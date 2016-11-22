@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.springframework.boot:spring-boot-starter-groovy-templates:1.4.1.RELEASE">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-groovy-templates/1.4.1.RELEASE/4fef191767f337e837524976aa65e237cf73ba23/spring-boot-starter-groovy-templates-1.4.1.RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-groovy-templates/1.4.1.RELEASE/a4f1ff068c3763a852cdbcf05ecd6e3e907b72fc/spring-boot-starter-groovy-templates-1.4.1.RELEASE-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
