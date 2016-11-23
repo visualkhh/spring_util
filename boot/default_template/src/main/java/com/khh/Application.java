@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //@ComponentScan(basePackages = {"com.khh.project"})
 //@Configuration
 @EnableAutoConfiguration
-@SpringBootApplication(scanBasePackages = {"com.khh"})
+@SpringBootApplication(scanBasePackages = {"com.khh.project"})
 public class Application {
 
     public static void main(String[] args) throws Exception {
