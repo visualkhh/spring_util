@@ -6,7 +6,8 @@
     <!--<include resource="org/springframework/boot/logging/logback/file-appender.xml" />-->
 
 
-    <!-- log4jdbc-log4j2 -->
+
+    <!-- log4jdbc-log4j2
     <logger name="jdbc.sqlonly"        level="DEBUG"/>
     <logger name="jdbc.sqltiming"      level="DEBUG"/>
     <logger name="jdbc.audit"          level="DEBUG"/>
@@ -14,6 +15,7 @@
     <logger name="jdbc.resultsettable" level="DEBUG"/>
     <logger name="jdbc.connection"     level="DEBUG"/>
     <logger name="com.khh.project"     level="DEBUG"/>
+    -->
     <!--<root level="INFO">-->
         <!--<appender-ref ref="FILE" />-->
     <!--</root>-->

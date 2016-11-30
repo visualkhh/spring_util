@@ -3,9 +3,6 @@ package com.khh.project.config.filter;
 import javax.servlet.*;
 import java.io.IOException;
 
-/**
- * Created by visualkhh on 2016. 11. 12..
- */
 public class TestFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         System.out.println("vvv");

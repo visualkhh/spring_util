@@ -1,0 +1,108 @@
+#http://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html
+application:
+  version: 1.0
+  title: boardApplication
+
+spring:
+  application:
+    name: springboot
+  main:
+    banner-mode: off
+  h2:
+    console:
+      enabled: true # Enable the console.
+      path: /h2-console # Path at which the console will be available.
+      settings:
+        trace: false # Enable trace output.
+        web-allow-others: false # Enable remote access.
+  datasource:
+    name: testdb
+    initialize: true  # Populate the database using 'data.sql'.
+    #schema:
+    #data:
+    platform: all # Platform to use in the schema resource (schema-${platform}.sql).
+    #url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=- 1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+    continue-on-error: true
+  hibernate:
+    hbm2ddl:
+      auto: update
+      show_sql: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      generate-ddl: true
+      ddl-auto: create-drop
+      show-sql: true
+  data:
+    repositories:
+      enabled: true
+  http:
+    multipart:
+      enabled: true # Enable support of multi-part uploads.
+
+# SECURITY (SecurityProperties)
+security:
+  basic:
+    authorize-mode: role # Security authorize mode to apply.
+    enabled: true # Enable basic authentication.
+    path: /** # Comma-separated list of paths to secure.
+    realm: Spring # HTTP basic realm name.
+  enable-csrf: true # Enable Cross Site Request Forgery support.
+  filter-order: 0 # Security filter chain order.
+  filter-dispatcher-types: ASYNC, FORWARD, INCLUDE, REQUEST # Security filter chain dispatcher types.
+  headers:
+    cache: true # Enable cache control HTTP headers.
+    content-type: true # Enable "X-Content-Type-Options" header.
+    frame: true # Enable "X-Frame-Options" header.
+    #hsts= # HTTP Strict Transport Security (HSTS) mode (none, domain, all).
+    xss: true # Enable cross site scripting (XSS) protection.
+  #ignored= # Comma-separated list of paths to exclude from the default secured paths.
+  require-ssl: false # Enable secure channel for all requests.
+  sessions: stateless # Session creation policy (always, never, if_required, stateless).
+  user:
+    name: user # Default user name.
+    password: user # Password for the default user name. A random password is logged on startup by default.
+    role: USER # Granted roles for the default user name.
+#  view:
+#      prefix:
+#      suffix: :.vm
+  groovy:
+    template:
+      cache: false
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.hibernate: INFO
+    com.khh: DEBUG
+
+
+---
+
+spring:
+  profiles: development
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.hibernate: INFO
+    com.khh: DEBUG
+
+---
+
+spring:
+  profiles: production
+
+logging:
+  #file: logs/application.log
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.hibernate: INFO
+    com.khh: INFO
+
+

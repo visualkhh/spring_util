@@ -1,0 +1,3 @@
++-+-+-+-+-+-+-+ ${application.title}
+|O|M|N|I|C|N|S|
++-+-+-+-+-+-+-+ ${application.version}

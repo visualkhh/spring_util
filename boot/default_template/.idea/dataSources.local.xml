@@ -5,6 +5,7 @@
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
       <secret-storage>memory</secret-storage>
       <first-sync>true</first-sync>
+      <user-name>sa</user-name>
     </data-source>
   </component>
 </project>

@@ -1,3 +1,5 @@
+#http://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html
+#http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 application:
   version: 1.0
   title: boardApplication
@@ -17,6 +19,8 @@ spring:
   datasource:
     name: testdb
     initialize: true  # Populate the database using 'data.sql'.
+    #schema:
+    #data:
     platform: all # Platform to use in the schema resource (schema-${platform}.sql).
     #url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=- 1;DB_CLOSE_ON_EXIT=FALSE
     driverClassName: org.h2.Driver
@@ -39,6 +43,16 @@ spring:
   http:
     multipart:
       enabled: true # Enable support of multi-part uploads.
+  mvc:
+    locale: ko_KR
+  # INTERNATIONALIZATION (MessageSourceAutoConfiguration)
+#  messages:
+#    always-use-message-format: false # Set whether to always apply the MessageFormat rules, parsing even messages without arguments.
+#    basename: messages # Comma-separated list of basenames, each following the ResourceBundle convention.
+#    cache-seconds: -1 # Loaded resource bundle files cache expiration, in seconds. When set to -1, bundles are cached forever.
+#    encoding: UTF-8 # Message bundles encoding.
+#    fallback-to-system-locale: true # Set whether to fall back to the system Locale if no files for a specific Locale have been found.
+
 
 # SECURITY (SecurityProperties)
 security:
@@ -74,7 +88,7 @@ logging:
     root: INFO
     org.springframework.web: INFO
     org.hibernate: INFO
-    com.khh: DEBUG
+    com.khh: INFO
 
 
 ---
@@ -82,7 +96,24 @@ logging:
 spring:
   profiles: development
 
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.hibernate: INFO
+    com.khh: DEBUG
+
 ---
 
 spring:
   profiles: production
+
+logging:
+  #file: logs/application.log
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.hibernate: INFO
+    com.khh: INFO
+
+

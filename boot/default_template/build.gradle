@@ -26,6 +26,7 @@ buildscript {
 }
 
 repositories {
+    maven { url "http://119.206.205.172:8081/nexus/content/repositories/releases/" }
     mavenCentral()
 }
 
@@ -62,6 +63,13 @@ dependencies {
 
 
     testCompile ("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+
+
+    compile group: 'com.omnicns', name: 'common-java', version: '0.0.1'
+    compile group: 'com.omnicns', name: 'common-jsp', version: '0.0.1'
+    compile group: 'com.omnicns', name: 'common-spring', version: '0.0.1'
+
+
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 idea {

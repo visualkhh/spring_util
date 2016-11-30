@@ -23,6 +23,9 @@
     <orderEntry type="library" name="Gradle: javax.transaction:jta:1.1" level="project" />
     <orderEntry type="library" name="Gradle: javax.mail:mail:1.4.7" level="project" />
     <orderEntry type="library" name="Gradle: net.sf.corn:corn-cps:1.1.7" level="project" />
+    <orderEntry type="library" name="Gradle: com.omnicns:common-java:0.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.omnicns:common-jsp:0.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.omnicns:common-spring:0.0.1" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-test:1.4.1.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit:4.11" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter:1.4.1.RELEASE" level="project" />

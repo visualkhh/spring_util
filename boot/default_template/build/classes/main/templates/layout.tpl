@@ -1,29 +1,33 @@
 package templates
 
+import com.khh.project.config.web.WebSecurityConfigurerAdapter
+
+//http://melix.github.io/blog/2014/02/markuptemplateengine.html
 html {
   head {
     title(title)
-    link(rel:'stylesheet', href:'/css/bootstrap.min.css')
+    //link(rel:'stylesheet', href:'/css/bootstrap.min.css')
   }
   body {
     div(class:'container') {
       div(class:'navbar') {
         div(class:'navbar-inner') {
-          a(class:'brand',
-              href:'http://beta.groovy-lang.org/docs/groovy-2.3.0/html/documentation/markup-template-engine.html') {
-              yield 'Groovy - Layout!!'
+          a(style:'padding:5px', class:'brand', href:'/') {
+              yield '<HOME>'
           }
-          ul(class:'nav') {
-            li {
-              a(href:'/') {
-                yield 'Messages'
-              }
-            }
+          a(style:'padding:5px', href:"${WebSecurityConfigurerAdapter.LOGIN_PAGE}") {
+              yield 'login'
           }
+          a(style:'padding:5px', href:"${WebSecurityConfigurerAdapter.LOGOUT_URL}") {
+              yield 'logout'
+          }
+          hr()
         }
       }
       h1(title)
       div { content() }
+      hr()
+
     }
   }
 }
