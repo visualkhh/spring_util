@@ -7,13 +7,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.access.vote.AffirmativeBased;
+import org.springframework.security.access.vote.RoleHierarchyVoter;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Slf4j
@@ -40,7 +54,7 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
     public static final String LOGOUT_URL               = SECURITY_PATH+"/sign_out";
     public static final String REMEMBER_ME_KEY          = "REMEBMER_ME_KEY";
 
-    public static final String REMEMBER_ME_COOKE_NAME  = "REMEMBER_ME_COOKE";
+    public static final String REMEMBER_ME_COOKE_NAME   = "REMEMBER_ME_COOKE";
 
 
 
@@ -48,26 +62,10 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
     private AuthenticationProvider authenticationProvider;
     @Autowired
     private LoginUserDetailsService userDetailsService;
-
-//    private final static String REMEMBER_ME_KEY = "LIBQA_REMEBMER_ME_KEY";
-//
-//    @Autowired
-//    private CustomAuthenticationProvider customAuthenticationProvider;
-//
-//    @Autowired
-//    private DataSource dataSource;
-//
-//    @Autowired
-//    private UserDetailsServiceImpl userDetailsServiceImpl;
-
-//    @Override
-//    public void configure(WebSecurity webSecurity) throws Exception {
-//        log.debug("-----security ignore-----");
-//        webSecurity.ignoring().antMatchers("/", "/resource/**");
-//    }
-
-//    @Autowired
-    //private LoginUserRepository loginUserRepository;
+	@Autowired
+	AuthenticationManager authenticationManager;
+    @Autowired
+	private DataSource dataSource;
 
 
     @Override
@@ -75,6 +73,7 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
         if(h2ConsoleEnabled) {
             web.ignoring().antMatchers("/h2-console/**");
         }
+		web.ignoring().antMatchers("/resource/**","/static/**","/img/**","/image/**");
     }
 
 
@@ -84,12 +83,14 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
         http
             .anonymous()
                 .and()
+			.addFilterBefore(filterSecurityInterceptor(), UsernamePasswordAuthenticationFilter.class)
             .authorizeRequests()
                 //.antMatchers("/", ANON_PATH +"/**", SECURITY_PATH+"/**").permitAll()
                 .antMatchers("/", ANON_PATH +"/**").permitAll()
                 .antMatchers(AUTH_PATH +"/**").hasRole("AUTH")
-//                .antMatchers("/admin/**").hasRole("ADMIN")
-//                .antMatchers("/board/**").hasRole("USER")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/board/**").hasRole("USER")
+//                .antMatchers("/board/**").hasAnyAuthority()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
@@ -178,13 +179,55 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
         tokenBasedRememberMeServices.setCookieName(REMEMBER_ME_COOKE_NAME);
         return tokenBasedRememberMeServices;
     }
-//
+
+
+    ////////http://aoruqjfu.fun25.co.kr/index.php/post/657
+	@Bean
+	public FilterSecurityInterceptor filterSecurityInterceptor() {
+		FilterSecurityInterceptor filterSecurityInterceptor = new FilterSecurityInterceptor();
+		filterSecurityInterceptor.setAuthenticationManager(authenticationManager);
+		filterSecurityInterceptor.setSecurityMetadataSource(filterInvocationSecurityMetadataSource());
+		filterSecurityInterceptor.setAccessDecisionManager(affirmativeBased());
+		return filterSecurityInterceptor;
+	}
+
+	@Bean
+	public AffirmativeBased affirmativeBased() {
+		List<AccessDecisionVoter<? extends Object>> accessDecisionVoters = new ArrayList<>();
+		accessDecisionVoters.add(roleVoter());
+		AffirmativeBased affirmativeBased = new AffirmativeBased(accessDecisionVoters);
+		return affirmativeBased;
+	}
+
+	@Bean
+	public RoleHierarchyVoter roleVoter() {
+		RoleHierarchyVoter roleHierarchyVoter = new RoleHierarchyVoter(roleHierarchy());
+		roleHierarchyVoter.setRolePrefix("ROLE_");
+		return roleHierarchyVoter;
+	}
+
+	//RoleHierarchy 설정
+	@Bean
+	public RoleHierarchy roleHierarchy() {
+		RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+		roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_USER");
+		return roleHierarchy;
+	}
+
+	//시큐리트쪽 부분에서 사용자가 화면 페이지 호출하면 매번 호출되는 클래스 중요함
+	@Bean
+	public FilterInvocationSecurityMetadataSource filterInvocationSecurityMetadataSource(){
+		return new FilterInvocationSecurityMetadataSource();
+	}
+
 //    @Bean
 //    public AuthenticationSuccessHandler loginSuccessHandler() {
 //        log.debug("#### login Success handler #####");
 //        return new AuthenticationSuccessHandler();
 //    }
 //
+
+	//REMEMBER ME를 위한.
 //    @Bean
 //    public PersistentTokenRepository persistentTokenRepository() {
 //        JdbcTokenRepositoryImpl tokenRepositoryImpl = new JdbcTokenRepositoryImpl();

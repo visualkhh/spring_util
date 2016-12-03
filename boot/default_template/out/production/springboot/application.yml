@@ -1,4 +1,5 @@
 #http://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html
+#http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 application:
   version: 1.0
   title: boardApplication
@@ -42,6 +43,16 @@ spring:
   http:
     multipart:
       enabled: true # Enable support of multi-part uploads.
+  mvc:
+    locale: ko_KR
+  # INTERNATIONALIZATION (MessageSourceAutoConfiguration)
+#  messages:
+#    always-use-message-format: false # Set whether to always apply the MessageFormat rules, parsing even messages without arguments.
+#    basename: messages # Comma-separated list of basenames, each following the ResourceBundle convention.
+#    cache-seconds: -1 # Loaded resource bundle files cache expiration, in seconds. When set to -1, bundles are cached forever.
+#    encoding: UTF-8 # Message bundles encoding.
+#    fallback-to-system-locale: true # Set whether to fall back to the system Locale if no files for a specific Locale have been found.
+
 
 # SECURITY (SecurityProperties)
 security:
@@ -77,7 +88,14 @@ logging:
     root: INFO
     org.springframework.web: INFO
     org.hibernate: INFO
-    com.khh: DEBUG
+    com.khh: INFO
+
+
+khh:
+  project:
+    config:
+      welcom_title: 방갑습니다.
+
 
 
 ---
@@ -89,7 +107,7 @@ logging:
   level:
     root: INFO
     org.springframework.web: INFO
-    org.hibernate: INFO
+    org.hibernate: DEBUG
     com.khh: DEBUG
 
 ---

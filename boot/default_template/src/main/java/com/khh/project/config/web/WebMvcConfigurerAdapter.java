@@ -1,13 +1,17 @@
 package com.khh.project.config.web;
 
+import com.khh.project.web.error.ErrorController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.web.WebMvcProperties;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -15,6 +19,7 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -49,7 +54,7 @@ public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.con
 			@Override
 			public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView view) {
 				CsrfToken token = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
-				if (token != null) {
+				if (token != null && null != view) {
 					view.addObject(token.getParameterName(), token);
 				}
 			}
@@ -129,16 +134,18 @@ public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.con
 //        return viewResolver;
 //    }
 
-//    @Bean
-//    public EmbeddedServletContainerCustomizer containerCustomizer() {
-//        return container -> {
-//            ErrorPage error401Page = new ErrorPage(HttpStatus.UNAUTHORIZED, ERROR_401);
-//            ErrorPage error403Page = new ErrorPage(HttpStatus.FORBIDDEN, ERROR_403);
-//            ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, ERROR_404);
-//            ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, ERROR_500);
-//            container.addErrorPages(error401Page, error403Page, error404Page, error500Page);
-//        };
-//    }
+    @Bean
+    public EmbeddedServletContainerCustomizer containerCustomizer() {
+        return container -> {
+            container.addErrorPages(
+					new ErrorPage(HttpStatus.UNAUTHORIZED, 			ErrorController.ERROR_401),
+					new ErrorPage(HttpStatus.FORBIDDEN, 			ErrorController.ERROR_403),
+					new ErrorPage(HttpStatus.NOT_FOUND,				ErrorController.ERROR_404),
+					new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, ErrorController.ERROR_500),
+					new ErrorPage(Throwable.class, 					ErrorController.ERROR_DEFAULT)
+			);
+        };
+    }
 
 //    @Bean
 //    @ConfigurationProperties("spring.datasource")
@@ -146,10 +153,14 @@ public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.con
 //        return DataSourceBuilder.create().build();
 //    }
 
-//    @Override
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/resource/**").addResourceLocations("/resource/");
-//    }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resource/**")	.addResourceLocations("/resource/");
+		registry.addResourceHandler("/static/**")	.addResourceLocations("/static/");
+		registry.addResourceHandler("/static/**")	.addResourceLocations("/static/");
+		registry.addResourceHandler("/img/**")		.addResourceLocations("/img/");
+		registry.addResourceHandler("/image/**")	.addResourceLocations("/image/");
+    }
 
 
 }

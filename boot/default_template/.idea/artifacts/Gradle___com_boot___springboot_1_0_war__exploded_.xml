@@ -1,15 +1,10 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="Gradle : com.boot : springboot-1.0.war (exploded)">
-    <output-path>$PROJECT_DIR$/build/libs/exploded/springboot-1.0.war</output-path>
+    <output-path>$PROJECT_DIR$/out/artifacts/springboot/exploded/springboot-1.0.war</output-path>
     <properties id="gradle-properties">
-      <options external-project-path="$PROJECT_DIR$">
-        <manifest>TWFuaWZlc3QtVmVyc2lvbjogMS4wDQoNCg==</manifest>
-      </options>
+      <options external-project-path="$PROJECT_DIR$" />
     </properties>
     <root id="root">
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/build/libs/exploded/springboot-1.0.war/META-INF/MANIFEST.MF" />
-      </element>
       <element id="javaee-facet-resources" facet="springboot_main/web/Web Gradle : springboot-1.0.war" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -93,6 +88,9 @@
           <element id="library" level="project" name="Gradle: org.ow2.asm:asm:5.0.3" />
           <element id="library" level="project" name="Gradle: ch.qos.logback:logback-core:1.1.7" />
         </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/out/artifacts/springboot/exploded/springboot-1.0.war/META-INF/MANIFEST.MF" />
       </element>
     </root>
   </artifact>

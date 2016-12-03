@@ -32,6 +32,7 @@ public class LoginUserDetails implements org.springframework.security.core.userd
 
 
 	@OneToMany(fetch = FetchType.EAGER)
+//	@OneToMany
 	@JoinColumn(name="USERNAME")
 	private Collection<LoginUserGrantedAuthority> authorities;
 

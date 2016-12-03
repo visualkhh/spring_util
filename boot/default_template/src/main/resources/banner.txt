@@ -1,3 +1,4 @@
-+-+-+-+-+-+-+-+ ${application.title}
-|O|M|N|I|C|N|S|
-+-+-+-+-+-+-+-+ ${application.version}
+ +-+-+-+-+-+-+-+ ${application.title}
+|  V I S U A L  |
+|   K   H   H   |
+ +-+-+-+-+-+-+-+ ${application.version}

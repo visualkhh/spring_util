@@ -91,6 +91,13 @@ logging:
     com.khh: INFO
 
 
+khh:
+  project:
+    config:
+      welcom_title: 방갑습니다.
+
+
+
 ---
 
 spring:
@@ -100,7 +107,7 @@ logging:
   level:
     root: INFO
     org.springframework.web: INFO
-    org.hibernate: INFO
+    org.hibernate: DEBUG
     com.khh: DEBUG
 
 ---
