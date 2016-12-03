@@ -90,11 +90,14 @@ logging:
     org.hibernate: INFO
     com.khh: INFO
 
+multipart:
+  maxFileSize: 10Mb
 
 khh:
   project:
     config:
       welcom_title: 방갑습니다.
+      file_upload_path: ~/temp
 
 
 

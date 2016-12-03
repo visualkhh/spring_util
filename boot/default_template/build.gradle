@@ -28,10 +28,17 @@ buildscript {
 repositories {
     maven { url "http://119.206.205.172:8081/nexus/content/repositories/releases/" }
     mavenCentral()
+    maven { url "http://www.egovframe.go.kr/maven/" }
 }
 
 
 dependencies {
+
+    compile(group: 'egovframework.rte', name: 'egovframework.rte.ptl.mvc', version:'3.5.0') {
+        exclude(group: 'egovframework.rte')
+//        exclude(module: 'commons-logging')
+    }
+
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-devtools:${springBootVersion}")

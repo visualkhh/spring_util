@@ -17,6 +17,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -29,6 +30,8 @@ import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hibernate.criterion.Restrictions.and;
+
 
 @Slf4j
 @Configuration
@@ -39,22 +42,25 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
     @Value("${spring.h2.console.enabled}")
     boolean h2ConsoleEnabled;
 
-    public static final String ROOT_PATH                = "/";
-    public static final String SECURITY_PATH            = "/security";
-    public static final String ANON_PATH                = "/anon";
-    public static final String AUTH_PATH                = "/auth";
+    public static final String ROOT_PATH                	= "/";
+    public static final String SECURITY_PATH            	= "/security";
+    public static final String ANON_PATH                	= "/anon";
+    public static final String AUTH_PATH                	= "/auth";
 
-    public static final String LOGIN_PAGE               = SECURITY_PATH+"/login";
-    public static final String LOGIN_PROCESSING_URL     = SECURITY_PATH+"/sign_in";
-    public static final String FAILURE_URL              = SECURITY_PATH+"/fail";
-    public static final String USERNAME_PARAMETER       = "username";
-    public static final String PASSWORD_PARAMETER       = "password";
-    public static final String DEFAULT_SUCCESS_URL      = ROOT_PATH;
-    public static final String LOGOUT_SUCCESS_URL       = ROOT_PATH;
-    public static final String LOGOUT_URL               = SECURITY_PATH+"/sign_out";
-    public static final String REMEMBER_ME_KEY          = "REMEBMER_ME_KEY";
+    public static final String LOGIN_PAGE               	= SECURITY_PATH+"/login";
+    public static final String LOGIN_PROCESSING_URL     	= SECURITY_PATH+"/sign_in";
+    public static final String FAILURE_URL              	= SECURITY_PATH+"/fail";
+    public static final String USERNAME_PARAMETER       	= "username";
+    public static final String PASSWORD_PARAMETER       	= "password";
+    public static final String DEFAULT_SUCCESS_URL      	= ROOT_PATH;
+    public static final String LOGOUT_SUCCESS_URL       	= ROOT_PATH;
+    public static final String LOGOUT_URL               	= SECURITY_PATH+"/sign_out";
+    public static final String SESSION_EXPIRED_URL      	= LOGIN_PAGE+"?expred";
+    public static final String SESSION_INVALIDSESSION_URL	= LOGIN_PAGE+"?invalid";
+    public static final String LOGOUT_URL               	= SECURITY_PATH+"/sign_out";
+    public static final String REMEMBER_ME_KEY          	= "REMEBMER_ME_KEY";
 
-    public static final String REMEMBER_ME_COOKE_NAME   = "REMEMBER_ME_COOKE";
+    public static final String REMEMBER_ME_COOKE_NAME   	= "REMEMBER_ME_COOKE";
 
 
 
@@ -83,7 +89,7 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
         http
             .anonymous()
                 .and()
-			.addFilterBefore(filterSecurityInterceptor(), UsernamePasswordAuthenticationFilter.class)
+			//.addFilterBefore(filterSecurityInterceptor(), UsernamePasswordAuthenticationFilter.class)
             .authorizeRequests()
                 //.antMatchers("/", ANON_PATH +"/**", SECURITY_PATH+"/**").permitAll()
                 .antMatchers("/", ANON_PATH +"/**").permitAll()
@@ -93,6 +99,14 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
 //                .antMatchers("/board/**").hasAnyAuthority()
                 .anyRequest().authenticated()
                 .and()
+			.sessionManagement()
+				.maximumSessions(1)
+				.expiredUrl(SESSION_EXPIRED_URL)
+				.maxSessionsPreventsLogin(true)
+				.and()
+				.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+				.invalidSessionUrl(SESSION_INVALIDSESSION_URL)
+				.and()
             .formLogin()
                 .loginPage(LOGIN_PAGE)                       //로그인 페이지
                 .loginProcessingUrl(LOGIN_PROCESSING_URL)     //login-processing-url  로그인 페이지 form action에 입력할 주소 지정
