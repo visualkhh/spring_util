@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
-@Component
 public class AuthenticationProvider implements org.springframework.security.authentication.AuthenticationProvider {
 
 	@Value("${khh.project.config.welcom_title}")
@@ -26,6 +25,8 @@ public class AuthenticationProvider implements org.springframework.security.auth
 	@Autowired
 	MessageSourceAccessor messageSource;
 
+	@Autowired
+	PasswordEncoder encoder;
 	@Override
 	@Transactional //http://jdm.kr/blog/141
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -42,7 +43,6 @@ public class AuthenticationProvider implements org.springframework.security.auth
 		}
 
 
-		PasswordEncoder encoder = new PasswordEncoder();
 		if(!encoder.matches(encoder.encode(password),userDetails.getPassword())){    //실패
 			throw new BadCredentialsException(messageSource.getMessage("error.login.fail"));
 		}

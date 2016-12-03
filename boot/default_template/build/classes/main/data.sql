@@ -14,6 +14,7 @@ INSERT INTO AUTHORITY
 ('khh',       	'AUTH_USER_D'),
 ('khh',       	'AUTH_ADMIN_C'),
 ('khh',       	'AUTH_ADMIN_D'),
+
 ('visualkhh', 	'ROLE_USER'),
 ('hhk',       	'ROLE_USER');
 

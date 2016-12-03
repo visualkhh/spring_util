@@ -1,8 +1,8 @@
 package com.khh.project.config.web.security;
 
-/**
- * Created by Administrator on 2016-11-30.
- */
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class PasswordEncoder implements org.springframework.security.crypto.password.PasswordEncoder {
 	@Override
 	public String encode(CharSequence rawPassword) {

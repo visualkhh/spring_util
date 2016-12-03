@@ -2,7 +2,7 @@
 #http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 application:
   version: 1.0
-  title: boardApplication
+  title: Board Application
 
 spring:
   application:

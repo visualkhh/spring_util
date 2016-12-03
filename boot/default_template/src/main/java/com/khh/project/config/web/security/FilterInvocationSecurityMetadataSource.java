@@ -7,6 +7,8 @@ import org.springframework.cache.CacheManager;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.FilterInvocation;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 
 @Slf4j
@@ -20,7 +22,13 @@ public class FilterInvocationSecurityMetadataSource implements org.springframewo
 
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
-		log.debug(object.toString());
+
+		log.debug("FilterInvocationSecurityMetadataSource  "+object.toString());
+		FilterInvocation fi = (FilterInvocation) object;
+		HttpServletRequest request 		= fi.getHttpRequest();
+		HttpServletResponse response 	= fi.getResponse();
+		String url = request.getRequestURI();
+
 		return null;
 	}
 
