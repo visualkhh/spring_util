@@ -28,22 +28,24 @@ buildscript {
 repositories {
     maven { url "http://119.206.205.172:8081/nexus/content/repositories/releases/" }
     mavenCentral()
-    maven { url "http://www.egovframe.go.kr/maven/" }
+//    maven { url "http://www.egovframe.go.kr/maven/" }
 }
 
 
 dependencies {
 
-    compile(group: 'egovframework.rte', name: 'egovframework.rte.ptl.mvc', version:'3.5.0') {
-        exclude(group: 'egovframework.rte')
-//        exclude(module: 'commons-logging')
-    }
+//    compile(group: 'egovframework.rte', name: 'egovframework.rte.ptl.mvc', version:'3.5.0') {
+//        exclude(group: 'egovframework.rte')
+////        exclude(module: 'commons-logging')
+//    }
 
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-devtools:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-security:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-integration:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-groovy-templates:${springBootVersion}")
+    optional "org.springframework.boot:spring-boot-configuration-processor"
     //compile("org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}")
     //compile("org.springframework.boot:spring-boot-starter-velocity:${springBootVersion}")
 

@@ -17,7 +17,7 @@ public class LogoutSuccessHandler implements org.springframework.security.web.au
 			try {
 				request.getSession().invalidate();
 				System.out.println("User Successfully Logout");
-				//you can add more codes here when the user successfully logs out,
+				//you can add more codes here when the admin successfully logs out,
 				//such as updating the database for last active.
 			} catch (Exception e) {
 				e.printStackTrace();

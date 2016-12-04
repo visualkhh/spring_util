@@ -12,12 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 @Controller
-@RequestMapping("/")
+@RequestMapping(WebController.PATH_ROOT)
 public class WebController {
+    public static final String 		PATH_ROOT = "/";
+
     @Autowired
     BoardRepository boardRepository;
-    @RequestMapping({"","/"})
-    String index(HttpServletRequest request, HttpServletResponse response, Model model) {
+
+
+	@RequestMapping({"",PATH_ROOT})
+	public String index(HttpServletRequest request, HttpServletResponse response, Model model) {
         return "index";
     }
 }

@@ -1,4 +1,4 @@
-package com.khh.project.config;
+package com.khh.project;
 
 import com.khh.project.web.error.ErrorController;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@org.springframework.web.bind.annotation.ControllerAdvice
+@org.springframework.web.bind.annotation.ControllerAdvice("com.khh.project")
 @Slf4j
 public class ControllerAdvice {
 

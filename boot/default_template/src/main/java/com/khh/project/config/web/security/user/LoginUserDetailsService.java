@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 
-@Transactional //http://jdm.kr/blog/141
+//@Transactional //http://jdm.kr/blog/141
 public class LoginUserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService{
 	@Autowired
 	MessageSourceAccessor messageSource;

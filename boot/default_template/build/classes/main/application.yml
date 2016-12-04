@@ -22,21 +22,21 @@ spring:
     #schema:
     #data:
     platform: all # Platform to use in the schema resource (schema-${platform}.sql).
-    #url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=- 1;DB_CLOSE_ON_EXIT=FALSE
+#    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=- 1;DB_CLOSE_ON_EXIT=FALSE
     driverClassName: org.h2.Driver
     username: sa
     password:
     continue-on-error: true
-  hibernate:
-    hbm2ddl:
-      auto: update
-      show_sql: true
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
+    show-sql: true
+    open-in-view: true
     hibernate:
-      generate-ddl: true
       ddl-auto: create-drop
-      show-sql: true
+    properties:
+      hibernate.current_session_context_class: thread
+#      hibernate.current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
   data:
     repositories:
       enabled: true
@@ -45,6 +45,9 @@ spring:
       enabled: true # Enable support of multi-part uploads.
   mvc:
     locale: ko_KR
+  groovy:
+    template:
+      cache: false
   # INTERNATIONALIZATION (MessageSourceAutoConfiguration)
 #  messages:
 #    always-use-message-format: false # Set whether to always apply the MessageFormat rules, parsing even messages without arguments.
@@ -53,6 +56,13 @@ spring:
 #    encoding: UTF-8 # Message bundles encoding.
 #    fallback-to-system-locale: true # Set whether to fall back to the system Locale if no files for a specific Locale have been found.
 
+###ETC##########
+#  hibernate:
+#    properties:
+#      hibernate.dialect: org.hibernate.dialect.H2Dialect
+#      hibernate.show_sql: true
+#      hibernate.hbm2ddl.auto: create-drop
+#      hibernate.current_session_context_class: thread
 
 # SECURITY (SecurityProperties)
 security:
@@ -74,15 +84,13 @@ security:
   require-ssl: false # Enable secure channel for all requests.
   sessions: stateless # Session creation policy (always, never, if_required, stateless).
   user:
-    name: user # Default user name.
-    password: user # Password for the default user name. A random password is logged on startup by default.
-    role: USER # Granted roles for the default user name.
+    name: user # Default admin name.
+    password: user # Password for the default admin name. A random password is logged on startup by default.
+    role: USER # Granted roles for the default admin name.
 #  view:
 #      prefix:
 #      suffix: :.vm
-  groovy:
-    template:
-      cache: false
+
 logging:
   level:
     root: INFO

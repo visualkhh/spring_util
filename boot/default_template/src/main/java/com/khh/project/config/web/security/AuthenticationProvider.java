@@ -28,7 +28,7 @@ public class AuthenticationProvider implements org.springframework.security.auth
 	@Autowired
 	PasswordEncoder encoder;
 	@Override
-	@Transactional //http://jdm.kr/blog/141
+//	@Transactional //http://jdm.kr/blog/141
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
 

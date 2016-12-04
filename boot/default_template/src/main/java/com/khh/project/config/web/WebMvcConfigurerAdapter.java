@@ -2,6 +2,7 @@ package com.khh.project.config.web;
 
 import com.khh.project.web.error.ErrorController;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.web.WebMvcProperties;
@@ -39,15 +40,36 @@ public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.con
 	@Value("${spring.mvc.locale}")
 	Locale locale;
 
-//    @Value("${libqa.viewResolver.cached}")
-//    private String viewResolverCached;
+	@Autowired
+	SessionFactory sessionFactory = null;
 
+	//	preHandle 	boolean 	1. 클라이언트의 요청을 컨트롤러에 전달 하기 전에 호출
+	//	 false 인 경우 intercepter  또는 controller 를 실행 시키지 않고 요청 종료
+	//	postHandle 	void 	1. 컨트롤러 로직 실행 된 후 호출됨2. 컨트롤러 실행 도중 error 발생의 경우 postHandle() 는 실행	되지 않음
+	//	 request 로 넘어온 데이터 가공시 많이 쓰임
+	//	afterCompletion 	void 	1. 컨트롤러 로직 실행 된 후 호출 됨 2. 컨트롤러 실행 도중이나 view 페이지 실행 도중 error 발생 해도	실행됨
+	//	 공통 Exception 처리 로직 작성시 많이 쓰임
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(csrfTokenAddingInterceptor()).addPathPatterns("/**");       //.includePathPatterns("/**") .excludePathPatterns("/**/*.ecxld");
 		registry.addInterceptor(localeChangeInterceptor()).addPathPatterns("/**");
+		registry.addInterceptor(sessionFactoryTransctionInterceptor()).addPathPatterns("/**");
 	}
 
+	@Bean
+	public HandlerInterceptor sessionFactoryTransctionInterceptor() {
+		return new HandlerInterceptorAdapter() {
+			@Override
+			public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+				sessionFactory.getCurrentSession().beginTransaction();
+				return true;
+			}
+			@Override
+			public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+				sessionFactory.getCurrentSession().getTransaction().commit();
+			}
+		};
+	}
 	@Bean
 	public HandlerInterceptor csrfTokenAddingInterceptor() {
 		return new HandlerInterceptorAdapter() {

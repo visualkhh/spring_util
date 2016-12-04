@@ -13,10 +13,10 @@
 //
 //        @Test
 //        public void readUserTest() {
-//            User user = userMapper.readUser("cusonar");
-//            assertThat("cusonar", is(user.getUsername()));
-//            assertThat("YCU", is(user.getName()));
-//            assertThat("1234", is(user.getPassword()));
+//            User admin = userMapper.readUser("cusonar");
+//            assertThat("cusonar", is(admin.getUsername()));
+//            assertThat("YCU", is(admin.getName()));
+//            assertThat("1234", is(admin.getPassword()));
 //        }
 //
 //        @Test
