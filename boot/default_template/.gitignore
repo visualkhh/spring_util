@@ -1,0 +1,6 @@
+*
+!.gitignore
+!src/
+!src/*
+!build.gradle
+!settings.gradle
