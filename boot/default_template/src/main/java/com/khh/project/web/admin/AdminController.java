@@ -1,5 +1,6 @@
 package com.khh.project.web.admin;
 
+import com.khh.project.web.admin.domain.Authority;
 import com.khh.project.web.admin.domain.User;
 import com.khh.project.web.admin.repository.UserRepository;
 import com.omnicns.java.db.hibernate.Hibernater;
@@ -8,11 +9,13 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -29,6 +32,9 @@ public class AdminController {
     @Autowired
     public UserRepository userRepository;
 
+   // @Autowired
+  //  Hibernater hibernater;
+
     @RequestMapping({"","/"})
     @ResponseBody
     String home() {
@@ -36,10 +42,39 @@ public class AdminController {
     }
 
 
+
+    @RequestMapping("/save")
+    @ResponseBody
+    String save() {
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.beginTransaction();
+        User u = new User();
+        u.setUsername("zzz");
+        u.setPassword("zzz");
+
+        Authority a = new Authority();
+        a.setUsername("zzz");
+        a.setAuthority("vvv");
+        List l= new ArrayList<>();
+        l.add(a);
+        u.setAuthorities(l);
+
+        currentSession.save(u);
+
+        currentSession.flush();
+        currentSession.clear();
+        currentSession.getTransaction().commit();
+
+        return "ok";
+    }
+
+
+
     @RequestMapping("/list")
     @ResponseBody
     List<User> list() {
         Session currentSession = sessionFactory.getCurrentSession();
+
 //        currentSession.beginTransaction();
         Criteria crit = currentSession.createCriteria(User.class);
 //        crit.setFetchMode("authorities", FetchMode.JOIN); //강제로 지연로딩 사용안함
@@ -47,6 +82,10 @@ public class AdminController {
         ////crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//조인 쿼리가 날라간다
         //위처럼할수도 있지만 엔티티에도 넣어도된다 @Fetch(FetchMode.SELECT) 이것도 각각 날라간다
         List<User> list = crit.list();
+//        currentSession.flush();
+//        currentSession.clear();
+//        currentSession.getTransaction().commit();
+
 //        List<User> list = (List<User>) crit.uniqueResult();
 //        currentSession.getTransaction().commit();
         // currentSession.close();

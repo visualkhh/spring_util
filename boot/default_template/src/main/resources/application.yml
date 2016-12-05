@@ -5,6 +5,14 @@ application:
   title: Board Application
 
 spring:
+  devtools:
+    livereload:
+      enabled: true
+  freemarker:
+    cache: false
+#    templateLoaderPath:
+  config:
+    location:
   application:
     name: springboot
   main:
@@ -22,21 +30,26 @@ spring:
     #schema:
     #data:
     platform: all # Platform to use in the schema resource (schema-${platform}.sql).
-#    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=- 1;DB_CLOSE_ON_EXIT=FALSE
+#    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     driverClassName: org.h2.Driver
     username: sa
     password:
     continue-on-error: true
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    generate-ddl: true
-    show-sql: true
-    open-in-view: true
-    hibernate:
-      ddl-auto: create-drop
-    properties:
-      hibernate.current_session_context_class: thread
-#      hibernate.current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+#  jpa:
+#    database-platform: org.hibernate.dialect.H2Dialect
+#    generate-ddl: true
+#    show-sql: true
+#    open-in-view: true
+#    hibernate:
+#      ddl-auto: create-drop
+#    properties:
+#      hibernate.current_session_context_class: thread
+#      hibernate.jdbc.batch_size: 50
+#      hibernate.format_sql: false
+#      hibernate.validator.apply_to_ddl: false
+#      hibernate.validator.autoregister_listeners: false
+#      javax.persistence.validation.mode: none
+##      hibernate.current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
   data:
     repositories:
       enabled: true
@@ -56,13 +69,7 @@ spring:
 #    encoding: UTF-8 # Message bundles encoding.
 #    fallback-to-system-locale: true # Set whether to fall back to the system Locale if no files for a specific Locale have been found.
 
-###ETC##########
-#  hibernate:
-#    properties:
-#      hibernate.dialect: org.hibernate.dialect.H2Dialect
-#      hibernate.show_sql: true
-#      hibernate.hbm2ddl.auto: create-drop
-#      hibernate.current_session_context_class: thread
+
 
 # SECURITY (SecurityProperties)
 security:
@@ -101,11 +108,25 @@ logging:
 multipart:
   maxFileSize: 10Mb
 
-khh:
-  project:
-    config:
-      welcom_title: 방갑습니다.
-      file_upload_path: ~/temp
+
+######## CUSTOM PROPERTIES ##########
+hibernate:
+  mapping-locations: classpath:hibernate/*.hbm.xml
+  packages-to-scan: com.khh.project
+  annotated-packages: com.khh.project
+  properties:
+#    hibernate.connection.url
+    hibernate.dialect: org.hibernate.dialect.H2Dialect
+    hibernate.show_sql: true
+    hibernate.hbm2ddl.auto: update
+    hibernate.current_session_context_class: thread
+
+project:
+  properties:
+    hello: hello22
+
+
+
 
 
 

@@ -8,7 +8,13 @@ apply plugin: 'war'
 apply plugin: 'groovy'
 version = '1.0'
 sourceCompatibility = 1.8
-
+targetCompatibility = 1.8
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+compileJava {
+    options.fork = true
+    options.forkOptions.executable = "${System.getenv().JAVA_HOME}/bin/javac" // assumes that javac is on PATH
+    //options.compilerArgs << "-XDignore.symbol.file"// does not exist 오류나면..
+}
 
 buildscript {
     ext {
@@ -41,11 +47,16 @@ dependencies {
 
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
-    compile("org.springframework.boot:spring-boot-devtools:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-security:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-integration:${springBootVersion}")
+    //devtools
+    compile("org.springframework.boot:spring-boot-devtools")
+    //config를위하여
+    compile("org.springframework.boot:spring-boot-configuration-processor")
+    //optional ("org.springframework.boot:spring-boot-configuration-processor")
+
+    //view template  select one!
     compile("org.springframework.boot:spring-boot-starter-groovy-templates:${springBootVersion}")
-    optional "org.springframework.boot:spring-boot-configuration-processor"
     //compile("org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}")
     //compile("org.springframework.boot:spring-boot-starter-velocity:${springBootVersion}")
 
@@ -81,6 +92,7 @@ dependencies {
 
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
+compileJava.dependsOn(processResources)
 idea {
     module {
         inheritOutputDirs = false

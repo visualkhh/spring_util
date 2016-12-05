@@ -18,8 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class AuthenticationProvider implements org.springframework.security.authentication.AuthenticationProvider {
 
-	@Value("${khh.project.config.welcom_title}")
-	String welcom_title;
 	@Autowired
 	LoginUserDetailsService userDetailsService;
 	@Autowired
@@ -37,7 +35,7 @@ public class AuthenticationProvider implements org.springframework.security.auth
 		String username = (String)authentication.getPrincipal();
 		String password = (String)authentication.getCredentials();
 		LoginUserDetails userDetails = userDetailsService.loadUserByUsername(username);
-		log.info("Login try ip : "+welcom_title+" -> "+remoteIP+" input id("+username+") info:"+userDetails);
+		log.info("Login try ip :  -> "+remoteIP+" input id("+username+") info:"+userDetails);
 		if(null == userDetails || userDetails.isAccountNonLocked()==false || userDetails.isAccountNonExpired() == false || userDetails.isEnabled() == false || userDetails.isCredentialsNonExpired() == false) {
 			throw new UsernameNotFoundException(messageSource.getMessage("error.login.fail"));
 		}
