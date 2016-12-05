@@ -1,5 +1,0 @@
- +-+-+-+-+-+-+-+-+-+-+
-|   V  I  S  U  A  L  |
-|     K    H   H      |  ${application.title}
-| visualkhh@gmail.com |  ${application.version}
- +-+-+-+-+-+-+-+-+-+-+
