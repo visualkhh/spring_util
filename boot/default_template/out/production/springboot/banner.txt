@@ -1,4 +1,0 @@
- +-+-+-+-+-+-+-+ ${application.title}
-|  V I S U A L  |
-|   K   H   H   |
- +-+-+-+-+-+-+-+ ${application.version}
