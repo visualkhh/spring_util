@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.web.WebMvcProperties;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +13,6 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,7 +36,15 @@ public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.con
 
 
 	@Value("${spring.mvc.locale}")
-	Locale locale;
+	Locale locale = null;
+
+	@Value("${spring.messages.basename}")
+	String messagesBasename = null;
+	@Value("${spring.messages.encoding}")
+	String messagesEncoding = null;
+	@Value("${spring.messages.cache-seconds}")
+	int messagesCacheSeconds;
+
 
 	@Autowired
 	SessionFactory sessionFactory = null;
@@ -99,13 +105,13 @@ public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.con
 		return lci;
 	}
 
-
+	//message source
 	@Bean
 	public ReloadableResourceBundleMessageSource messageSource(){
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-		messageSource.setBasename("classpath:/messages/message");
-		messageSource.setDefaultEncoding("UTF-8");
-		messageSource.setCacheSeconds(60);
+		messageSource.setBasename(messagesBasename);                //"classpath:/messages/message"
+		messageSource.setDefaultEncoding(messagesEncoding);
+		messageSource.setCacheSeconds(messagesCacheSeconds);
 		return messageSource;
 	}
 

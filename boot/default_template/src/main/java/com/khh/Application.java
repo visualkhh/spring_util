@@ -11,12 +11,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 //@ComponentScan(basePackages = {"com.khh.project"})
 //@Configuration
 @EnableAutoConfiguration
-@SpringBootApplication(scanBasePackages = {"com.khh.project"})
+@SpringBootApplication(scanBasePackages = {Application.BASE_PACKAGES})
 @EnableTransactionManagement
 public class Application {
+	public static final String BASE_PACKAGES = "com.khh.project";
 
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(Application.class, args);
-    }
+	public static void main(String[] args) throws Exception {
+		SpringApplication.run(Application.class, args);
+	}
 
 }

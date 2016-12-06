@@ -39,7 +39,7 @@ repositories {
 
 
 dependencies {
-
+// egov 전자정부 프레임워크 감리통과하려면 아래 풀어 dependencies 걸어서 감리만 통과하여라
 //    compile(group: 'egovframework.rte', name: 'egovframework.rte.ptl.mvc', version:'3.5.0') {
 //        exclude(group: 'egovframework.rte')
 ////        exclude(module: 'commons-logging')
@@ -59,13 +59,13 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-groovy-templates:${springBootVersion}")
     //compile("org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}")
     //compile("org.springframework.boot:spring-boot-starter-velocity:${springBootVersion}")
-
-    compile("com.h2database:h2:1.4.192");
-
     /*jsp jstl viwe 쓰려면
     compile("javax.servlet:jstl");
     compile("org.apache.tomcat.embed:tomcat-embed-jasper")
     */
+
+    compile("com.h2database:h2:1.4.192");
+
     compile('com.jayway.jsonpath:json-path:2.1.0')
 
     /* lombok*/

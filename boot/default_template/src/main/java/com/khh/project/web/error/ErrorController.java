@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
-//@RequestMapping(ErrorController.ERROR_PATH)
 @Slf4j
 public class ErrorController implements org.springframework.boot.autoconfigure.web.ErrorController {
 

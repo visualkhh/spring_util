@@ -1,5 +1,6 @@
 package com.khh.project.config;
 
+import com.khh.Application;
 import com.khh.project.config.properties.HibernateProperties;
 import com.khh.project.config.properties.ProjectProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -77,9 +78,13 @@ public class HibernateConfig {
 		}
 		if (hibernateProperties.getPackagesToScan() != null) {
 			factory.setPackagesToScan(hibernateProperties.getPackagesToScan());
+		}else{
+			factory.setPackagesToScan(Application.BASE_PACKAGES);
 		}
 		if (hibernateProperties.getAnnotatedPackages() != null) {
 			factory.setAnnotatedPackages(hibernateProperties.getAnnotatedPackages());
+		}else{
+			factory.setAnnotatedPackages(Application.BASE_PACKAGES);
 		}
 		factory.setHibernateProperties(hibernateProperties.getProperties());
 		Properties hibernateProperties = new Properties();

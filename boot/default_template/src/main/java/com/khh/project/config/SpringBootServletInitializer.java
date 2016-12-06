@@ -2,19 +2,14 @@ package com.khh.project.config;
 
 import com.khh.Application;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.support.OpenSessionInViewFilter;
-import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
-import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ScheduledExecutorFactoryBean;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.filter.CharacterEncodingFilter;
+
 import javax.servlet.Filter;
 import java.nio.charset.Charset;
 
@@ -50,9 +45,6 @@ public class SpringBootServletInitializer extends org.springframework.boot.web.s
 		bean.setPoolSize(5);
 		return bean;
 	}
-
-
-
 
 
 }

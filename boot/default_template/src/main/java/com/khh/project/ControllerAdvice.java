@@ -1,8 +1,7 @@
 package com.khh.project;
 
-import com.khh.project.web.error.ErrorController;
+import com.khh.Application;
 import com.omnicns.java.callstack.StackTraceUtil;
-import com.omnicns.java.convert.ConvertUtil;
 import com.omnicns.web.request.RequestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,41 +14,41 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@org.springframework.web.bind.annotation.ControllerAdvice("com.khh.project")
+
+@org.springframework.web.bind.annotation.ControllerAdvice(Application.BASE_PACKAGES)
 @Slf4j
 public class ControllerAdvice {
 
 
-//	@ExceptionHandler(EntityNotFoundException.class)
-//	@ResponseStatus(HttpStatus.NOT_FOUND)
-//	@ResponseBody
-//	ModelAndView handleException(HttpServletRequest request, HttpServletResponse response, EntityNotFoundException exception){
-//		log.debug("Entity Not Found Exception {}",exception.getMessage());
-//		log.trace(exception.getMessage(),exception);
-//		ModelAndView mav = new ModelAndView();
-//		response.setHeader("x-status", "Exception");
-//		mav.addObject("throwable", exception);
-//		mav.setViewName("error/default");
-//		return mav;
-//	}
-//
-//
-//	@ExceptionHandler({UsernameNotFoundException.class})
-//	@ResponseStatus(HttpStatus.UNAUTHORIZED)
-//	@ResponseBody
-//	ModelAndView handleException(HttpServletRequest request, HttpServletResponse response, UsernameNotFoundException exception){
-//		log.debug("Username not found {}",exception.getLocalizedMessage());
-//		log.trace(exception.getMessage(),exception);
-//		ModelAndView mav = new ModelAndView();
-//		response.setHeader("x-status", "Exception");
-//		mav.addObject("throwable", exception);
-//		mav.setViewName("error/default");
-//		return mav;
-//	}
+	@ExceptionHandler(EntityNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseBody
+	ModelAndView handleException(HttpServletRequest request, HttpServletResponse response, EntityNotFoundException exception){
+		log(request,response,exception);
+		//log.trace(exception.getMessage(),exception);
+		ModelAndView mav = new ModelAndView();
+		response.setHeader("x-status", "Exception");
+		mav.addObject("throwable", exception);
+		mav.setViewName("error/default");
+		return mav;
+	}
+
+
+	@ExceptionHandler({UsernameNotFoundException.class})
+	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	@ResponseBody
+	ModelAndView handleException(HttpServletRequest request, HttpServletResponse response, UsernameNotFoundException exception){
+		log(request,response,exception);
+		//log.trace(exception.getMessage(),exception);
+		ModelAndView mav = new ModelAndView();
+		response.setHeader("x-status", "Exception");
+		mav.addObject("throwable", exception);
+		mav.setViewName("error/default");
+		return mav;
+	}
 
 
 
@@ -58,7 +57,7 @@ public class ControllerAdvice {
 	@ResponseBody
 	ModelAndView handleException(HttpServletRequest request, HttpServletResponse response, Throwable exception){
 		log(request,response,exception);
-		log.trace(exception.getMessage(),exception);
+		//log.trace(exception.getMessage(),exception);
 		ModelAndView mav = new ModelAndView();
 		response.setHeader("x-status", "Exception");
 		mav.addObject("throwable", exception);
