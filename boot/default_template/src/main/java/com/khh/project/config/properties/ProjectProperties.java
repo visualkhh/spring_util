@@ -12,5 +12,12 @@ import java.util.Map;
 @Data
 public class ProjectProperties {
 	private Map<String, String> properties = new HashMap<String, String>();
+
+	private LocaleChange localeChange;
+
+	@Data
+	public static class LocaleChange{
+		String paramName;
+	}
 }
 

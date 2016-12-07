@@ -20,6 +20,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.RememberMeServices;
@@ -244,7 +246,11 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
 	}
 
 
-//
+   // https://github.com/sbcoba/spring-boot-oauth2-sample/blob/master/src/main/java/com/example/DemoApplication.java
+//	@Bean
+//	public TokenStore JdbcTokenStore(DataSource dataSource) {
+//		return new JdbcTokenStore(dataSource);
+//	}
 
 	//REMEMBER ME를 위한.
 //    @Bean

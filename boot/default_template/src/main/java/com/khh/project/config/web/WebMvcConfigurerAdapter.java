@@ -1,5 +1,6 @@
 package com.khh.project.config.web;
 
+import com.khh.project.config.properties.ProjectProperties;
 import com.khh.project.web.error.ErrorController;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
@@ -45,6 +46,8 @@ public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.con
 	@Value("${spring.messages.cache-seconds}")
 	int messagesCacheSeconds;
 
+	@Autowired
+	ProjectProperties projectProperties;
 
 	@Autowired
 	SessionFactory sessionFactory = null;
@@ -101,7 +104,7 @@ public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.con
 	@Bean
 	public LocaleChangeInterceptor localeChangeInterceptor() {
 		LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
-		lci.setParamName("lang");
+		lci.setParamName(projectProperties.getLocaleChange().getParamName());
 		return lci;
 	}
 
@@ -166,11 +169,11 @@ public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.con
     public EmbeddedServletContainerCustomizer containerCustomizer() {
         return container -> {
             container.addErrorPages(
-					new ErrorPage(HttpStatus.UNAUTHORIZED, 			ErrorController.ERROR_401),
-					new ErrorPage(HttpStatus.FORBIDDEN, 			ErrorController.ERROR_403),
-					new ErrorPage(HttpStatus.NOT_FOUND,				ErrorController.ERROR_404),
-					new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, ErrorController.ERROR_500),
-					new ErrorPage(Throwable.class, 					ErrorController.ERROR_DEFAULT)
+					new ErrorPage(HttpStatus.UNAUTHORIZED, 			ErrorController.PATH_ROOT + ErrorController.ERROR_401),
+					new ErrorPage(HttpStatus.FORBIDDEN, 			ErrorController.PATH_ROOT + ErrorController.ERROR_403),
+					new ErrorPage(HttpStatus.NOT_FOUND,				ErrorController.PATH_ROOT + ErrorController.ERROR_404),
+					new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, ErrorController.PATH_ROOT + ErrorController.ERROR_500),
+					new ErrorPage(Throwable.class, 					ErrorController.PATH_ROOT + ErrorController.ERROR_DEFAULT)
 			);
         };
     }

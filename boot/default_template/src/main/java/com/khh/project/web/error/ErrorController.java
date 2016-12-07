@@ -8,14 +8,15 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
 @Slf4j
+@RequestMapping(ErrorController.PATH_ROOT)
 public class ErrorController implements org.springframework.boot.autoconfigure.web.ErrorController {
 
-	public static final String ERROR_PATH		= "/error";
-	public static final String ERROR_DEFAULT	= ERROR_PATH + "/default";
-	public static final String ERROR_401		= ERROR_PATH + "/401";
-	public static final String ERROR_403		= ERROR_PATH + "/403";
-	public static final String ERROR_404		= ERROR_PATH + "/404";
-	public static final String ERROR_500		= ERROR_PATH + "/500";
+	public static final String PATH_ROOT 		= "/error";
+	public static final String ERROR_DEFAULT	= "/default";
+	public static final String ERROR_401		= "/401";
+	public static final String ERROR_403		= "/403";
+	public static final String ERROR_404		= "/404";
+	public static final String ERROR_500		= "/500";
 
 
 
@@ -46,6 +47,6 @@ public class ErrorController implements org.springframework.boot.autoconfigure.w
 
 	@Override
 	public String getErrorPath() {
-		return ERROR_DEFAULT;
+		return "error/default";
 	}
 }

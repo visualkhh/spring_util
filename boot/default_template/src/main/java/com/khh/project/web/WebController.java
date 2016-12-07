@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping(WebController.PATH_ROOT)
 @Slf4j
 public class WebController {
-    public static final String 	PATH_ROOT = "/";
+    public static final String PATH_ROOT = "/";
 
 	@Autowired
 	private ProjectProperties projectProperty;
@@ -23,7 +23,7 @@ public class WebController {
     BoardRepository boardRepository;
 
 
-	@RequestMapping({"",PATH_ROOT})
+	@RequestMapping({"", PATH_ROOT})
 	public String index(HttpServletRequest request, HttpServletResponse response, Model model) {
 		log.debug(projectProperty.toString());
         return "index";

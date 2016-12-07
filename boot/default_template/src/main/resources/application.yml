@@ -94,6 +94,10 @@ security:
     name: user # Default admin name.
     password: user # Password for the default admin name. A random password is logged on startup by default.
     role: USER # Granted roles for the default admin name.
+  oauth2:
+    client:
+      client-id: user
+      client-secret: user
 #  view:
 #      prefix:
 #      suffix: :.vm
@@ -122,6 +126,8 @@ hibernate:
     hibernate.current_session_context_class: thread
 
 project:
+  locale-change:
+    param-name: lang
   properties:
     hello: hello22
 

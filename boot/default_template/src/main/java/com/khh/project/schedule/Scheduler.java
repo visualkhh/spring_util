@@ -22,8 +22,8 @@ public class Scheduler {
 		// 실행될 로직
 	}
 
-	@Scheduled(cron = "0/10 * * * * ?")
-	public void anotherJob2() {
-		log.debug(new Date().toString());
-	}
+//	@Scheduled(cron = "0/10 * * * * ?")
+//	public void anotherJob2() {
+//		log.debug(new Date().toString());
+//	}
 }
