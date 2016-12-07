@@ -50,7 +50,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-integration:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-security:${springBootVersion}")
 //    compile("org.springframework.boot:spring-boot-starter-data-rest:${springBootVersion}")
-//    compile("org.springframework.security.oauth:spring-security-oauth2")
+    compile("org.springframework.security.oauth:spring-security-oauth2")
     //devtools
     compile("org.springframework.boot:spring-boot-devtools")
     //config를위하여

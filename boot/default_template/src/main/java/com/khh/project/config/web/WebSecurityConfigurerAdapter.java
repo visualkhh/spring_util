@@ -20,8 +20,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
+//import org.springframework.security.oauth2.provider.token.TokenStore;
+//import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.RememberMeServices;
@@ -56,7 +56,7 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
 
     public static final String LOGIN_PAGE               	= SECURITY_PATH+"/login";
     public static final String LOGIN_PROCESSING_URL     	= SECURITY_PATH+"/sign_in";
-    public static final String FAILURE_URL              	= SECURITY_PATH+"/fail";
+    public static final String FAILURE_URL              	= LOGIN_PAGE;
     public static final String USERNAME_PARAMETER       	= "username";
     public static final String PASSWORD_PARAMETER       	= "password";
     public static final String DEFAULT_SUCCESS_URL      	= ROOT_PATH;
@@ -82,7 +82,7 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
         if(h2ConsoleEnabled) {
             web.ignoring().antMatchers(h2ConsolePath+"/**");
         }
-		web.ignoring().antMatchers("/resource/**","/static/**","/img/**","/image/**");
+		web.ignoring().antMatchers("/resource/**","/static/**","/img/**","/image/**");//,"/oauth/**");
     }
 
 
@@ -117,7 +117,7 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
                 .usernameParameter(USERNAME_PARAMETER)
                 .passwordParameter(PASSWORD_PARAMETER)
                 .defaultSuccessUrl(DEFAULT_SUCCESS_URL)       //성공시 이동될 페이지
-                .failureHandler(authenticationFailureHandler())
+                //.failureHandler(authenticationFailureHandler())
                 .successHandler(authenticationSuccessHandler())
                 .permitAll()
                 .and()
@@ -140,14 +140,18 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
     }
 
 
-
 ///////////////////////////AuthenticationProvider/////////////////////////////////////////////////
 /**/     //AuthenticationProvider Interface는 자동으로 클래스패스에 있는거 찾아서 쓴다
 /**/ //
 /**/ //	//DaoAuthenticationProvider daoAuthenticationProvider()  대신  이거 아래 처럼 등록을해도된다
+/**/ //@Override
+/**/ //protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+/**/ //	auth.authenticationProvider(authenticationProvider());
+/**/ //}
+/**/ //	//메모리로 사용하고싶을때
 /**/ //	@Override
 /**/ //	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-/**/ //		auth.authenticationProvider(authenticationProvider());
+/**/ //		auth.inMemoryAuthentication().withUser("min").password("min").roles("USER");
 /**/ //	}
 /**/ //    @Bean //스프링에서 제공하는 기본적인 아이디 idpassword관련 처리
 /**/ //    public DaoAuthenticationProvider daoAuthenticationProvider() {
@@ -251,6 +255,20 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
 //	public TokenStore JdbcTokenStore(DataSource dataSource) {
 //		return new JdbcTokenStore(dataSource);
 //	}
+//   @Override
+//   protected void configure(AuthenticationManagerBuilder authManagerBuilder) throws Exception {
+//	   authManagerBuilder
+//			   .inMemoryAuthentication()
+//			   .withUser("user1").password("password1").roles("USER").and()
+//			   .withUser("admin1").password("password1").roles("ADMIN");
+//   }
+//
+//	@Bean
+//	@Override
+//	public AuthenticationManager authenticationManager() throws Exception {
+//		return super.authenticationManager();
+//	}
+
 
 	//REMEMBER ME를 위한.
 //    @Bean
