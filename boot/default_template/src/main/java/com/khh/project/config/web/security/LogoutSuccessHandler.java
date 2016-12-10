@@ -1,5 +1,6 @@
 package com.khh.project.config.web.security;
 
+import com.khh.project.config.web.WebSecurityConfigurerAdapter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 
@@ -12,7 +13,8 @@ import java.io.IOException;
 public class LogoutSuccessHandler implements org.springframework.security.web.authentication.logout.LogoutSuccessHandler {
 	@Override
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-		log.debug(request+"     "+response+ "   "+authentication);
+		log.debug("onLogoutSuccess:"+request+"     "+response+ "   "+authentication);
+
 		if (authentication != null && authentication.getDetails() != null) {
 			try {
 				request.getSession().invalidate();
@@ -26,7 +28,7 @@ public class LogoutSuccessHandler implements org.springframework.security.web.au
 
 		response.setStatus(HttpServletResponse.SC_OK);
 		//redirect to login
-		response.sendRedirect("/");
+		response.sendRedirect(WebSecurityConfigurerAdapter.ROOT_PATH);
 		//super.onLogoutSuccess(request,response,authentication);
 	}
 }

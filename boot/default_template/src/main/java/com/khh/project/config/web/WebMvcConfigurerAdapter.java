@@ -13,6 +13,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.LocaleResolver;
@@ -63,8 +67,30 @@ public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.con
 		registry.addInterceptor(csrfTokenAddingInterceptor()).addPathPatterns("/**");       //.includePathPatterns("/**") .excludePathPatterns("/**/*.ecxld");
 		registry.addInterceptor(localeChangeInterceptor()).addPathPatterns("/**");
 		registry.addInterceptor(sessionFactoryTransctionInterceptor()).addPathPatterns("/**");
+		//resource 서버 할때 세션쪽에 로그인된정보 Auhentication 안들어가는거때문에 인텁셉터 걸었다 하지만 그냥 웹이랑 ResourceServer랑 같이 둘수가 없다
+//		registry.addInterceptor(securityContentHolderInterceptor()).addPathPatterns("/**");
 	}
 
+//	@Bean
+//	public HandlerInterceptor securityContentHolderInterceptor() {
+//		return new HandlerInterceptorAdapter() {
+//			@Override
+//			public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+//				Object auth = request.getSession().getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY+"_AUTHENTICATION");
+//				if(null!=auth && null!=SecurityContextHolder.getContext()) {
+//					SecurityContextHolder.getContext().setAuthentication((Authentication)auth);
+//				}
+//				return true;
+//			}
+//			@Override
+//			public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+//				Object auth = request.getSession().getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY+"_AUTHENTICATION");
+//				if(null!=auth && null!=SecurityContextHolder.getContext()) {
+//					SecurityContextHolder.getContext().setAuthentication((Authentication)auth);
+//				}
+//			}
+//		};
+//	}
 	@Bean
 	public HandlerInterceptor sessionFactoryTransctionInterceptor() {
 		return new HandlerInterceptorAdapter() {
@@ -169,11 +195,11 @@ public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.con
     public EmbeddedServletContainerCustomizer containerCustomizer() {
         return container -> {
             container.addErrorPages(
-					new ErrorPage(HttpStatus.UNAUTHORIZED, 			ErrorController.PATH_ROOT + ErrorController.ERROR_401),
-					new ErrorPage(HttpStatus.FORBIDDEN, 			ErrorController.PATH_ROOT + ErrorController.ERROR_403),
-					new ErrorPage(HttpStatus.NOT_FOUND,				ErrorController.PATH_ROOT + ErrorController.ERROR_404),
-					new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, ErrorController.PATH_ROOT + ErrorController.ERROR_500),
-					new ErrorPage(Throwable.class, 					ErrorController.PATH_ROOT + ErrorController.ERROR_DEFAULT)
+					new ErrorPage(HttpStatus.UNAUTHORIZED, 			ErrorController.PATH_ROOT + ErrorController.PATH_ERROR_401),
+					new ErrorPage(HttpStatus.FORBIDDEN, 			ErrorController.PATH_ROOT + ErrorController.PATH_ERROR_403),
+					new ErrorPage(HttpStatus.NOT_FOUND,				ErrorController.PATH_ROOT + ErrorController.PATH_ERROR_404),
+					new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, ErrorController.PATH_ROOT + ErrorController.PATH_ERROR_500),
+					new ErrorPage(Throwable.class, 					ErrorController.PATH_ROOT + ErrorController.PATH_ERROR_DEFAULT)
 			);
         };
     }
@@ -184,6 +210,7 @@ public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.con
 //        return DataSourceBuilder.create().build();
 //    }
 
+	//리소스 패스 설정
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resource/**")	.addResourceLocations("/resource/");

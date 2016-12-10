@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
@@ -22,6 +24,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 //import org.springframework.security.oauth2.provider.token.TokenStore;
 //import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.RememberMeServices;
@@ -42,6 +45,8 @@ import static org.hibernate.criterion.Restrictions.and;
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @EnableWebSecurity
+//@Order(Ordered.HIGHEST_PRECEDENCE)
+//@Order(2)
 public class WebSecurityConfigurerAdapter extends org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter {
 
     @Value("${spring.h2.console.enabled}")
@@ -54,16 +59,16 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
     public static final String ANON_PATH                	= "/anon";
     public static final String AUTH_PATH                	= "/auth";
 
-    public static final String LOGIN_PAGE               	= SECURITY_PATH+"/login";
-    public static final String LOGIN_PROCESSING_URL     	= SECURITY_PATH+"/sign_in";
+    public static final String LOGIN_PAGE               	= SECURITY_PATH + "/login";
+    public static final String LOGIN_PROCESSING_URL     	= SECURITY_PATH + "/sign_in";
     public static final String FAILURE_URL              	= LOGIN_PAGE;
     public static final String USERNAME_PARAMETER       	= "username";
     public static final String PASSWORD_PARAMETER       	= "password";
     public static final String DEFAULT_SUCCESS_URL      	= ROOT_PATH;
     public static final String LOGOUT_SUCCESS_URL       	= ROOT_PATH;
-    public static final String SESSION_EXPIRED_URL      	= LOGIN_PAGE+"?expred";
-    public static final String SESSION_INVALIDSESSION_URL	= LOGIN_PAGE+"?invalid";
-    public static final String LOGOUT_URL               	= SECURITY_PATH+"/sign_out";
+    public static final String SESSION_EXPIRED_URL      	= LOGIN_PAGE + "?expred";
+    public static final String SESSION_INVALIDSESSION_URL	= LOGIN_PAGE + "?invalid";
+    public static final String LOGOUT_URL               	= SECURITY_PATH + "/sign_out";
     public static final String REMEMBER_ME_KEY          	= "REMEBMER_ME_KEY";
     public static final String REMEMBER_ME_COOKE_NAME   	= "REMEMBER_ME_COOKE";
 
@@ -82,8 +87,9 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
         if(h2ConsoleEnabled) {
             web.ignoring().antMatchers(h2ConsolePath+"/**");
         }
-		web.ignoring().antMatchers("/resource/**","/static/**","/img/**","/image/**");//,"/oauth/**");
-    }
+		web.ignoring().antMatchers("/resource/**", "/static/**", "/img/**", "/image/**");
+//		web.ignoring().antMatchers("/resource/**", "/static/**", "/img/**", "/image/**", "/oauth/**");
+	}
 
 
     @Override
@@ -92,14 +98,13 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
         http
             .anonymous()
                 .and()
+			//커스텀 시큐리티 인텁셉터 하려면 아래를 사용하면된다
 //			.addFilterBefore(filterSecurityInterceptor(), UsernamePasswordAuthenticationFilter.class)
-//			.addFilterBefore(filterSecurityInterceptor(), AnonymousAuthenticationFilter.class)
             .authorizeRequests()
                 .antMatchers("/", ANON_PATH +"/**")		.permitAll()
-                .antMatchers(AUTH_PATH +"/**")			.hasRole("AUTH")
                 .antMatchers("/admin/**")				.hasRole("ADMIN")
                 .antMatchers("/board/**")				.hasRole("USER")
-                //.antMatchers("/board/**").hasAnyAuthority()
+//                .antMatchers(AUTH_PATH +"/**")			.authenticated()
                 .anyRequest().authenticated()
                 .and()
 			.sessionManagement()							//http://niees.tistory.com/17
@@ -212,7 +217,11 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
 
 
 
-
+	@Override
+	@Bean
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {

@@ -9,7 +9,7 @@ layout 'layout.tpl', title: 'login',
         form(action:"${WebSecurityConfigurerAdapter.LOGIN_PROCESSING_URL}", method:'POST'){
             input(type:'text', name:'username', value:'')
             input(type:'password', name:'password', value:'')
-            input(type:'hidden', name:"${_csrf.parameterName}", value:"${_csrf.token}")
+            input(type:'hidden', name:"${_csrf?.parameterName}", value:"${_csrf?.token}")
             input(type:'submit', value:'submit')
         }
     }

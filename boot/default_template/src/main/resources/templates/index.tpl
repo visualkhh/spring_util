@@ -2,6 +2,7 @@ package templates.board
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository
 
 //http://www.w3ii.com/ko/groovy/groovy_template_engines.html
 layout 'layout.tpl', title: "page : ${springMacroRequestContext.getMessage('msg.main')}",
@@ -20,6 +21,10 @@ layout 'layout.tpl', title: "page : ${springMacroRequestContext.getMessage('msg.
             div{
                 yield SecurityContextHolder.context?.authentication
             }
+//            div(style:"margin:50px"){
+////                yield request.getSession().getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
+//                //yield springMacroRequestContext.request.getSession().getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY+"_AUTHENTICATION");
+//            }
 //            div(style:"margin:50px") {
 //                SecurityContextHolder.context?.authentication?.authorities?.each {sit->
 //                    div {

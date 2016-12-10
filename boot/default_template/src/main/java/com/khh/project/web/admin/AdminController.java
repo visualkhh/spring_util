@@ -19,12 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping(AdminController.PATH_ROOT)
 @Transactional
 @javax.transaction.Transactional(rollbackOn = { Exception.class })
 @Slf4j
 public class AdminController {
 
+    public static final String PATH_ROOT = "/admin";
 
     @Autowired
     public SessionFactory sessionFactory;

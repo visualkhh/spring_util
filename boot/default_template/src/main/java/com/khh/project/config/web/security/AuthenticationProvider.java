@@ -15,6 +15,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
+
 @Slf4j
 public class AuthenticationProvider implements org.springframework.security.authentication.AuthenticationProvider {
 
@@ -29,13 +31,13 @@ public class AuthenticationProvider implements org.springframework.security.auth
 //	@Transactional //http://jdm.kr/blog/141
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
-
-		WebAuthenticationDetails detail = (WebAuthenticationDetails) authentication.getDetails();
-		String remoteIP = detail.getRemoteAddress();
+		//detail에는 Object가 넘어온다  oauth  일경우에는 맵이 들어온다
+//		WebAuthenticationDetails detail = (WebAuthenticationDetails) authentication.getDetails();
+//		String remoteIP = detail.getRemoteAddress();
 		String username = (String)authentication.getPrincipal();
 		String password = (String)authentication.getCredentials();
 		LoginUserDetails userDetails = userDetailsService.loadUserByUsername(username);
-		log.info("Login try ip :  -> "+remoteIP+" input id("+username+") info:"+userDetails);
+		log.info("Login try ip :  ->  input id("+username+") info:"+userDetails);
 		if(null == userDetails || userDetails.isAccountNonLocked()==false || userDetails.isAccountNonExpired() == false || userDetails.isEnabled() == false || userDetails.isCredentialsNonExpired() == false) {
 			throw new UsernameNotFoundException(messageSource.getMessage("error.login.fail"));
 		}

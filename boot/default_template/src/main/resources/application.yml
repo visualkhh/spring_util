@@ -94,12 +94,14 @@ security:
     name: user # Default admin name.
     password: user # Password for the default admin name. A random password is logged on startup by default.
     role: USER # Granted roles for the default admin name.
-#  oauth2:
-#    client:
-#      client-id: user
-#      client-secret: user
-#      access-token-validity-seconds: 1800
-#      refresh-token-validity-seconds: 1800
+  oauth2:
+#    resource:
+#      user-info-uri: /api
+    client:
+      client-id: user
+      client-secret: user
+      access-token-validity-seconds: 1800
+      refresh-token-validity-seconds: 1800
 #  view:
 #      prefix:
 #      suffix: :.vm

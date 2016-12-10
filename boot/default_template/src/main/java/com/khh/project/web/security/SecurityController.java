@@ -15,11 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 @Controller
-@RequestMapping(WebSecurityConfigurerAdapter.SECURITY_PATH)
+@RequestMapping(SecurityController.PATH_ROOT)
 public class SecurityController {
 
+    public static final String PATH_ROOT = WebSecurityConfigurerAdapter.SECURITY_PATH;
 
-    @RequestMapping({"","/"})
+    @RequestMapping({"",PATH_ROOT})
     String index(HttpServletRequest request, HttpServletResponse response, Model model) {
         return "security/login";
     }

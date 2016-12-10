@@ -7,6 +7,6 @@ html {
   head {
   }
   body {
-    yield 'ERROR_401'
+    yield 'PATH_ERROR_401'
   }
 }

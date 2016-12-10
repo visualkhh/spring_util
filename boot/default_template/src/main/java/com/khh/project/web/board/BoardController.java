@@ -19,11 +19,14 @@ import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 @Controller
-@RequestMapping("/board")
+@RequestMapping(BoardController.PATH_ROOT)
 //@Repository
 //@Transactional
 //@javax.transaction.Transactional
 public class BoardController {
+
+    public static final String PATH_ROOT    =   "/board";
+
     @Autowired
     BoardRepository repository;
 
@@ -35,8 +38,7 @@ public class BoardController {
 
     @RequestMapping({"","/"})
     @ResponseBody
-    String home() {
-
+    String index() {
         return "boar main";
     }
 
@@ -45,7 +47,6 @@ public class BoardController {
     @RequestMapping("/list")
     @ResponseBody
     List<Board> list() {
-
         Session currentSession = sessionFactory.getCurrentSession();
         currentSession.beginTransaction();
         Criteria crit = currentSession.createCriteria(Board.class);
