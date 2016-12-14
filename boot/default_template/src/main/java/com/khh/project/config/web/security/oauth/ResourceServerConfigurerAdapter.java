@@ -36,7 +36,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 
-@EnableResourceServer// API 서버 인증(또는 권한 설정   일반 웹뷰 서버랑 resource서버는 같이갈수없다
 @Configuration
 @Slf4j
 @Order(-3)

@@ -51,7 +51,10 @@ public class WebAOP {
 	@Around("execution(* com.khh.project.web..*Controller.*(..))")
 	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
 		log.debug(joinPoint.toString());
-		return joinPoint.proceed();
+		log.debug("around before");
+		Object a = joinPoint.proceed();
+		log.debug("around after");
+		return a;
 	};
 
 }

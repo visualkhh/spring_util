@@ -19,7 +19,6 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 //http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-security.html
 
-@EnableAuthorizationServer // OAuth2 권한 서버
 @Configuration
 @Order(1)
 public class AuthorizationServerConfigurerAdapter extends org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter {
