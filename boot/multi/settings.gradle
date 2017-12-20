@@ -1,0 +1,33 @@
+rootProject.name = 'multi-spring'
+
+String [] modules = ['api-core','api-cms']
+include modules
+
+// root directory에 하위 modules에 설정된 값들 디렉토리 만들기
+
+modules.each {
+ def projectDir = new File(rootDir, it)
+
+ //sub directory create
+ if (!projectDir.exists()) {
+     projectDir.mkdirs()
+ }
+
+}
+////////lib
+def modulesMap = [:]
+//modulesMap['basic-java']    = "${System.getenv().OMNICNS_LIB}/basic_java/common";
+//modulesMap['basic_jsp']     = "${System.getenv().OMNICNS_LIB}/basic_jsp/common";
+//modulesMap['basic_spring']  = "${System.getenv().OMNICNS_LIB}/basic_spring/common";
+//modulesMap['basic_springboot']  = "${System.getenv().OMNICNS_LIB}/basic_springboot";
+modulesMap.each{ key, value->
+    println (rootProject.name+'  '+key+"-------"+value)
+    include key
+//    def projectDir = new File(rootDir, key)
+//    if( !projectDir.exists() ) {
+//        projectDir.mkdirs()
+//    }
+    if (value?.trim()) {
+        project(":${key}").projectDir = new File(value)
+    }
+}

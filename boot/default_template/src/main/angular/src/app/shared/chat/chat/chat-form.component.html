@@ -1,0 +1,16 @@
+<div class="chat-footer">
+  <div class="textarea-div">
+    <div class="typearea">
+      <textarea placeholder="Write a reply..." id="textarea-expand" (keyup.enter)="sendMessageEnter()"
+                class="custom-scroll" [(ngModel)]="message"></textarea>
+    </div>
+  </div>
+
+  <span class="textarea-controls">
+      <button class="btn btn-sm btn-primary pull-right"
+              (click)="sendMessage()">Reply</button>
+    <span class="pull-right smart-form" style="margin-top: 3px; margin-right: 10px;"> <label
+    class="checkbox pull-right">
+      <input type="checkbox" [(ngModel)]="enterToSend" name="subscription" id="subscription"><i></i>Press <strong> ENTER </strong> to send </label> </span> <a
+    (click)="(null)" class="pull-left"><i class="fa fa-camera fa-fw fa-lg"></i></a> </span>
+</div>

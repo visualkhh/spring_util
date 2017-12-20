@@ -1,0 +1,327 @@
+apply plugin: 'base'
+group 'com.visualkhh'
+
+buildscript {
+	ext {
+		springBootVersion = '1.5.9.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+		maven {
+			url "http://112.217.122.30:8081/nexus/content/repositories/releases/"
+		}
+		maven {
+			url 'https://plugins.gradle.org/m2/'
+		}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'nu.studer:gradle-jooq-plugin:2.0.9'
+	}
+}
+
+
+//전체 프로젝트 적용
+allprojects {
+
+	apply plugin: 'java'
+	apply plugin: 'idea'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+	version = "0.0.1"
+
+	targetCompatibility = 1.8
+	sourceCompatibility = 1.8
+	//인코딩 모두 적용
+	def defaultEncoding = 'UTF-8'
+	//AbstractCompile 모든 JVM을 통한 컴파일일 경우
+	//하위로는 GroovyCompile   JavaCompile   AbstractScalaCompile
+	tasks.withType(AbstractCompile).each {
+		it.options.encoding = defaultEncoding
+	}
+	tasks.withType(Javadoc) { Javadoc javadoc ->
+		javadoc.options.encoding = defaultEncoding
+		javadoc.options.addStringOption('Xdoclint:all,-missing', '-quiet')
+	}
+
+	idea {
+		module {
+			outputDir file('build/classes/main')
+			testOutputDir file('build/classes/test')
+		}
+	}
+//	if(project.convention.findPlugin(JavaPluginConvention)) {
+//		// Change the output directory for the main and test source sets back to the old path
+//		sourceSets.main.output.classesDir = new File(buildDir, "classes/main")
+//		sourceSets.test.output.classesDir = new File(buildDir, "classes/test")
+//	}
+
+
+
+	repositories {
+		mavenCentral()
+		maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
+		maven { url "http://112.217.122.30:8081/nexus/content/repositories/releases/" }
+	}
+
+	dependencies {
+		compile('org.springframework.boot:spring-boot-starter-aop')
+		compile('org.springframework.boot:spring-boot-starter-data-redis')
+//		compile("org.jooq:jooq:3.10.2")
+		compile('org.springframework.boot:spring-boot-starter-jooq')
+		compile('org.springframework.boot:spring-boot-starter-cache')
+//	compile('org.springframework.boot:spring-boot-starter-security')
+		compile('org.springframework.boot:spring-boot-starter-validation')
+		compile('org.springframework.boot:spring-boot-starter-web')
+		compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+		compile('org.springframework.boot:spring-boot-configuration-processor')
+		compile('org.springframework.session:spring-session-data-redis')
+		compile("org.springframework.boot:spring-boot-starter-data-jpa")
+//		compile("org.hibernate:hibernate-core:5.2.12.Final")
+		compile("org.hibernate:hibernate-java8")
+		compile "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.8.+"
+		compile('com.fasterxml.jackson.datatype:jackson-datatype-jdk8')
+		compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+//	compile("com.fasterxml.jackson.core:jackson-databind:2.2.3")
+//	compile("org.springframework.security.oauth:spring-security-oauth2")
+		compile('com.zaxxer:HikariCP:2.7.4')
+		compile('org.modelmapper:modelmapper:1.1.0')
+		compile('mysql:mysql-connector-java:6.0.3')
+//	compile ("io.jsonwebtoken:jjwt")
+//	runtime('com.h2database:h2')
+		compile('org.projectlombok:lombok:1.16.6')
+		compile group: 'com.omnicns', name: 'common-java', version: '0.0.21'
+		compile group: 'com.omnicns', name: 'common-jsp', version: '0.0.2'
+		compile group: 'com.omnicns', name: 'common-spring', version: '0.0.14'
+		compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+		compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+
+
+		testCompile('org.springframework.boot:spring-boot-starter-test')
+		testCompile('org.springframework.security:spring-security-test')
+//		testCompile group: 'junit', name: 'junit', version: '4.12'
+	}
+
+}
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'nu.studer.jooq'
+
+
+jooq {
+	prod(sourceSets.main) {
+		jdbc {
+			driver = 'com.mysql.cj.jdbc.Driver'
+			url = 'jdbc:mysql://123.123.123.123:3306/prod?serverTimezone=Asia/Seoul'
+			user = '****'
+			password = '****'
+		}
+		generator {
+			name = 'org.jooq.util.DefaultGenerator'
+//			strategy {
+//				name = 'org.jooq.util.DefaultGeneratorStrategy'
+//				// ...
+//			}
+
+			strategy {
+				name = null
+				matchers {
+					tables {
+						table {
+							expression = '^T_(.*?)$'
+							tableIdentifier {
+								transform = 'UPPER'
+								expression = '$1'
+							}
+							tableClass {
+								transform = 'PASCAL'
+								expression = 'J_$1'
+							}
+						}
+					}
+				}
+			}
+			database {
+				name = 'org.jooq.util.mysql.MySQLDatabase'
+				inputSchema = 'prod'
+//				customTypes {
+//					customType{
+//						name = 'ZonedDateTime'
+//						converter = 'com.omnicns.omnifit2.common.config.converter.ZonedDateTimeConverter'
+//						type = 'java.time.ZonedDateTime'
+//					}
+//				}
+				forcedTypes {
+					forcedType {
+						userType = 'java.time.ZonedDateTime'
+						converter = 'com.omnicns.omnifit2.common.config.converter.ZonedDateTimeConverter'
+						expression = '(.*?)Dt$'
+					}
+				}
+//				forcedTypes {
+//					forcedType {
+//						name = 'ZonedDateTime'
+//						expression = '.*\\Dt'
+//					}
+//				}
+			}
+			generate {
+				relations = true
+				deprecated = false
+				records = true
+				immutablePojos = false
+				fluentSetters = true
+				pojos = false
+				pojosEqualsAndHashCode = false
+				jpaAnnotations = true
+				springAnnotations = false
+				validationAnnotations = false
+				routines = false
+//				javaTimeTypes = true
+			}
+			target {
+				packageName = 'com.visualkhh.jooq'
+				directory = 'jooq/src/main/java'
+			}
+		}
+	}
+
+
+	dev(sourceSets.main) {
+		jdbc {
+			driver = 'com.mysql.cj.jdbc.Driver'
+			url = 'jdbc:mysql://123.123.123.123:3306/dev?serverTimezone=Asia/Seoul'
+			user = '****'
+			password = '****'
+		}
+		generator {
+			name = 'org.jooq.util.DefaultGenerator'
+			strategy {
+				name = null
+				matchers {
+					tables {
+						table {
+							expression = '^T_(.*?)$'
+							tableIdentifier {
+								transform = 'UPPER'
+								expression = '$1'
+							}
+							tableClass {
+								transform = 'PASCAL'
+								expression = 'J_$1'
+							}
+						}
+					}
+				}
+			}
+			database {
+				name = 'org.jooq.util.mysql.MySQLDatabase'
+				inputSchema = 'dev'
+				forcedTypes {
+					forcedType {
+						userType = 'java.time.ZonedDateTime'
+						converter = 'com.omnicns.omnifit2.common.config.converter.ZonedDateTimeConverter'
+						expression = '(.*?)Dt$'
+					}
+				}
+			}
+			generate {
+				relations = true
+				deprecated = false
+				records = true
+				immutablePojos = false
+				fluentSetters = true
+				pojos = false
+				pojosEqualsAndHashCode = false
+				jpaAnnotations = false
+				springAnnotations = false
+				validationAnnotations = false
+				routines = false
+			}
+			target {
+				packageName = 'com.visualkhh.jooq'
+				directory = 'jooq/src/main/java'
+			}
+		}
+	}
+}
+
+//서브 프로젝트 적용
+//subprojects { subprojects ->
+//}
+dependencies {
+	compile project(':common')
+	jooqRuntime ('mysql:mysql-connector-java:6.0.3')
+}
+
+clean.doFirst {
+//	delete "${rootDir}/api-library/auto-generated-classes/"
+//	println "${rootDir}/api-library/auto-generated-classes/"
+//	file('src/main/someFile.txt').delete()
+//	file('src/main/libs').deleteDir()
+	println "== ${buildDir} =="
+	delete "${buildDir}"
+}
+clean.doLast {
+	tasks.generateDevJooqSchemaSource.execute()
+}
+project(':api') {
+	group = 'com.visualkhh.api'
+	version = '0.0.1-SNAPSHOT'
+	springBoot {
+		executable = true
+	}
+	bootRepackage {
+		mainClass = 'com.visualkhh.ApiApplication'
+	}
+
+	jar {
+//	baseName = 'api'
+//	version = '0.0.1-SNAPSHOT'
+//	archiveName = "api.jar"
+		manifest {
+			attributes  'Title': 'api', 'Version': version, 'Main-Class': bootRepackage.mainClass
+		}
+		archiveName 'api.jar'
+		dependsOn configurations.runtime
+		from {
+			configurations.compile.collect {it.isDirectory()? it: zipTree(it)}
+		}
+	}
+
+	dependencies {
+		compile project(':common')
+		compile rootProject
+	}
+}
+project(':cms') {
+	group = 'com.visualkhh.api'
+	version = '0.0.1-SNAPSHOT'
+	springBoot {
+		executable = true
+	}
+	bootRepackage {
+		mainClass = 'com.visualkhh.CmsApplication'
+	}
+
+	jar {
+//	baseName = 'cms'
+//	version = '0.0.1-SNAPSHOT'
+//	archiveName = "cms.jar"
+		manifest {
+			attributes  'Title': 'cms', 'Version': version, 'Main-Class': bootRepackage.mainClass
+		}
+		archiveName 'cms.jar'
+		dependsOn configurations.runtime
+		from {
+			configurations.compile.collect {it.isDirectory()? it: zipTree(it)}
+		}
+	}
+
+	dependencies {
+		compile project(':common')
+		compile rootProject
+		compile('org.springframework.boot:spring-boot-starter-security')
+	}
+}

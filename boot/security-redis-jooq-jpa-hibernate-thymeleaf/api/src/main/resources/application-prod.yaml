@@ -1,0 +1,8 @@
+spring:
+  profiles: prod
+  jpa:
+    show-sql: false
+server:
+  port: 8080
+logging:
+  config: classpath:logback-prod.xml

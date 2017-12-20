@@ -1,0 +1,46 @@
+#https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/
+spring:
+  pid:
+    file: springboot-app.pid
+  cache.type: redis
+  redis:
+    host: 123.123.123.123
+    port: 6379
+    database: 1
+    password: ****
+  session.store-type: REDIS
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+#      naming.physical-strategy: OmnifitNamingStrategy
+    properties:
+      enable_lazy_load_no_trans: true
+      database-platform: org.hibernate.dialect.MySQLDialect
+      hibernate:
+        current_session_context_class: org.springframework.orm.hibernate4.SpringSessionContext
+#        current_session_context_class: thread
+        jdbc:
+          time_zone: UTC
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://123.123.123.123:3306/dev?serverTimezone=Asia/Seoul
+    username: ****
+    password: ****
+
+  messages:
+#    always-use-message-format: false # Set whether to always apply the MessageFormat rules, parsing even messages without arguments.
+    cache-seconds: -1 # Loaded resource bundle files cache expiration, in seconds. When set to -1, bundles are cached forever.
+    basename: classpath:/messages/message # Comma-separated list of basenames, each following the ResourceBundle convention.
+    encoding: UTF-8
+  thymeleaf:
+    cache: false
+
+##################
+project:
+  properties:
+    salt: saltsaltsalt
+    cache:
+      redis-defaultExpireTime: 0
+      redis-expireTime-billDetailData: 3600
+      redis-expireTime-billSummaryInfos: 3600

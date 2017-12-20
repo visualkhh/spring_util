@@ -1,0 +1,18 @@
+rootProject.name = 'cibs'
+def modulesMap = [:]
+/*
+modulesMap['basic_java']     = "${System.getenv().OMNICNS_LIB}/basic_java/common"
+modulesMap['basic_jsp']     = "${System.getenv().OMNICNS_LIB}/basic_jsp/common"
+modulesMap['basic_spring']     = "${System.getenv().OMNICNS_LIB}/basic_spring/common"
+*/
+modulesMap.each{ key, value->
+    include key
+
+    def projectDir = new File(rootDir, key)
+    if( !projectDir.exists() ) {
+        projectDir.mkdirs()
+    }
+    if (value?.trim()) {
+        project(":${key}").projectDir = new File(value)
+    }
+}

@@ -1,0 +1,18 @@
+rootProject.name = 'oauth2'
+
+String [] modules = ['core','resource','auth']
+include modules
+
+// root directory에 하위 modules에 설정된 값들 디렉토리 만들기
+modules.each {
+    def projectDir = new File(rootDir, it)
+
+    //sub directory create
+    if (!projectDir.exists()) {
+        projectDir.mkdirs()
+    }
+
+}
+
+
+

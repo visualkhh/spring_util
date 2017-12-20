@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+	
+	<bean id="mailSender" class ="com.omnicns.web.spring.mail.Mailer" >
+	    <property name="from" value="ff.kr" />
+	    <property name="charSet" value="UTF-8" />
+	    
+	    <property name="host" value="smtp.gmail.com" />
+	    <property name="port" value="587" />
+	    <property name="username" value="ff" />
+	    <property name="password" value="ff" />
+	    <property name="param">
+	    	<map>
+				<entry key="template_path" value="/front/template/email.html" />
+				<entry key="logo_img_path" value="http://ges/logo.png" />
+			</map>
+	    </property>
+	    <property name="javaMailProperties">
+		    <props>
+		    	<prop key="mail.smtp.starttls.enable">true</prop>
+		    </props>
+	    </property>
+	</bean>
+			
+</beans>

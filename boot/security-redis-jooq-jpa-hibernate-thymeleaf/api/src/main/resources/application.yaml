@@ -1,0 +1,49 @@
+#https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/
+#http://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html
+#http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+
+spring:
+  pid:
+    file: springboot-app.pid
+  cache.type: redis
+  redis:
+    host: 123.123.123.123
+    port: 6379
+    database: 0
+    password: ****
+  session.store-type: REDIS
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+      naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+       jdbc:
+         time_zone: UTC
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://123.123.123.123:3306/dev?serverTimezone=Asia/Seoul
+    username: ****
+    password: ****
+  messages:
+#    always-use-message-format: false # Set whether to always apply the MessageFormat rules, parsing even messages without arguments.
+    cache-seconds: -1 # Loaded resource bundle files cache expiration, in seconds. When set to -1, bundles are cached forever.
+    basename: classpath:/messages/message # Comma-separated list of basenames, each following the ResourceBundle convention.
+    encoding: UTF-8
+  jooq.sql-dialect: MYSQL
+#  jackson.serialization.write_dates_as_timestamps: false
+  jackson.serialization.WRITE_DATES_AS_TIMESTAMPS: false
+
+
+project:
+  properties:
+    header-name: x-visualkhh
+    resource:
+      domain: http://visualkhh.co.kr
+      music-file-path: /home/nfs/music
+      video-file-path: /home/nfs/video
+  cache:
+    defaultExpireTime: 60 #second
+    expireTime:
+      CodeService-getCodes: 10

@@ -1,0 +1,50 @@
+#http://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html
+#http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  h2:
+    console:
+      enabled: true # Enable the console.
+      path: /h2-console # Path at which the console will be available.
+security:
+  oauth2:
+    client:
+      client-id: rpwd
+      client-secret: pwd
+    resource:
+    #Jwt토큰 자체적으로 체크할때 키를 서버에서 받아온다
+#      jwt.key-uri: http://localhost:8081/oauth/token_key
+#서버에서 체크할때
+      token-info-uri: http://localhost:8081/oauth/check_token
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.hibernate: DEBUG
+    com.khh: DEBUG
+
+
+
+
+######## CUSTOM PROPERTIES ##########
+datasource:
+    article:
+        url: jdbc:h2:mem:article
+        username: sa
+    user:
+        url: jdbc:h2:mem:user
+        username: sa
+
+
+hibernate:
+  mapping-locations: classpath:hibernate/*.hbm.xml
+#  packages-to-scan: com.khh.project
+#  annotated-packages: com.khh.project
+  properties:
+#    hibernate.connection.url
+    hibernate.dialect: org.hibernate.dialect.H2Dialect
+    hibernate.show_sql: true
+    hibernate.hbm2ddl.auto: update
+    hibernate.current_session_context_class: thread

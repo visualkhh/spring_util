@@ -1,0 +1,25 @@
+<dt *ngIf="user.visible">
+  <popover-content #myPopover
+                   title="Popover title"
+                   placement="right"
+                   [animation]="true"
+
+                   [closeOnClickOutside]="true">
+
+    <div class="usr-card" style="min-width: 200px;">
+      <img [src]="user.picture" [alt]="user.username"/>
+      <div class="usr-card-content">
+        <h3>{{user.username}}</h3>
+        <p [innerHTML]="user.role" ></p>
+      </div>
+    </div>
+  </popover-content>
+  <a href="#" class="usr" (click)="openChatBox($event)"
+     [attr.data-chat-id]="state.chatId"
+     [attr.data-chat-status]="user.status"
+     [popover]="myPopover"
+     [popoverOnHover]="true"
+  >
+    <i></i>{{user.username}}
+  </a>
+</dt>

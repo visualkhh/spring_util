@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds">
+	<!--<include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%-5level|%thread|%logger{36}|%method[%line]|%msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!--<prudent>true</prudent>-->
+		<file>log/cms.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>log/cms.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<!--<filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+		<!--<level>INFO</level>-->
+		<!--</filter>-->
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%-5level|%thread|%logger{36}|%method[%line]|%msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!--<prudent>true</prudent>-->
+		<file>log/cms_error.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>log/cms_error.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+		</filter>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%-5level|%thread|%logger{36}|%method[%line]|%msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="OMNIFIT_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!--<prudent>true</prudent>-->
+		<file>log/cms_omnicns.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>log/cms_omnicns.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<!--<filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+		<!--<level>INFO</level>-->
+		<!--</filter>-->
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%-5level|%thread|%logger{36}|%method[%line]|%msg%n</pattern>
+		</encoder>
+	</appender>
+
+
+	<root level="INFO">
+		<appender-ref ref="FILE" />
+		<appender-ref ref="ERROR_FILE" />
+	</root>
+	<logger name="com.omnicns" level="INFO">
+		<appender-ref ref="OMNIFIT_FILE" />
+	</logger>
+</configuration>
+

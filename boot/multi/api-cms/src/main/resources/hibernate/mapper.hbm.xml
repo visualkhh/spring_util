@@ -1,0 +1,339 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- http://www.mkyong.com/hibernate/hibernate-one-to-many-relationship-example/ 
+	맵핑 -->
+
+<hibernate-mapping>
+<!-- <hibernate-mapping package="com.omnicns.omnifit.vo"> -->
+<!-- 	<class name="com.mkyong.stock.Stock" table="stock" catalog="mkyongdb"> -->
+<!-- 		<id name="stockId" type="java.lang.Integer"> -->
+<!-- 			<column name="STOCK_ID" /> -->
+<!-- 			<generator class="identity" /> -->
+<!-- 		</id> -->
+<!-- 		<property name="stockCode" type="string"> -->
+<!-- 			<column name="STOCK_CODE" length="10" not-null="true" unique="true" /> -->
+<!-- 		</property> -->
+<!-- 		<property name="stockName" type="string"> -->
+<!-- 			<column name="STOCK_NAME" length="20" not-null="true" unique="true" /> -->
+<!-- 		</property> -->
+<!-- 		<set name="stockDailyRecords" table="stock_daily_record" inverse="true" -->
+<!-- 			lazy="true" fetch="select"> -->
+<!-- 			<key> -->
+<!-- 				<column name="STOCK_ID" not-null="true" /> -->
+<!-- 			</key> -->
+<!-- 			<one-to-many class="com.mkyong.stock.StockDailyRecord" /> -->
+<!-- 		</set> -->
+<!-- 	</class> -->
+<!-- 	<class name="com.mkyong.stock.StockDailyRecord" table="stock_daily_record" -->
+<!-- 		catalog="mkyongdb"> -->
+<!-- 		<id name="recordId" type="java.lang.Integer"> -->
+<!-- 			<column name="RECORD_ID" /> -->
+<!-- 			<generator class="identity" /> -->
+<!-- 		</id> -->
+<!-- 		<many-to-one name="stock" class="com.mkyong.stock.Stock" -->
+<!-- 			fetch="select"> -->
+<!-- 			<column name="STOCK_ID" not-null="true" /> -->
+<!-- 		</many-to-one> -->
+<!-- 		<property name="priceOpen" type="java.lang.Float"> -->
+<!-- 			<column name="PRICE_OPEN" precision="6" /> -->
+<!-- 		</property> -->
+<!-- 		<property name="priceClose" type="java.lang.Float"> -->
+<!-- 			<column name="PRICE_CLOSE" precision="6" /> -->
+<!-- 		</property> -->
+<!-- 		<property name="priceChange" type="java.lang.Float"> -->
+<!-- 			<column name="PRICE_CHANGE" precision="6" /> -->
+<!-- 		</property> -->
+<!-- 		<property name="volume" type="java.lang.Long"> -->
+<!-- 			<column name="VOLUME" /> -->
+<!-- 		</property> -->
+<!-- 		<property name="date" type="date"> -->
+<!-- 			<column name="DATE" length="10" not-null="true" unique="true" /> -->
+<!-- 		</property> -->
+<!-- 	</class> -->
+
+	<!--
+		https://docs.jboss.org/hibernate/orm/3.3/reference/en/html/querysql.html  이름으로 query맵핑
+		http://docs.jboss.org/hibernate/core/3.6/reference/en-US/html_single/#persistent-classes-dynamicmodels
+		http://www.mkyong.com/hibernate/hibernate-named-query-examples/
+		http://www.journaldev.com/3451/hibernate-named-query-example-tutorial-namedquery-annotation-join-hql-native-sql
+		https://docs.jboss.org/hibernate/stable/core.old/reference/en/html/querysql-namedqueries.html
+	-->
+	<!--<sql-query name="getBoardById">-->
+	  	<!--<return alias="b" class="com.omnicns.omnifit.vo.BoardUserIDVO"/>-->
+	  	<!--&lt;!&ndash;  <return-property name="age" column="myAge"/>... &ndash;&gt;-->
+        <!--<![CDATA[-->
+           <!--SELECT -->
+           	<!--USER_ID AS {b.user_id},  -->
+           	<!--USER_PWD AS {b.user_pwd},  -->
+           	<!--USER_NM AS {b.user_nm},  -->
+           	<!--ROLE AS {b.role},  -->
+           	<!--SEQ AS {b.seq}, -->
+           	<!--CONTENT AS {b.content},  -->
+           	<!--PWD AS {b.pwd},  -->
+           	<!--REGDT  AS {b.regdt} -->
+           <!--FROM T_USER A, T_BOARD B -->
+   			<!--WHERE (ISNULL(:like, '1') = '1' or A.USER_ID LIKE :like)  &#45;&#45; Dynamic query...-->
+   			<!--AND A.USER_ID = B.USER_ID -->
+           <!--]]> -->
+	<!--</sql-query>-->
+	<sql-query name="getBoard">
+<!-- 		<return alias="assets" class="com.omnicns.omnifit.vo.BoardNormalVO" /> -->
+        <![CDATA[
+           SELECT 
+           	USER_ID,  
+           	USER_PWD,  
+           	USER_NM,  
+           	ROLE,  `
+           	SEQ, 
+           	CONTENT,  
+           	PWD,  
+           	REGDT
+           FROM T_USER A, T_BOARD B 
+   			WHERE (ISNULL(:like, '1') = '1' or B.CONTENT LIKE :like)  -- Dynamic query...
+   			AND A.USER_ID = B.USER_ID 
+           ]]> 
+	</sql-query>
+	<sql-query name="getGBoard">
+        <![CDATA[
+           SELECT 
+           	USER_ID,  
+           	USER_PWD,  
+           	USER_NM,  
+           	ROLE,  
+           	SEQ, 
+           	CONTENT,  
+           	PWD,  
+           	REGDT
+           FROM T_USER A, T_BOARD B 
+   			WHERE A.USER_ID = B.USER_ID 
+   			<%if(like!=null || like != 'null'){%>
+   			AND B.CONTENT LIKE :like  -- Dynamic query...
+   			<%}%>
+           ]]> 
+	</sql-query>
+	<sql-query name="pushBoard">
+	
+<!-- 	  	<return alias="b" class="com.omnicns.omnifit.vo.BoardUserIDVO"/> -->
+	  	<!--  <return-property name="age" column="myAge"/>... -->
+        <![CDATA[
+			INSERT INTO T_BOARD 
+				(CONTENT, USER_ID, PWD, REGDT)
+			VALUES
+				(:content,:user_id, :pwd, CURRENT_TIMESTAMP)
+           ]]> 
+	</sql-query>
+	
+	<!-- 통계 -->
+	<!-- 송출 지역별 통계  -->
+	<sql-query name="getAreaStat">
+		<![CDATA[
+			SELECT A.AREA1 AS AREA1, B.SUBMIT_DATE AS SUBMIT_DATE, B.CNT AS CNT
+			FROM (
+				SELECT AREA1
+				FROM TB_AREA
+				WHERE AREA2 = '전체' AND AREA1 != '전국'
+				<%if(null != area && area.length()>0 ) {%>
+					AND AREA_ID = :area
+				<%}%>
+				ORDER BY area_id
+			) A,
+			(
+				SELECT AREA1, SUBMIT_DATE, COUNT(*) AS CNT
+				FROM (
+					SELECT A.WAIT_ID, AREA1, SUBSTR(SUBMIT_DATE, 1, :date_query) AS SUBMIT_DATE
+					FROM TB_MSG_SUBMIT A,
+						 TB_MSG_AREA B,
+						 TB_MSG_COMPANY C,
+						 TB_AREA D
+					WHERE A.WAIT_ID = B.WAIT_ID
+					AND A.WAIT_ID = C.WAIT_ID
+					AND B.AREA_ID = D.AREA_ID
+					AND A.SUBMIT_DATE BETWEEN :search_start AND :search_end
+					<%if(null != search_telecom && search_telecom.length()>0 ) {%>
+						AND C.COMPANY_ID IN (0,$search_telecom)
+					<%}%>
+					AND A.STATUS = 'FINISHED'
+					AND ( A.TEST_CH IS NULL OR A.TEST_CH = 'N' )
+					<%if(null != class_id && class_id.length()>0 ) {%>
+						AND A.CLASS_ID = :class_id
+					<%}%>
+
+					UNION
+
+					SELECT A.WAIT_ID, AREA1, SUBSTR(SUBMIT_DATE, 1, :date_query) AS SUBMIT_DATE
+					FROM TB_MSG_SUBMIT A,
+						 TB_MSG_AREA_GROUP B,
+						 TB_MSG_COMPANY C,
+						 TB_AREA_GROUP_MAP D,
+						 TB_AREA E
+					WHERE A.WAIT_ID = B.WAIT_ID
+					AND A.WAIT_ID = C.WAIT_ID
+					AND B.GROUP_ID = D.GROUP_ID
+					AND D.AREA_ID = E.AREA_ID
+					AND A.SUBMIT_DATE BETWEEN :search_start AND :search_end
+					<%if(null != search_telecom && search_telecom.length()>0 ) {%>
+						AND C.COMPANY_ID IN (0,$search_telecom)
+					<%}%>
+					AND A.STATUS = 'FINISHED'
+					AND (A.TEST_CH IS NULL OR A.TEST_CH = 'N')
+					<%if(null != class_id && class_id.length()>0 ) {%>
+						AND A.CLASS_ID = :class_id
+					<%}%>
+				)
+				GROUP BY AREA1, SUBMIT_DATE
+			) B
+			WHERE A.AREA1 = B.AREA1
+			ORDER BY SUBMIT_DATE
+		]]>
+	</sql-query>
+	
+	<!-- 재난 유형별 통계  -->
+	<sql-query name="getTypeStat">
+		<![CDATA[
+			SELECT A.CLASS2, B.SUBMIT_DATE AS SUBMIT_DATE, B.CNT AS CNT
+			FROM (
+			  SELECT CLASS2 FROM TB_MSG_CLASS
+			) A
+			RIGHT OUTER JOIN (
+			  SELECT CLASS2, SUBMIT_DATE, COUNT(*) AS CNT
+			  FROM (
+			    SELECT
+			    	A.WAIT_ID,
+			    	D.CLASS2,
+			         <%if(null != area && area.length()>0 ) {%>
+			    	E.AREA1,
+			    	<%}%>
+			    	SUBSTR(SUBMIT_DATE, 1, :date_query) AS SUBMIT_DATE
+			    FROM TB_MSG_AREA A,
+			         TB_MSG_SUBMIT B,
+			         TB_MSG_COMPANY C,
+			         TB_MSG_CLASS D
+			         <%if(null != area && area.length()>0 ) {%>
+			         ,TB_AREA E
+			         <%}%>
+			    WHERE A.WAIT_ID=B.WAIT_ID
+			    AND A.WAIT_ID=C.WAIT_ID
+			    <%if(null != area && area.length()>0 ) {%>
+			    AND A.AREA_ID=E.AREA_ID
+			    <%}%>
+			    AND B.CLASS_ID=D.CLASS_ID
+			    AND B.SUBMIT_DATE BETWEEN :search_start AND :search_end
+			    AND B.STATUS='FINISHED'
+			    AND (B.TEST_CH IS NULL OR B.TEST_CH = 'N')
+			    <%if(null != search_telecom && search_telecom.length()>0 ) {%>
+			      AND C.COMPANY_ID IN (0,$search_telecom)
+			    <%}%>
+			    <%if(null != class_id && class_id.length()>0 ) {%>
+			      AND D.CLASS_ID = :class_id
+			    <%}%>
+			    
+			    UNION
+			    
+			    SELECT
+			    	A.WAIT_ID,
+			    	D.CLASS2,
+			         <%if(null != area && area.length()>0 ) {%>
+			    	F.AREA1,
+			    	<%}%>
+			    	SUBSTR(SUBMIT_DATE, 1, :date_query)
+			    FROM TB_MSG_AREA_GROUP A,
+			         TB_MSG_SUBMIT B,
+			         TB_MSG_COMPANY C,
+			         TB_MSG_CLASS D
+			         <%if(null != area && area.length()>0 ) {%>
+			         ,TB_AREA_GROUP_MAP E,
+			         TB_AREA F
+			         <%}%>
+			    WHERE A.WAIT_ID=B.WAIT_ID
+			    AND A.WAIT_ID=C.WAIT_ID
+			    AND B.CLASS_ID=D.CLASS_ID
+			    <%if(null != area && area.length()>0 ) {%>
+			    AND A.GROUP_ID=E.GROUP_ID
+			    AND E.AREA_ID=F.AREA_ID
+			    <%}%>
+			    AND B.STATUS='FINISHED'
+			    AND (B.TEST_CH IS NULL OR B.TEST_CH = 'N')
+			    AND B.SUBMIT_DATE BETWEEN :search_start AND :search_end
+			    <%if(null != search_telecom && search_telecom.length()>0 ) {%>
+			      AND C.COMPANY_ID IN (0,$search_telecom)
+			    <%}%> 
+			    <%if(null != class_id && class_id.length()>0 ) {%>
+			      AND D.CLASS_ID = :class_id
+			    <%}%>
+			  )   
+			  <%if(null != area && area.length()>0 ) {%>			    
+			  WHERE AREA1 = (select AREA1 from TB_AREA where area_id = :area) 
+			  <%}%>
+			  GROUP BY CLASS2, SUBMIT_DATE
+			) B ON A.CLASS2=B.CLASS2
+			ORDER BY SUBMIT_DATE
+		]]>
+	</sql-query>
+	
+	<!-- 종합 통계  -->
+	<sql-query name="getAllStat">
+		<![CDATA[
+			SELECT A.CLASS2 AS CLASS2, B.AREA1 AS AREA1, B.CNT AS CNT
+			FROM (
+			  SELECT CLASS2, CLASS1_ORDER, CLASS2_ORDER FROM TB_MSG_CLASS
+			) A
+			RIGHT OUTER JOIN (
+			  SELECT CLASS2, AREA1, COUNT(*) AS CNT
+			  FROM (
+			    SELECT A.WAIT_ID, AREA1, SUBMIT_DATE
+			    FROM TB_MSG_SUBMIT A,
+			         TB_MSG_AREA B,
+			         TB_MSG_COMPANY C,
+			         TB_AREA D
+			    WHERE A.WAIT_ID=B.WAIT_ID
+			    AND A.WAIT_ID=C.WAIT_ID
+			    AND B.AREA_ID=D.AREA_ID
+			    AND A.STATUS='FINISHED'
+			    AND (A.TEST_CH IS NULL OR A.TEST_CH = 'N')
+			    AND A.SUBMIT_DATE BETWEEN :search_start AND :search_end
+			    <%if(null != search_telecom && search_telecom.length()>0 ) {%>
+			      AND C.COMPANY_ID IN (0,$search_telecom)
+			    <%}%>
+			    <%if(null != class_id && class_id.length()>0 ) {%>
+			      AND A.CLASS_ID = :class_id
+			    <%}%>
+			    
+			    UNION
+			    
+			    SELECT A.WAIT_ID, AREA1, SUBMIT_DATE
+			    FROM TB_MSG_SUBMIT A,
+			         TB_MSG_AREA_GROUP B,
+			         TB_MSG_COMPANY C,
+			         TB_AREA_GROUP_MAP D,
+			         TB_AREA E
+			    WHERE A.WAIT_ID=B.WAIT_ID
+			    AND A.WAIT_ID=C.WAIT_ID
+			    AND B.GROUP_ID=D.GROUP_ID
+			    AND D.AREA_ID=E.AREA_ID
+			    AND A.STATUS='FINISHED'
+			    AND (A.TEST_CH IS NULL OR A.TEST_CH = 'N')
+			    AND A.SUBMIT_DATE BETWEEN :search_start AND :search_end
+			    <%if(null != search_telecom && search_telecom.length()>0 ) {%>
+			      AND C.COMPANY_ID IN (0,$search_telecom)
+			    <%}%> 
+			    <%if(null != class_id && class_id.length()>0 ) {%>
+			      AND A.CLASS_ID = :class_id
+			    <%}%>
+			  ) A, TB_MSG_SUBMIT B, TB_MSG_CLASS C
+			  WHERE A.WAIT_ID=B.WAIT_ID
+			  AND B.CLASS_ID=C.CLASS_ID
+			  GROUP BY CLASS2, AREA1
+			) B ON A.CLASS2=B.CLASS2
+		
+		    <%if(null != area && area.length()>0 ) {%>			    
+     				WHERE AREA1 = (select AREA1 from TB_AREA where area_id = :area) 
+		    <%}%>
+			ORDER BY CLASS1_ORDER, CLASS2_ORDER
+		]]>
+	</sql-query>
+	
+</hibernate-mapping>

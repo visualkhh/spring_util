@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+	<!-- bootManager -->
+	<bean id="BootManager" class="com.khh.boot.BootManager" factory-method="getInstance">
+	</bean>
+	<!-- securityManager -->
+	<bean id="SecurityManager" class="com.khh.security.SecurityManager" factory-method="getInstance">
+		<property name="privacyKey" value="~~~"/>
+	</bean>
+	
+	<!-- configManager -->
+	<bean id="ConfigManager" class="com.khh.config.ConfigManager" factory-method="getInstance">
+		<property name="configVarName" value="oc.config.path"/>
+		<property name="param">
+	    	<map>
+				<entry key="sign_uri" value="/sign"/>
+				<entry key="auth_uri" value="/auth"/>
+				<entry key="authcheck_uri" value="/authcheck"/>
+				<entry key="anon_uri" value="/anon"/>
+				<entry key="root_uri" value="/"/>
+
+			</map>
+	    </property>
+	</bean>
+	
+</beans>	

@@ -1,0 +1,52 @@
+{
+  "groups": [
+    {
+      "name": "hibernate",
+      "type": "com.khh.api.properties.HibernateProperties",
+      "sourceType": "com.khh.api.properties.HibernateProperties"
+    },
+    {
+      "name": "project",
+      "type": "com.khh.api.properties.ProjectProperties",
+      "sourceType": "com.khh.api.properties.ProjectProperties"
+    },
+    {
+      "name": "project.locale-change",
+      "type": "com.khh.api.properties.ProjectProperties$LocaleChange",
+      "sourceType": "com.khh.api.properties.ProjectProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "hibernate.annotated-packages",
+      "type": "java.lang.String[]",
+      "sourceType": "com.khh.api.properties.HibernateProperties"
+    },
+    {
+      "name": "hibernate.mapping-locations",
+      "type": "java.lang.String",
+      "sourceType": "com.khh.api.properties.HibernateProperties"
+    },
+    {
+      "name": "hibernate.packages-to-scan",
+      "type": "java.lang.String[]",
+      "sourceType": "com.khh.api.properties.HibernateProperties"
+    },
+    {
+      "name": "hibernate.properties",
+      "type": "java.util.Properties",
+      "sourceType": "com.khh.api.properties.HibernateProperties"
+    },
+    {
+      "name": "project.locale-change.param-name",
+      "type": "java.lang.String",
+      "sourceType": "com.khh.api.properties.ProjectProperties$LocaleChange"
+    },
+    {
+      "name": "project.properties",
+      "type": "java.util.Map<java.lang.String,java.lang.String>",
+      "sourceType": "com.khh.api.properties.ProjectProperties"
+    }
+  ],
+  "hints": []
+}

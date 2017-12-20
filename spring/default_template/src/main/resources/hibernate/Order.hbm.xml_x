@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	
+	
+	
+<!-- http://www.mkyong.com/hibernate/hibernate-named-query-examples/ -->
+<hibernate-mapping>
+    <class name="com.mkyong.common.Stock" table="stock" >
+        <id name="stockId" type="java.lang.Integer">
+            <column name="STOCK_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="stockCode" type="string">
+            <column name="STOCK_CODE" length="10" not-null="true" unique="true" />
+        </property>
+    </class>
+
+    <query name="findStockByStockCode">
+        <![CDATA[SELECT * from Stock s where s.stockCode = :stockCode]]>
+    </query>
+	
+</hibernate-mapping>

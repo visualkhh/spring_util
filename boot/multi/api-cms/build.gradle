@@ -1,0 +1,3 @@
+bootRepackage {
+    mainClass = 'com.nhis.ggij.api.CmsApiApplication'
+}

@@ -1,0 +1,198 @@
+/**
+ * 작업자   : doldol
+ * 작업날짜 : 2016.12.13
+ */
+
+apply plugin: 'base'
+group 'com.nhis.ggij'
+
+//외부 에서
+buildscript {
+
+    ext {
+        springCloudVersion = 'Brixton.SR6'
+        springBootVersion = '1.4.2.RELEASE'
+        springDependencyVersion = '0.5.1.RELEASE'
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven { url "http://119.206.205.172:8081/nexus/content/repositories/releases/" }
+		maven { url "https://code.lds.org/nexus/content/groups/main-repo" }
+        maven { url 'http://repo.springsource.org/plugins-release'}
+        maven { url 'http://repo.spring.io/milestone'}
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:${springDependencyVersion}")
+
+    }
+}
+
+//전체 프로젝트 적용
+allprojects {
+    version = "0.1.0"
+}
+
+//서브 프로젝트 적용
+subprojects { subprojects ->
+
+    apply plugin: 'groovy'
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'war'
+    apply plugin: 'idea'
+    apply plugin: 'io.spring.dependency-management'
+
+    targetCompatibility = 1.8
+    sourceCompatibility = 1.8
+
+    //인코딩 모두 적용
+    def defaultEncoding = 'UTF-8'
+
+    //AbstractCompile 모든 JVM을 통한 컴파일일 경우
+    //하위로는 GroovyCompile   JavaCompile   AbstractScalaCompile
+    tasks.withType(AbstractCompile).each {
+        it.options.encoding = defaultEncoding
+    }
+
+    tasks.withType(Javadoc) { Javadoc javadoc ->
+        javadoc.options.encoding = defaultEncoding
+        javadoc.options.addStringOption('Xdoclint:all,-missing', '-quiet')
+    }
+
+    springBoot {
+        executable = true
+    }
+
+    repositories {
+        jcenter()
+        maven { url "http://119.206.205.172:8081/nexus/content/repositories/releases/" }
+        maven { url "https://code.lds.org/nexus/content/groups/main-repo" }
+    }
+
+    dependencies {
+// egov 전자정부 프레임워크 감리통과하려면 아래 풀어 dependencies 걸어서 감리만 통과하여라
+//    compile(group: 'egovframework.rte', name: 'egovframework.rte.ptl.mvc', version:'3.5.0') {
+//        exclude(group: 'egovframework.rte')
+////        exclude(module: 'commons-logging')
+//    }
+
+        compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+        compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
+        compile("org.springframework.boot:spring-boot-starter-integration:${springBootVersion}")
+
+        /* json */
+        compile group: 'com.bluelinelabs', name: 'logansquare', version: '1.1.0'
+//        compile group: 'com.google.code.gson', name: 'gson', version: '2.6.2'
+
+
+        //devtools
+        compile("org.springframework.boot:spring-boot-devtools")
+        //config를위하여  config hot depoly하기위하 여
+        compile("org.springframework.boot:spring-boot-configuration-processor")
+        //optional ("org.springframework.boot:spring-boot-configuration-processor")
+
+        compile "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.8.+"
+        compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.+"
+        
+        compile("com.h2database:h2:1.4.192");
+
+        compile('com.jayway.jsonpath:json-path:2.1.0')
+
+        /* lombok*/
+        compile group: 'org.projectlombok', name: 'lombok', version: '1.16.8'
+        /* quartz */
+        compile group: 'org.quartz-scheduler', name: 'quartz', version: '1.8.6'
+        // https://mvnrepository.com/artifact/javax.transaction/jta
+        compile group: 'javax.transaction', name: 'jta', version: '1.1'
+
+        /* email */
+        compile group: 'javax.mail', name: 'mail', version: '1.4.7'
+
+        /* class scaner  https://sites.google.com/site/javacornproject/corn-cps */
+        compile group: 'net.sf.corn', name: 'corn-cps', version: '1.1.7'
+
+
+        //org.apache.commons
+        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+        compile group: 'commons-io', name: 'commons-io', version: '2.4'
+
+
+
+        compile group: 'com.omnicns', name: 'common-java', version: '0.0.1'
+        compile group: 'com.omnicns', name: 'common-jsp', version: '0.0.1'
+        compile group: 'com.omnicns', name: 'common-spring', version: '0.0.1'
+
+
+        /*oracle*/
+        compile group: 'com.oracle', name: 'ojdbc6', version: '11.2.0.3'
+
+        compile fileTree(dir: 'libs', includes: ['*.jar'])
+
+
+
+
+
+        testCompile ("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+        testCompile group: 'junit', name: 'junit', version: '4.11'
+    }
+}
+
+project(':api-core') {
+    dependencies {
+//        compile project(':basic_springboot')
+    }
+}
+
+project(':api-cms') {
+    dependencies {
+//        compile project(':basic_springboot')
+        compile project(':api-core')
+    }
+}
+
+
+
+
+//==================== 별도의 실행이 필요한 task 시작 ====================
+
+// 하위 디렉토리 생성 eclipse 일경우만 실행 합니다
+task initSrc << {
+    project.sourceSets*.allSource.srcDirTrees.flatten().dir.each { dir ->
+        dir.mkdirs()
+    }
+}
+
+// javadoc 생성 설정
+task docJava(type: Javadoc) {
+    source subprojects.collect {project ->
+        project.sourceSets.main.allJava
+    }
+    destinationDir = new File(buildDir, 'javadoc')
+
+    println "buildDir => ["+buildDir+ "]"
+
+    //classpath
+    classpath = files(subprojects.collect {project ->
+        project.sourceSets.main.compileClasspath
+    })
+
+    println " ------------------ javadoc end ------------------"
+
+}
+
+//tasks.eclipse.dependsOn(initSrc)
+
+
+//Wrapper 3.2.1 버전 설치
+task wrapper(type: Wrapper) {
+    gradleVersion = "3.2.1"
+}
+//==================== 별도의 실행이 필요한 task 종료 ====================
+
+
+

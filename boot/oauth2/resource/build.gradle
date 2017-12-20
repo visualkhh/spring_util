@@ -1,0 +1,3 @@
+bootRepackage {
+    mainClass = 'com.khh.api.ResourceApplication'
+}

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 30초마다 설정 파일의 변경을 확인한다. 파일이 변경되면 다시 로딩한다 -->
+<!--<configuration>-->
+<configuration scan="true" scanPeriod="30 seconds">
+
+	<!-- 외부 설정파일을 사용할 수 있다. -->
+	<property resource="resource.properties"/>
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyyMMddHHmmss}|%-5level|%logger{36}|%method[%line]|%msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${CBIS_HOME}/log/cbis/cbis.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 파일이 하루에 한개씩 생성된다 -->
+			<fileNamePattern>${CBIS_HOME}/log/cbis/cbis-%d{MM-dd-yyyy}.log</fileNamePattern>
+
+			<!-- maxHIstory 설정은 위 부분에 롤링 정책에 따라 적용되 된다고 보면된다.
+			 위 설정데로 라면 30일이 지난 파일은 삭제가 된다.-->
+			<!--<maxHistory>30</maxHistory>-->
+		</rollingPolicy>
+
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyyMMddHHmmss}|%-5level|%thread|%logger{36}|%method[%line]|%msg%n</pattern>
+		</encoder>
+	</appender>
+
+
+	<logger name="org.springframework" level="debug"/>
+	<logger name="org.hibernate" level="debug"/>
+	<logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="trace"/>
+	<logger name="org.hibernate.loader.Loader" level="info"/>
+	<logger name="org.hibernate.engine.internal.TwoPhaseLoad" level="info"/>
+	<logger name="com.omnicns.java.db.hibernate.Hibernater" level="info"/>
+	<logger name="org.hibernate.engine.loading.internal.CollectionLoadContext" level="info"/>
+	<logger name="org.springframework.security.web.session.HttpSessionEventPublisher" level="info"/>
+	<logger name="org.springframework.security.web.util.matcher.AntPathRequestMatcher" level="info"/>
+	<logger name="com.omnicns" level="debug"/>
+
+
+	<root level="debug">
+		<!--<appender-ref ref="CONSOLE"/>-->
+		<appender-ref ref="FILE"/>
+	</root>
+
+
+</configuration>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+    <context:component-scan base-package="com.omnicns" >
+       <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
+    
+    
+    
+    <bean id="messageSourceAccessor"
+	    class="org.springframework.context.support.MessageSourceAccessor">
+	    <constructor-arg ref="messageSource" />
+  	</bean>
+  
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>classpath:/message/message-common</value>
+			</list>
+		</property>
+		<property name="cacheSeconds">
+			<value>60</value>
+		</property>
+	</bean>
+	<!-- MultipartResolver 설정
+   <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+       <property name="maxUploadSize" value="100000000" />
+       <property name="maxInMemorySize" value="100000000" />
+       <property name="defaultEncoding" value="UTF-8" />
+   </bean> -->
+   <!-- egov Custom MultiFile resolver 
+	<bean id="local.MultiCommonsMultipartResolver"
+		class="egovframework.rte.util.web.resolver.MultiCommonsMultipartResolver">
+		<property name="maxUploadSize" value="100000000" />
+		<property name="maxInMemorySize" value="100000000" />
+	</bean>
+	-->
+</beans>

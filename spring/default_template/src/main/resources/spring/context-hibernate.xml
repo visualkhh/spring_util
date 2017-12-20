@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+<!-- 
+http://docs.jboss.org/hibernate/core/3.6/reference/en-US/html_single/#persistent-classes-dynamicmodels  
+https://docs.jboss.org/hibernate/orm/3.3/reference/ko-KR/html_single/
+위링크 예제파일 잘나와있음 
+ -->
+<!-- <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" lazy-init="false"> -->
+<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" lazy-init="false">
+		<property name="dataSource" ref="dataSource" />
+		
+<!-- 		<property name="configLocation"> -->
+<!-- 			<value>classpath:/egovframework/hibernate/hibernate.cfg.xml</value> -->
+<!-- 		</property>	  -->
+		<property name="mappingLocations">
+			<value>classpath:/hibernate/*.hbm.xml</value>
+		</property>		
+		
+		<property name="hibernateProperties">
+			<props>
+				<!--hibernate dialect-START-->
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+<!-- 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop> -->
+				<!--hibernate dialect-END-->
+				<prop key="hibernate.format_sql">false</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.use_sql_comments">false</prop>
+				<prop key="hibernate.jdbc.batch_size">50</prop>
+				
+				<prop key="spring.jpa.properties.javax.persistence.validation.mode">false</prop>
+				<prop key="hibernate.query.startup_check">false</prop>
+				<prop key="hibernate.validator.apply_to_ddl">false</prop>
+				<prop key="hibernate.validator.autoregister_listeners">false</prop>
+				<prop key="javax.persistence.validation.mode">none</prop>
+				
+			</props>
+		</property>
+		
+<!-- 		<property name="annotatedClasses">
+			<list>
+				<value>egovframework.rte.rex.cgr.service.CategoryVO</value>	
+			</list>
+		</property>
+ -->		<property name="packagesToScan">
+			<list>
+				<value>com.omnicns.*</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+    	<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+</beans>

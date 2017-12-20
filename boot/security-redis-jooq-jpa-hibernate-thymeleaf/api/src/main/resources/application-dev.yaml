@@ -1,0 +1,8 @@
+spring:
+  profiles: dev
+  jpa:
+    show-sql: true
+server:
+  port: 8080
+logging:
+  config: classpath:logback-dev.xml

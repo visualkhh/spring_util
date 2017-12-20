@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- http://www.mkyong.com/hibernate/hibernate-one-to-many-relationship-example/ 
+	맵핑 -->
+
+<hibernate-mapping>
+<!-- <hibernate-mapping package="com.omnicns.project2.vo"> -->
+<!-- 	<class name="com.mkyong.stock.Stock" table="stock" catalog="mkyongdb"> -->
+<!-- 		<id name="stockId" type="java.lang.Integer"> -->
+<!-- 			<column name="STOCK_ID" /> -->
+<!-- 			<generator class="identity" /> -->
+<!-- 		</id> -->
+<!-- 		<property name="stockCode" type="string"> -->
+<!-- 			<column name="STOCK_CODE" length="10" not-null="true" unique="true" /> -->
+<!-- 		</property> -->
+<!-- 		<property name="stockName" type="string"> -->
+<!-- 			<column name="STOCK_NAME" length="20" not-null="true" unique="true" /> -->
+<!-- 		</property> -->
+<!-- 		<set name="stockDailyRecords" table="stock_daily_record" inverse="true" -->
+<!-- 			lazy="true" fetch="select"> -->
+<!-- 			<key> -->
+<!-- 				<column name="STOCK_ID" not-null="true" /> -->
+<!-- 			</key> -->
+<!-- 			<one-to-many class="com.mkyong.stock.StockDailyRecord" /> -->
+<!-- 		</set> -->
+<!-- 	</class> -->
+<!-- 	<class name="com.mkyong.stock.StockDailyRecord" table="stock_daily_record" -->
+<!-- 		catalog="mkyongdb"> -->
+<!-- 		<id name="recordId" type="java.lang.Integer"> -->
+<!-- 			<column name="RECORD_ID" /> -->
+<!-- 			<generator class="identity" /> -->
+<!-- 		</id> -->
+<!-- 		<many-to-one name="stock" class="com.mkyong.stock.Stock" -->
+<!-- 			fetch="select"> -->
+<!-- 			<column name="STOCK_ID" not-null="true" /> -->
+<!-- 		</many-to-one> -->
+<!-- 		<property name="priceOpen" type="java.lang.Float"> -->
+<!-- 			<column name="PRICE_OPEN" precision="6" /> -->
+<!-- 		</property> -->
+<!-- 		<property name="priceClose" type="java.lang.Float"> -->
+<!-- 			<column name="PRICE_CLOSE" precision="6" /> -->
+<!-- 		</property> -->
+<!-- 		<property name="priceChange" type="java.lang.Float"> -->
+<!-- 			<column name="PRICE_CHANGE" precision="6" /> -->
+<!-- 		</property> -->
+<!-- 		<property name="volume" type="java.lang.Long"> -->
+<!-- 			<column name="VOLUME" /> -->
+<!-- 		</property> -->
+<!-- 		<property name="date" type="date"> -->
+<!-- 			<column name="DATE" length="10" not-null="true" unique="true" /> -->
+<!-- 		</property> -->
+<!-- 	</class> -->
+
+	<!--
+		https://docs.jboss.org/hibernate/orm/3.3/reference/en/html/querysql.html  이름으로 query맵핑
+		http://docs.jboss.org/hibernate/core/3.6/reference/en-US/html_single/#persistent-classes-dynamicmodels
+		http://www.mkyong.com/hibernate/hibernate-named-query-examples/
+		http://www.journaldev.com/3451/hibernate-named-query-example-tutorial-namedquery-annotation-join-hql-native-sql
+		https://docs.jboss.org/hibernate/stable/core.old/reference/en/html/querysql-namedqueries.html
+	-->
+	<sql-query name="getBoardById">
+	  	<return alias="b" class="com.khh.project2.vo.BoardUserIDVO"/>
+	  	<!--  <return-property name="age" column="myAge"/>... -->
+        <![CDATA[
+        ~~
+           ]]> 
+	</sql-query>
+	<sql-query name="getBoard">
+<!-- 		<return alias="assets" class="BoardNormalVO" /> -->
+        <![CDATA[
+          ~~
+           ]]> 
+	</sql-query>
+	<sql-query name="getGBoard">
+        <![CDATA[
+         ~~
+           ]]> 
+	</sql-query>
+	<sql-query name="pushBoard">
+	
+<!-- 	  	<return alias="b" class="BoardUserIDVO"/> -->
+	  	<!--  <return-property name="age" column="myAge"/>... -->
+        <![CDATA[
+			~~
+           ]]> 
+	</sql-query>
+	
+	<!-- 통계 -->
+	<!-- 송출 지역별 통계  -->
+	<sql-query name="getAreaStat">
+		<![CDATA[
+			~~
+		]]>
+	</sql-query>
+	
+	<!-- 재난 유형별 통계  -->
+	<sql-query name="getTypeStat">
+		<![CDATA[
+			~~
+		]]>
+	</sql-query>
+	
+	<!-- 종합 통계  -->
+	<sql-query name="getAllStat">
+		<![CDATA[
+			~~
+		]]>
+	</sql-query>
+	
+</hibernate-mapping>

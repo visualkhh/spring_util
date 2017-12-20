@@ -1,0 +1,71 @@
+#http://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html
+#http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+application:
+  version: 1.0
+  title: API-CORE Application
+server:
+  port: 8080
+spring:
+  devtools:
+    livereload:
+      enabled: true
+  freemarker:
+    cache: false
+  http:
+    multipart:
+      enabled: true # Enable support of multi-part uploads.
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+#  messages.basename: messages-validation, messages
+#      hibernate.current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+  h2:
+    console:
+      enabled: true # Enable the console.
+      path: /h2-console # Path at which the console will be available.
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.hibernate: DEBUG
+    com.nhis: DEBUG
+
+
+
+######## CUSTOM PROPERTIES ##########
+datasource:
+  primary:
+    jndi: jdbc/primaryDB
+  inner:
+    jndi: jdbc/innerDB
+#datasource:
+#    primary:
+#        url: jdbc:h2:mem:article
+#        username: sa
+#        password:
+#    inner:
+#        url: jdbc:h2:mem:user
+#        username: sa
+#        password:
+
+#    primary:
+##        url: jdbc:oracle:thin:@xxxxxx:1521:orcl
+#        url: jdbc:oracle:thin:@xxxxxx:1521:orcl
+#        username: xxx
+#        password: xxx
+#    inner:
+#        url: jdbc:oracle:thin:@xxxxxx:1521:orcl
+#        username: xxxx
+#        password: xxxx
+
+
+
+project:
+  locale-change:
+    param-name: lang
+  properties:
+    hello: hello22
+
+encryp:
+  http-body-key: default-body
+  privacy-key: default-privacy

@@ -1,0 +1,7 @@
+<div class="login-info">
+  <span *ngIf="user?.picture"><a (click)="toggleShortcut()">
+	   <img [src]="user.picture" alt="me"
+          class="online"/><span>{{user.username }}</span> <i class="fa fa-angle-down"></i>
+    </a>
+   </span>
+</div>
