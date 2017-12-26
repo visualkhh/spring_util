@@ -78,6 +78,7 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
 				.anonymous()
 				.and()
 			    .csrf()
+				.csrfTokenRepository(csrfTokenRepository())
 				.and()
 				.authorizeRequests()
 				//				.antMatchers("/", ANON_PATH +"/**") .permitAll()
@@ -86,6 +87,7 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
 				.antMatchers().hasAnyAuthority()
 //					.anyRequest().authenticated()
 				.and()
+				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
 //				.sessionManagement()                     //http://niees.tistory.com/17
 //				.maximumSessions(1)
 //				.expiredUrl(SESSION_EXPIRED_URL)         //중복 로그인이 일어났을 경우 이동 할 주소​
@@ -214,6 +216,12 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
 		return new UserDetailsService();
 	}
 
+	//////csrf
+	private CsrfTokenRepository csrfTokenRepository() {
+		HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+		repository.setHeaderName("X-XSRF-TOKEN");
+		return repository;
+	}
 
 
 //	@Bean
