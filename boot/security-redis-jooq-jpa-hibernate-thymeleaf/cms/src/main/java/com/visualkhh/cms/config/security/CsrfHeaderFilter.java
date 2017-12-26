@@ -1,4 +1,4 @@
-package com.omnicns.omnifit2.cms.config.security;
+package com.visualkhh.cms.config.security;
 
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.filter.OncePerRequestFilter;
