@@ -46,7 +46,7 @@ public class FilterInvocationSecurityMetadataSource implements org.springframewo
 
 		List<ConfigAttribute> attributes = new ArrayList<ConfigAttribute>();
 		attributes.add(new com.omnicns.web.spring.security.ConfigAttribute("ROLE_SUPER"));
-		if(uri.equals(WebSecurityConfigurerAdapter.ROOT_PATH) || uri.equals(WebSecurityConfigurerAdapter.LOGIN_PAGE)){
+		if(uri.equals(WebSecurityConfigurerAdapter.ROOT_PATH) || uri.equals(WebSecurityConfigurerAdapter.LOGIN_PAGE) || uri.startsWith(WebSecurityConfigurerAdapter.SECURITY_PATH)){
 			attributes.add(new com.omnicns.web.spring.security.ConfigAttribute("ROLE_ANONYMOUS"));
 			attributes.add(new com.omnicns.web.spring.security.ConfigAttribute("ROLE_AUTH"));
 		}
