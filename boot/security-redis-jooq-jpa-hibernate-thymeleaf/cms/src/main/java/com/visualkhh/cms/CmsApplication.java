@@ -15,7 +15,13 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.TimeZone;
 
-@Slf4j @SpringBootApplication @EntityScan(basePackageClasses = {CmsApplication.class, Jsr310JpaConverters.class})
+@Slf4j @SpringBootApplication
+// 2017-12-12 10:38:40.030|ERROR|main|org.hibernate.AssertionFailure|<init>[33]|HHH000099: an assertion failure occured (this may indicate a bug in Hibernate, b
+// ut is more likely due to unsafe use of the session): org.hibernate.AssertionFailure: AttributeConverter class [class org.springframework.data.jpa.convert.thr
+//		eeten.Jsr310JpaConverters$InstantConverter] registered multiple times
+// 위에 에러로 DEV서버에서 구동되지 않아 entityscan 주석처리 후
+// gradle에 compile("org.hibernate:hibernate-java8") 추가
+// @EntityScan(basePackageClasses={Omnifit2ApiApplication.class, Jsr310JpaConverters.class})
 public class CmsApplication implements ApplicationRunner, ApplicationListener<ApplicationReadyEvent>{
 	@PostConstruct
 	void postConstruct() {
