@@ -324,4 +324,55 @@ project(':cms') {
 		compile rootProject
 		compile('org.springframework.boot:spring-boot-starter-security')
 	}
+
+
+	//project(':api') {
+//	dependencies {
+//		compile project(':common')
+//	}
+//}
+//sourceSets {
+//	main {
+//		resources {
+//			srcDirs = ["$projectDir/src/main/angular", "$projectDir/src/main/resources"]
+//		}
+//	}
+//}
+	processResources {
+		dependsOn "buildAngular"
+	}
+
+	def webappDir = "$projectDir/src/main/webapp"
+	def angularDir = "$projectDir/src/main/angular"
+//task tt(){
+//	println "$webappDir"
+//}
+	task buildAngular(type:Exec) {
+		// installAngular should be run prior to this task
+		dependsOn "installAngular"
+		workingDir "$angularDir"
+		inputs.dir "$angularDir"
+		// Add task to the standard build group
+		group = BasePlugin.BUILD_GROUP
+		// ng doesn't exist as a file in windows -> ng.cmd
+		if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")){
+			commandLine "ng.cmd", "build",  "-op", "$webappDir"
+		} else {
+			commandLine "ng", "build", "-op", "$webappDir"
+		}
+	}
+
+	task installAngular(type:Exec) {
+		workingDir "$angularDir"
+		inputs.dir "$angularDir"
+		group = BasePlugin.BUILD_GROUP
+		if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")){
+			commandLine "npm.cmd", "install"
+		} else {
+			commandLine "npm", "install"
+		}
+	}
+
+
+
 }
