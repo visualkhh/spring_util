@@ -92,7 +92,7 @@ allprojects {
 		compile('org.projectlombok:lombok:1.16.6')
 		compile group: 'com.omnicns', name: 'common-java', version: '0.0.21'
 		compile group: 'com.omnicns', name: 'common-jsp', version: '0.0.2'
-		compile group: 'com.omnicns', name: 'common-spring', version: '0.0.14'
+		compile group: 'com.omnicns', name: 'common-spring', version: '0.0.15'
 		compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
 		compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
 
@@ -155,7 +155,7 @@ jooq {
 				forcedTypes {
 					forcedType {
 						userType = 'java.time.ZonedDateTime'
-						converter = 'com.omnicns.omnifit2.common.config.converter.ZonedDateTimeConverter'
+						converter = 'com.visualkhh.common.config.converter.ZonedDateTimeConverter'
 						expression = '(.*?)Dt$'
 					}
 				}
@@ -221,7 +221,7 @@ jooq {
 				forcedTypes {
 					forcedType {
 						userType = 'java.time.ZonedDateTime'
-						converter = 'com.omnicns.omnifit2.common.config.converter.ZonedDateTimeConverter'
+						converter = 'com.visualkhh.common.config.converter.ZonedDateTimeConverter'
 						expression = '(.*?)Dt$'
 					}
 				}

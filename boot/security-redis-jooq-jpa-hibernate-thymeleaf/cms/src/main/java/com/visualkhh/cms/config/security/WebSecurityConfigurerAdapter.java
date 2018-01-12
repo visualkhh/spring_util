@@ -3,6 +3,7 @@ package com.visualkhh.cms.config.security;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -14,8 +15,17 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,35 +33,33 @@ import java.util.List;
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+//@Order(Integer.MAX_VALUE)
 @EnableWebSecurity
 public class WebSecurityConfigurerAdapter extends org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter {
 
 
-	public static final String ROOT_PATH                   = "/";
-	public static final String SECURITY_PATH               = "/security";
-	public static final String ANON_PATH                   = "/anon";
-	public static final String AUTH_PATH                   = "/auth";
+	public static final String ROOT_PATH                    = "/";
+	public static final String SECURITY_PATH                = "/security";
+	public static final String ANON_PATH                    = "/anon";
+	public static final String AUTH_PATH                    = "/auth";
 
-//	public static final String LOGIN_PAGE                  = SECURITY_PATH+"/login";
-	public static final String LOGIN_PAGE                  = "/";
-	public static final String LOGIN_PROCESSING_URL        = SECURITY_PATH+"/sign-in";
-	public static final String FAILURE_URL                 = ROOT_PATH;
-	public static final String USERNAME_PARAMETER          = "username";
-	public static final String PASSWORD_PARAMETER          = "password";
-	public static final String DEFAULT_SUCCESS_URL         = "/";
-	public static final String LOGOUT_SUCCESS_URL          = ROOT_PATH+"?logout";
-	public static final String SESSION_EXPIRED_URL         = ROOT_PATH+"?expred";
-	public static final String SESSION_INVALIDSESSION_URL  = ROOT_PATH+"?invalid";
-	public static final String LOGOUT_URL                  = SECURITY_PATH+"/sign-out";
-	public static final String REMEMBER_ME_KEY             = "REMEBMER_ME_KEY";
-	public static final String REMEMBER_ME_COOKE_NAME      = "REMEMBER_ME_COOKE";
+	public static final String LOGIN_PAGE                   = "/";
+	public static final String LOGIN_PROCESSING_URL         = SECURITY_PATH+"/sign-in";
+	public static final String USERNAME_PARAMETER           = "username";
+	public static final String PASSWORD_PARAMETER           = "password";
+	public static final String DEFAULT_SUCCESS_URL          = "/";
+	public static final String SESSION_EXPIRED_URL          = LOGIN_PAGE+"?expred";
+	public static final String SESSION_INVALIDSESSION_URL   = LOGIN_PAGE+"?invalid";
+	public static final String LOGOUT_URL                   = SECURITY_PATH+"/sign-out";
+	public static final String REMEMBER_ME_KEY              = "REMEBMER_ME_KEY";
+	public static final String REMEMBER_ME_COOKE_NAME       = "REMEMBER_ME_COOKE";
 
 //	@Autowired
 //	AuthenticationProvider authenticationProvider;
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers(ANON_PATH+"/**", "/assets/**", "/*.js", "/*.map");
+		web.ignoring().antMatchers(ANON_PATH+"/**", "/assets/**", "/*.js", "/*.map","/favicon.ico");
 	}
 
 
@@ -78,34 +86,40 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
 				.anonymous()
 				.and()
 			    .csrf()
+				.ignoringAntMatchers(ANON_PATH+"/**")
+				.ignoringAntMatchers(LOGOUT_URL)
+//				.requireCsrfProtectionMatcher(requestMatcher())
 				.csrfTokenRepository(csrfTokenRepository())
 				.and()
 				.authorizeRequests()
 				//				.antMatchers("/", ANON_PATH +"/**") .permitAll()
 //				.antMatchers(AUTH_PATH +"/**")      .hasRole("AUTH")
 //				.antMatchers("/super/**")           .hasRole("SUPER")
-				.antMatchers().hasAnyAuthority()
+//				.antMatchers("/**").hasAnyAuthority()
+				.anyRequest().hasAnyAuthority()
 //					.anyRequest().authenticated()
 				.and()
 				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-//				.sessionManagement()                     //http://niees.tistory.com/17
-//				.maximumSessions(1)
-//				.expiredUrl(SESSION_EXPIRED_URL)         //중복 로그인이 일어났을 경우 이동 할 주소​
-//				.maxSessionsPreventsLogin(false)         //만약 두번째 인증을 거부하게 하고 싶은 경우concurrency-control에​ error-if-maximum-exceeded="true"속성을 지정하면 된다.​
-//				.and()
-//				.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-//				.invalidSessionUrl(SESSION_INVALIDSESSION_URL)
-//				.and()
+				.sessionManagement()                     //http://niees.tistory.com/17
+//				.sessionAuthenticationStrategy(sessionAuthenticationStrategy())
+				.maximumSessions(1)
+				.sessionRegistry(sessionRegistry())
+				.expiredUrl(SESSION_EXPIRED_URL)         //중복 로그인이 일어났을 경우 이동 할 주소​
+				.maxSessionsPreventsLogin(false)         //만약 두번째 인증을 거부하게 하고 싶은 경우concurrency-control에​ error-if-maximum-exceeded="true"속성을 지정하면 된다.​
+				.and()
+				.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+				.invalidSessionUrl(SESSION_INVALIDSESSION_URL)
+				.and()
 				.formLogin()
 				.loginPage(LOGIN_PAGE)                       //로그인 페이지
 				.loginProcessingUrl(LOGIN_PROCESSING_URL)     //login-processing-url  로그인 페이지 form action에 입력할 주소 지정
-				.failureUrl(FAILURE_URL)                     //실패시 이동될 페이지
+//				.failureUrl(AuthenticationFailureHandler.FAILURE_URL)                     //실패시 이동될 페이지
 				.usernameParameter(USERNAME_PARAMETER)
 				.passwordParameter(PASSWORD_PARAMETER)
 				.defaultSuccessUrl(DEFAULT_SUCCESS_URL)       //성공시 이동될 페이지
-//					.failureHandler(authenticationFailureHandler())
+				.failureHandler(authenticationFailureHandler())
 				.successHandler(new AuthenticationSuccessHandler())
-//					.permitAll()
+					.permitAll()
 				.and()
 //				.rememberMe()
 //					.key(REMEMBER_ME_KEY)
@@ -114,16 +128,18 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
 				.logout()
 					.deleteCookies(REMEMBER_ME_COOKE_NAME)
 					.deleteCookies("JSESSIONID")
+					.deleteCookies(CsrfHeaderFilter.CSRF_TOKEN_COOKE_NAME)
 					.logoutUrl(LOGOUT_URL)
 					.invalidateHttpSession(true)
-					.logoutSuccessUrl(LOGOUT_SUCCESS_URL)
-//                .logoutSuccessHandler(logoutSuccessHandler())      //커스텀으로 로그아웃된거에 대한 처리를 해주면 로그아웃성공URL로 가지 않으니 커스텀할떄 사용해여라
+//					.logoutSuccessUrl(LOGOUT_SUCCESS_URL)
+                    .logoutSuccessHandler(logoutSuccessHandler())      //커스텀으로 로그아웃된거에 대한 처리를 해주면 로그아웃성공URL로 가지 않으니 커스텀할떄 사용해여라
 //				.logoutRequestMatcher(new AntPathRequestMatcher(LOGOUT_URL))
-//				.permitAll()
+				.permitAll()
 				.and()
 //				.authenticationProvider(authenticationProvider()) //configure(AuthenticationManagerBuilder auth) 오버라이딩해서 추가할수도있다.
 //				.addFilterBefore(filterSecurityInterceptor(), FilterSecurityInterceptor.class)
 				.addFilter(filterSecurityInterceptor);
+//				.addFilter(concurrentSessionFilter());
 //				.addFilter(filterSecurityInterceptor());
 //				.addFilterBefore(filterSecurityInterceptor, BasicAuthenticationFilter.class)
 //				.addFilterBefore(filterSecurityInterceptor(), BasicAuthenticationFilter.class)
@@ -135,9 +151,26 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
 
 	}
 
+	@Bean
+	public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
+		return new ServletListenerRegistrationBean<HttpSessionEventPublisher>(new HttpSessionEventPublisher());
+	}
+
 //	@Bean
 //	public AccessDeniedHandler accessDeniedHandler() {
-//		return new AccessDeniedHandler();
+//		return new com.omnicns.omnifit2.cms.config.security.AccessDeniedHandler();
+//	}
+//	@Bean
+//	public RequestMatcher requestMatcher() {
+//		return new RequestMatcher() {
+//			@Override
+//			public boolean matches(HttpServletRequest request) {
+//				if (request.getRequestURI().equals(LOGIN_PAGE)  || request.getRequestURI().indexOf(ANON_PATH) != -1) {
+//					return false;
+//				}
+//				return true;
+//			}
+//		};
 //	}
 
 
@@ -216,10 +249,42 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
 		return new UserDetailsService();
 	}
 
+	//注册自定义的SessionRegistry
+	@Bean
+	public SessionRegistry sessionRegistry(){
+		return new SessionRegistryImpl();
+	}
+
+	//注册自定义的sessionAuthenticationStrategy
+	//ConcurrentSessionControlAuthenticationStrategy控制并发
+	//SessionFixationProtectionStrategy可以防盗session
+	//RegisterSessionAuthenticationStrategy触发了注册新sessin
+//	@Bean
+//	public CompositeSessionAuthenticationStrategy sessionAuthenticationStrategy(){
+//		ConcurrentSessionControlAuthenticationStrategy concurrentSessionControlAuthenticationStrategy=new ConcurrentSessionControlAuthenticationStrategy(sessionRegistry());
+//		concurrentSessionControlAuthenticationStrategy.setMaximumSessions(2);
+//		concurrentSessionControlAuthenticationStrategy.setExceptionIfMaximumExceeded(true);
+//		SessionFixationProtectionStrategy sessionFixationProtectionStrategy=new SessionFixationProtectionStrategy();
+//		RegisterSessionAuthenticationStrategy registerSessionStrategy = new RegisterSessionAuthenticationStrategy(sessionRegistry());
+//		CompositeSessionAuthenticationStrategy sessionAuthenticationStrategy=new CompositeSessionAuthenticationStrategy(
+//				Arrays.asList(concurrentSessionControlAuthenticationStrategy,sessionFixationProtectionStrategy,registerSessionStrategy));
+//		return sessionAuthenticationStrategy;
+//	}
+//
+//
+//
+//
+//	//注册并发Session Filter
+//	@Bean
+//	public ConcurrentSessionFilter concurrentSessionFilter(){
+//		SimpleRedirectSessionInformationExpiredStrategy s = new SimpleRedirectSessionInformationExpiredStrategy(SESSION_EXPIRED_URL);
+//		return new ConcurrentSessionFilter(sessionRegistry(),s);
+//	}
+
 	//////csrf
 	private CsrfTokenRepository csrfTokenRepository() {
 		HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-		repository.setHeaderName("X-XSRF-TOKEN");
+		repository.setHeaderName("X-"+CsrfHeaderFilter.CSRF_TOKEN_COOKE_NAME);
 		return repository;
 	}
 
@@ -240,16 +305,19 @@ public class WebSecurityConfigurerAdapter extends org.springframework.security.c
 ////		log.debug("#### login Success handler #####");
 //		return new AuthenticationSuccessHandler();
 //	}
+	@Bean
+	public AuthenticationFailureHandler authenticationFailureHandler() {
+		return new AuthenticationFailureHandler();
+	}
+	//로그아웃 성공시 핸들링
+	@Bean
+	public LogoutSuccessHandler logoutSuccessHandler(){
+		return new LogoutSuccessHandler();
+	}
 //	@Bean
-//	public AuthenticationFailureHandler authenticationFailureHandler() {
-//		return new AuthenticationFailureHandler();
+//	public ActiveUserStore activeUserStore() {
+//		return new ActiveUserStore();
 //	}
-//	//로그아웃 성공시 핸들링
-//	@Bean
-//	public LogoutSuccessHandler logoutSuccessHandler(){
-//		return new LogoutSuccessHandler();
-//	}
-
 
 //
 

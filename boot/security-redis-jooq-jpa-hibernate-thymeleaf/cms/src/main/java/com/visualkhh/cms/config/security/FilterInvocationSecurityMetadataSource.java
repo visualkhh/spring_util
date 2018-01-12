@@ -43,10 +43,12 @@ public class FilterInvocationSecurityMetadataSource implements org.springframewo
 		log.debug("url:{}, method:{}, Authentication:{} FilterInvocationSecurityMetadataSource >> {}", uri, method, authentication, object.toString());
 
 
-
+//		if(uri.startsWith(WebSecurityConfigurerAdapter.SECURITY_PATH)){
+//			return null;
+//		}
 		List<ConfigAttribute> attributes = new ArrayList<ConfigAttribute>();
 		attributes.add(new com.omnicns.web.spring.security.ConfigAttribute("ROLE_SUPER"));
-		if(uri.equals(WebSecurityConfigurerAdapter.ROOT_PATH) || uri.equals(WebSecurityConfigurerAdapter.LOGIN_PAGE) || uri.startsWith(WebSecurityConfigurerAdapter.SECURITY_PATH)){
+		if(uri.equals(WebSecurityConfigurerAdapter.ROOT_PATH) || uri.equals(WebSecurityConfigurerAdapter.LOGIN_PAGE)){
 			attributes.add(new com.omnicns.web.spring.security.ConfigAttribute("ROLE_ANONYMOUS"));
 			attributes.add(new com.omnicns.web.spring.security.ConfigAttribute("ROLE_AUTH"));
 		}
@@ -60,7 +62,7 @@ public class FilterInvocationSecurityMetadataSource implements org.springframewo
 			userDetails.getAuthorities().stream().forEach(at->{
 				for (Auth auth:ListUtils.emptyIfNull(at.getAuth())) {
 					String userURI = auth.getUrl();
-					String crudType = auth.getCrudType();
+					String crudType = auth.getCrudTypeCd();
 					if(null!=uri && null!=userURI && uri.equals(userURI) && null!=method && null!=crudType && method.equals(crudType)){
 						com.omnicns.web.spring.security.ConfigAttribute u = new com.omnicns.web.spring.security.ConfigAttribute(at.getAuthority());
 						attributes.add(u);

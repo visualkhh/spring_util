@@ -7,12 +7,13 @@ import com.visualkhh.api.model.ApiHeader;
 import com.visualkhh.api.repository.DvcInfoRepository;
 import com.visualkhh.api.repository.UserDvcRepository;
 import com.visualkhh.api.repository.UserRepository;
-import com.visualkhh.common.code.Code;
-import com.visualkhh.common.exception.ErrorException;
+import com.visualkhh.common.code.MsgCode;
+import com.visualkhh.common.exception.ErrorMsgException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate5.SessionHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,7 +74,7 @@ public class UserService {
         if(StringUtils.isEmpty(header.getUserDvcSeq()) && !StringUtils.isEmpty(header.getSerialNo()) && !StringUtils.isEmpty(header.getCponId())){
             DvcInfo dvcInfo = dvcInfoRepository.findFirstBySerialNo(header.getSerialNo());
             if(null==dvcInfo){
-                throw new ErrorException(Code.E10101);
+                throw new ErrorMsgException(MsgCode.E10101, HttpStatus.INTERNAL_SERVER_ERROR);
             }
             User user = userRepository.findFirstByCponId(header.getCponId());
             if(null==user){
@@ -83,7 +84,7 @@ public class UserService {
                 user.setLstLginDt(ZonedDateTime.now());
                 user = userRepository.save(user);
             }else if("N".equals(user.getUseYn())){
-                throw new ErrorException(Code.E10103);
+                throw new ErrorMsgException(MsgCode.E10103, HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
             UserDvc userDvc = userDvcRepository.findFirstByUserSeqAndDvcSeq(user.getUserSeq(),dvcInfo.getDvcSeq());
@@ -97,7 +98,7 @@ public class UserService {
         }else{//userDvcUser가 존재할경우 serialNo와 cponId를 체크한다
             UserDvc userDvc = userDvcRepository.findOne(header.getUserDvcSeq());
             if(null==userDvc || null==userDvc.getDvcInfo() || null==userDvc.getUser() || (!userDvc.getDvcInfo().getSerialNo().equals(header.getSerialNo()) && !userDvc.getUser().getCponId().equals(header.getCponId()))){
-                throw new ErrorException(Code.E10104);
+                throw new ErrorMsgException(MsgCode.E10104, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
         return header;

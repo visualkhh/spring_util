@@ -1,6 +1,8 @@
 package com.visualkhh.cms.config.security;
 
+import com.omnicns.web.spring.security.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.AuthenticationException;
@@ -15,13 +17,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
+
 //로그인 실패 핸들러
 @Slf4j
 public class AuthenticationFailureHandler implements org.springframework.security.web.authentication.AuthenticationFailureHandler {
-    @Autowired
-    protected AuthenticationManager authenticationManager;
-    private RequestCache requestCache = null;
-    private RedirectStrategy redirectStrategy = null;
+    public static final String FAILURE_URL = WebSecurityConfigurerAdapter.LOGIN_PAGE+"?logfail";
+
+    @Autowired protected AuthenticationManager authenticationManager;
+    @Autowired UserDetailsService userDetailsService;
+    @Autowired private SessionFactory sessionFactory;
+    private RequestCache requestCache;
+    private RedirectStrategy redirectStrategy;
 
     public AuthenticationFailureHandler() {
         requestCache        = new HttpSessionRequestCache();
@@ -30,6 +36,13 @@ public class AuthenticationFailureHandler implements org.springframework.securit
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        redirectStrategy.sendRedirect(request, response, WebSecurityConfigurerAdapter.FAILURE_URL);
+//        adminService.pulseLginFailCnt(userDetails.getAdmSeq());
+        String username = request.getParameter(WebSecurityConfigurerAdapter.USERNAME_PARAMETER);
+        String password = request.getParameter(WebSecurityConfigurerAdapter.PASSWORD_PARAMETER);
+        userDetailsService.pulseLginFailCntByLginId(username);
+
+        //        Integer i = adminService.pulseLginFailCntByLginId(username);
+        SecurityUtil.setLastException(request,exception);
+        redirectStrategy.sendRedirect(request, response, FAILURE_URL);
     }
 }

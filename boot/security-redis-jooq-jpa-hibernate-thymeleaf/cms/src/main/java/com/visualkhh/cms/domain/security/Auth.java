@@ -38,7 +38,7 @@ public class Auth implements Serializable{
 	@Column
 	String authNm;
 	@Column
-	String crudType;
+	String crudTypeCd;
 	@Column
 	String menuNm;
 	@Column

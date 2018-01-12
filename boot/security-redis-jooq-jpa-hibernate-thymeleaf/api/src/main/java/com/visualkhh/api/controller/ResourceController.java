@@ -1,13 +1,14 @@
 package com.visualkhh.api.controller;
 
 import com.omnicns.java.property.PropertyUtil;
-import com.visualkhh.common.code.Code;
-import com.visualkhh.common.exception.ErrorException;
+import com.visualkhh.common.code.MsgCode;
+import com.visualkhh.common.exception.ErrorMsgException;
 import com.visualkhh.common.model.error.Error;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,7 @@ public class ResourceController {
     public FileSystemResource vidoes(@PathVariable(name = "fileName") String fileName){
         FileSystemResource fileSystemResource = new FileSystemResource(new File(videoFilePath+ PropertyUtil.getFileSeparator()+fileName));
         if(!fileSystemResource.exists()){
-            throw  new ErrorException(new Error(Code.E10003));
+            throw  new ErrorMsgException(MsgCode.E10003, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return fileSystemResource;
     }
@@ -38,7 +39,7 @@ public class ResourceController {
     public FileSystemResource musics(@PathVariable(name = "fileName") String fileName){
         FileSystemResource fileSystemResource = new FileSystemResource(new File(musicFilePath+ PropertyUtil.getFileSeparator()+fileName));
         if(!fileSystemResource.exists()){
-            throw  new ErrorException(new Error(Code.E10003));
+            throw  new ErrorMsgException(MsgCode.E10003, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return fileSystemResource;
     }

@@ -12,6 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +22,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Collection;
+import java.util.List;
 
 @Slf4j @EnableCaching
 @RestController
@@ -130,4 +136,40 @@ public class TestController {
     public ApiHeader headerCheckValidSerialCpon(HttpServletRequest request, @Validated({ValidatedApiHeadGroup.ValidSerialNoAndCponId.class}) ApiHeader header){
         return header;
     }
+
+
+
+
+//    @PostMapping(value = "/date")
+//    public Page<FitBrainResult> date(@RequestBody @Valid DateTest dateTest){
+//        log.debug(dateTest.getRegDt().toString());
+//        PageRequest pageRequest = new PageRequest(1,10);
+//        Page<FitBrainResult> list = fitBrainService.findAll(pageRequest);
+//        ZoneId zoneId = ZoneId.of("Asia/Seoul");
+//
+//        FitBrainResult o = list.getContent().get(0);
+//        ZonedDateTime original = o.getRegDt();
+//        ZonedDateTime arrival = original.withZoneSameInstant(zoneId);
+//        original.withZoneSameLocal(zoneId);
+//
+//
+////        o.setRegDt(o);
+//
+//        return fitBrainService.findAll(pageRequest);
+//    }
+//
+//
+//
+//    @PostMapping(value = "/board")
+//    public Brd board(@RequestBody @Valid Brd data){
+//        return brdService.save(data);
+//    }
+//    @GetMapping(value = "/board")
+//    public List<Brd> boards(@RequestParam(name = "from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime from, @RequestParam(name = "to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime to){
+//        return brdService.findByRegDtBetween(from, to);
+//    }
+//    @GetMapping(value = "/board1")
+//    public List<Brd> boards1(@ModelAttribute DateTest dateTest){
+//        return brdService.findByRegDtBetween(dateTest.getFrom(), dateTest.getTo());
+//    }
 }

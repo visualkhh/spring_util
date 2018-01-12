@@ -1,7 +1,7 @@
 package com.visualkhh.cms.controller;
 
-import com.visualkhh.common.code.Code;
-import com.visualkhh.common.exception.ErrorException;
+import com.visualkhh.common.code.MsgCode;
+import com.visualkhh.common.exception.ErrorMsgException;
 import com.visualkhh.common.model.error.Error;
 import com.visualkhh.common.model.error.FieldError;
 import lombok.extern.slf4j.Slf4j;
@@ -40,21 +40,21 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         log(ex,request);
-        return new ResponseEntity<>(getError(Code.E10002, ex.getBindingResult()), status);
+        return new ResponseEntity<>(getError(MsgCode.E10002, ex.getBindingResult()), status);
     }
 
     @Override
     protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         log(ex,request);
-        return new ResponseEntity<>(getError(Code.E10002, ex), status);
+        return new ResponseEntity<>(getError(MsgCode.E10002, ex), status);
     }
 
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         log(ex,request);
         Error e = new Error();
-        e.setCode(Code.E10004.name());
-        e.setMessage(msgSource.getMessage(Code.E10004.value()));
+        e.setCode(MsgCode.E10004.name());
+        e.setMessage(msgSource.getMessage(MsgCode.E10004.value()));
         return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
     }
 
@@ -62,24 +62,24 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
         log(ex,request);
         Error e = new Error();
-        e.setCode(Code.E99999.name());
+        e.setCode(MsgCode.E99999.name());
         e.setMessage(ex.getMessage());
         e.setData(body);
         return new ResponseEntity<>(e, status);
     }
 
-    @ExceptionHandler(ErrorException.class)
-    protected ResponseEntity<Object> errorException(ErrorException ex, WebRequest webRequest) {
+    @ExceptionHandler(ErrorMsgException.class)
+    protected ResponseEntity<Object> errorException(ErrorMsgException ex, WebRequest webRequest) {
         log(ex,webRequest);
         Error error = ex.getError();
         if(null!=error){
             if(StringUtils.isEmpty(error.getCode())){
-                error.setCode(Code.E99999.name());
+                error.setCode(MsgCode.E99999.name());
             }
             if(StringUtils.isEmpty(error.getMessage())){
                 String msg=null;
                 try{
-                    Code code = Code.valueOf(error.getCode());
+                    MsgCode code = MsgCode.valueOf(error.getCode());
                     if(null!=code) {
                         msg = msgSource.getMessage(code.value());
                     }else{
@@ -92,9 +92,9 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
             }
         }else{
             error = new Error();
-            error.setCode(Code.E99999.name());
+            error.setCode(MsgCode.E99999.name());
             if(StringUtils.isEmpty(ex.getMessage())){
-                error.setMessage(msgSource.getMessage(Code.E99999.value()));
+                error.setMessage(msgSource.getMessage(MsgCode.E99999.value()));
             }else {
                 error.setMessage(ex.getMessage());
             }
@@ -107,22 +107,22 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> sqlException(SQLException ex, WebRequest webRequest) {
         log(ex,webRequest);
         Error e = new Error();
-        e.setCode(Code.E30000.name());
-        e.setMessage(msgSource.getMessage(Code.E30000.value()));
+        e.setCode(MsgCode.E30000.name());
+        e.setMessage(msgSource.getMessage(MsgCode.E30000.value()));
         return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
     @ExceptionHandler(Throwable.class)
     protected ResponseEntity<Object> throwable(Throwable ex, WebRequest webRequest) {
         log(ex,webRequest);
         Error e = new Error();
-        e.setCode(Code.E99999.name());
+        e.setCode(MsgCode.E99999.name());
         e.setMessage(Optional.ofNullable(ex.getMessage()).orElseGet(()->ex.toString()));
         return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
 
-    private Error getError(Code code, BindingResult bindingResult) {
+    private Error getError(MsgCode code, BindingResult bindingResult) {
         Error e = new Error();
         e.setCode(code.name());
         e.setMessage(msgSource.getMessage(code.value()));

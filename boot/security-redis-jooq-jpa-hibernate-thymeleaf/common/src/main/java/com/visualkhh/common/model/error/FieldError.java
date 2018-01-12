@@ -4,9 +4,10 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import com.visualkhh.common.model.error.Error;
 
 @Getter @Setter @NoArgsConstructor @EqualsAndHashCode(callSuper = false)
-public class FieldError<T> extends com.visualkhh.common.model.error.Error<T> {
+public class FieldError<T> extends Error<T>  {
 	String field;
 
 }

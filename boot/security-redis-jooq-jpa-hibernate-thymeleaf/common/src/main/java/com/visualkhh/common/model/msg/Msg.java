@@ -1,7 +1,10 @@
-package com.visualkhh.common.model.error;
+package com.visualkhh.common.model.msg;
 
-import com.visualkhh.common.code.Code;
-import lombok.*;
+import com.visualkhh.common.code.MsgCode;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor @EqualsAndHashCode(callSuper = false)
 public class Msg<T>  {
@@ -23,10 +26,10 @@ public class Msg<T>  {
 		this.data = data;
 	}
 
-	public Msg(Code code, String message) {
+	public Msg(MsgCode code, String message) {
 		this(code.name(), message, null);
 	}
-	public Msg(Code code) {
+	public Msg(MsgCode code) {
 		this(code.name(), null, null);
 	}
 

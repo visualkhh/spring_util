@@ -22,6 +22,8 @@ import java.io.IOException;
 @Slf4j
 public class AuthenticationSuccessHandler implements org.springframework.security.web.authentication.AuthenticationSuccessHandler {
 
+    //    @Autowired
+//    ActiveUserStore activeUserStore;
     @Autowired
     protected AuthenticationManager authenticationManager;
     private RequestCache requestCache = null;
@@ -35,9 +37,14 @@ public class AuthenticationSuccessHandler implements org.springframework.securit
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         log.debug("onAuthenticationSuccess::"+authentication);
+//        HttpSession session = request.getSession(false);
+//        if (session != null) {
+//            LoggedUser user = new LoggedUser(authentication.getName(), activeUserStore);
+//            session.setAttribute("user", user);
+//        }
 //        SecurityContextHolder.getContext().setAuthentication(authentication);
         request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY+"_AUTHENTICATION",authentication);
-        sendRedirectDefaultUrl(request,response);
+        sendRedirectDefaultUrl(request, response);
     }
 
     private void sendRedirectSessionUrl(HttpServletRequest request,HttpServletResponse response) throws IOException {

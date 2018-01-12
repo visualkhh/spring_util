@@ -19,8 +19,10 @@ spring:
       naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
-       jdbc:
-         time_zone: UTC
+        current_session_context_class: org.springframework.orm.hibernate4.SpringSessionContext
+#        current_session_context_class: thread
+        jdbc:
+          time_zone: UTC
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:mysql://123.123.123.123:3306/dev?serverTimezone=Asia/Seoul
@@ -31,9 +33,10 @@ spring:
     cache-seconds: -1 # Loaded resource bundle files cache expiration, in seconds. When set to -1, bundles are cached forever.
     basename: classpath:/messages/message # Comma-separated list of basenames, each following the ResourceBundle convention.
     encoding: UTF-8
+  thymeleaf:
+    cache: false
   jooq.sql-dialect: MYSQL
-#  jackson.serialization.write_dates_as_timestamps: false
-  jackson.serialization.WRITE_DATES_AS_TIMESTAMPS: false
+  jackson.serialization.WRITE_DATES_AS_TIMESTAMPS: false # http://wonwoo.ml/index.php/post/1008 Jsonformat을 ISO8601로 바꾸는 설정
 
 
 project:
@@ -47,3 +50,4 @@ project:
     defaultExpireTime: 60 #second
     expireTime:
       CodeService-getCodes: 10
+      AppVerService-getAppInfo: 0 # 무제한

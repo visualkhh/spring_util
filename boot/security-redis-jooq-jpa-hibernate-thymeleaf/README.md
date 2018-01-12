@@ -31,5 +31,5 @@ Documents
 
 ##### 실행 angular
 > ${CMS_SOURCE}\src\main\angular 폴더 이동후   npm i 하여 현재폴더의 package.json으로 module 가져온다.
-> Node Parameters : ./node_modules/@angular/cli/bin/ng build -w -op ../webapp --dev
+> Node Parameters : ./node_modules/@angular/cli/bin/ng build -w -op ../resources/webapp --dev
 > Working directory: ${CMS_SOURCE}\src\main\angular

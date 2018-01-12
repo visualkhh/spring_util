@@ -1,10 +1,15 @@
 package com.visualkhh.common.model.error;
 
-import com.visualkhh.common.code.Code;
-import lombok.*;
+import com.visualkhh.common.code.MsgCode;
+import com.visualkhh.common.model.msg.Msg;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Getter @Setter @NoArgsConstructor @EqualsAndHashCode(callSuper = false)
 public class Error<T> extends Msg<T> {
 	List<Error> errors;
@@ -20,13 +25,13 @@ public class Error<T> extends Msg<T> {
 		this.errors = errors;
 	}
 
-	public Error(Code code, String message) {
+	public Error(MsgCode code, String message) {
 		super(code, message);
 	}
-	public Error(Code code) {
+	public Error(MsgCode code) {
 		super(code);
 	}
-	public Error(Code code, String message, List<Error> errors) {
+	public Error(MsgCode code, String message, List<Error> errors) {
 		super(code, message);
 		this.errors = errors;
 	}

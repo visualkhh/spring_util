@@ -5,16 +5,16 @@ import com.visualkhh.api.domain.FitBrain;
 import com.visualkhh.api.domain.FitBrainResult;
 import com.visualkhh.api.model.ApiHeader;
 import com.visualkhh.api.service.FitBrainService;
-import com.visualkhh.common.code.Code;
-import com.visualkhh.common.validate.ValidateGroup;
+import com.visualkhh.common.code.MsgCode;
 import com.visualkhh.common.domain.FitBrainResultBase;
-import com.visualkhh.common.exception.ErrorException;
-import com.visualkhh.common.model.error.Error;
+import com.visualkhh.common.exception.ErrorMsgException;
+import com.visualkhh.common.validate.ValidateGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,7 +64,7 @@ public class FitBrainController {
 
         FitBrainResult retFitBrainResult = fitBrainService.createFitBrainResult(t);
         if(retFitBrainResult==null) {
-            throw  new ErrorException(new Error(Code.E30001));
+            throw  new ErrorMsgException(MsgCode.E30001, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

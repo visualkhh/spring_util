@@ -1,11 +1,13 @@
 package com.visualkhh.cms.config;
 
 import com.visualkhh.cms.config.security.WebSecurityConfigurerAdapter;
+import com.visualkhh.cms.controller.AnonController;
 import com.visualkhh.common.config.CommonWebMvcConfigurerAdapter;
 import com.visualkhh.common.config.properties.ProjectProperties;
 import org.hibernate.SessionFactory;
 import org.hibernate.jpa.HibernateEntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -16,9 +18,15 @@ import org.springframework.orm.hibernate5.support.OpenSessionInViewFilter;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+
+import java.util.Locale;
 
 @Configuration
 @Import({CommonWebMvcConfigurerAdapter.class})
@@ -28,11 +36,27 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 @EnableTransactionManagement
 public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter {
 
-
+	@Value("${project.properties.angular-path}")
+	String angularPath;
 //	@Autowired
 //	private EntityManagerFactory entityManagerFactory;
 
-
+	@Bean
+	public LocaleResolver localeResolver() {
+		SessionLocaleResolver slr = new SessionLocaleResolver();
+		slr.setDefaultLocale(Locale.KOREAN);
+		return slr;
+	}
+	@Bean
+	public LocaleChangeInterceptor localeChangeInterceptor() {
+		LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+		lci.setParamName(AnonController.LANG_CHANGE_PARAM_NAME);
+		return lci;
+	}
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(localeChangeInterceptor()).addPathPatterns(AnonController.URI_PREFIX+AnonController.LANG_CHANGE_URI);
+	}
 
 //	@Bean
 //	public SessionFactory getSessionFactory() {
@@ -145,8 +169,9 @@ public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.con
 	//리소스 패스 설정
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/assets/**")	            .addResourceLocations("/assets/");
-		registry.addResourceHandler("/*.map")	                .addResourceLocations("/");
-		registry.addResourceHandler("/*.js")	                .addResourceLocations("/");
+		registry.addResourceHandler("/assets/**")	            .addResourceLocations(angularPath+"/assets/");
+		registry.addResourceHandler("/favicon.ico")	            .addResourceLocations(angularPath+"/assets/img/favicon/favicon.ico");
+		registry.addResourceHandler("/*.map")	                .addResourceLocations(angularPath+"/");
+		registry.addResourceHandler("/*.js")	                .addResourceLocations(angularPath+"/");
 	}
 }

@@ -1,12 +1,15 @@
 package com.visualkhh.common.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+import com.omnicns.web.spring.message.CustomReloadableResourceBundleMessageSource;
 import org.hibernate.validator.HibernateValidator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.web.DefaultErrorAttributes;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +17,8 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.orm.hibernate5.support.OpenSessionInViewFilter;
+import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 import org.springframework.scheduling.concurrent.ScheduledExecutorFactoryBean;
@@ -66,6 +71,7 @@ public class CommonWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter{
 						SerializationFeature.WRITE_DATES_AS_TIMESTAMPS //erializationFeature.WRITE_DATES_AS_TIMESTAMPS = yyyy-mm-dd’T’HH:mm:ssZZ
 				);
 				objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 				break;
 			}
 		}
@@ -107,23 +113,18 @@ public class CommonWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter{
 	public TaskScheduler taskScheduler() {
 		return new ConcurrentTaskScheduler();
 	}
+//	@Bean
+//	public CustomPropertiesPersistor customPropertiesPersistor() {
+//		return new CustomPropertiesPersistor();
+//	}
 
-
-	@Bean
-	public LocaleResolver localeResolver() {
-		AcceptHeaderLocaleResolver slr = new AcceptHeaderLocaleResolver();
-//        slr.setDefaultLocale(Locale.US);
-//        List localeList = new ArrayList();
-//        localeList.add(Locale.KOREA);
-//        localeList.add(Locale.CHINA);
-//        localeList.add(Locale.US);
-//        slr.setSupportedLocales(localeList);
-		return slr;
-	}
 
 	@Bean
 	public ReloadableResourceBundleMessageSource messageSource() {
-		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+
+//		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+		CustomReloadableResourceBundleMessageSource messageSource = CustomReloadableResourceBundleMessageSource.getInstance();
+//		messageSource.setPropertiesPersister(customPropertiesPersistor());
 		messageSource.setBasename(messagesBasename);                //"classpath:/messages/message"
 		messageSource.setDefaultEncoding(messagesEncoding);
 		messageSource.setUseCodeAsDefaultMessage(false);
@@ -166,6 +167,29 @@ public class CommonWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter{
 	@Bean
 	Hibernate5Module jsonHibernate5Module() {
 		return new Hibernate5Module();
+	}
+
+
+
+
+	/////////hibernate view //////////////////////////////////
+	@Bean
+	public FilterRegistrationBean openSessionInViewFilter() {
+		FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+		OpenSessionInViewFilter filter = new OpenSessionInViewFilter();
+		registrationBean.setFilter(filter);
+//		registrationBean.addUrlPatterns("/*");
+//		registrationBean.setOrder(Integer.MAX_VALUE);
+		registrationBean.setOrder(-900);
+		return registrationBean;
+	}
+	@Bean
+	public FilterRegistrationBean openEntityManagerInViewFilter() {
+		FilterRegistrationBean registrationBean = new FilterRegistrationBean(new OpenEntityManagerInViewFilter());
+		OpenEntityManagerInViewFilter filter = new OpenEntityManagerInViewFilter();
+		registrationBean.setFilter(filter);
+		registrationBean.setOrder(5);
+		return registrationBean;
 	}
 
     /*

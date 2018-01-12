@@ -4,10 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.visualkhh.api.model.ApiHeader;
 import com.visualkhh.api.service.DeviceService;
 import com.visualkhh.api.service.UserService;
-import com.visualkhh.common.code.Code;
+import com.visualkhh.common.code.MsgCode;
 import com.visualkhh.common.config.CommonWebMvcConfigurerAdapter;
 import com.visualkhh.common.config.properties.ProjectProperties;
-import com.visualkhh.common.exception.ErrorException;
+import com.visualkhh.common.exception.ErrorMsgException;
+import com.visualkhh.common.filter.RequestLoggingFilter;
 import com.visualkhh.common.model.error.Error;
 import org.hibernate.SessionFactory;
 import org.hibernate.jpa.HibernateEntityManagerFactory;
@@ -20,6 +21,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.support.OpenSessionInViewFilter;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
@@ -31,12 +33,15 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
 import javax.validation.Valid;
 import java.lang.annotation.Annotation;
 import java.util.List;
+import java.util.Locale;
 
 @Configuration
 @Import({CommonWebMvcConfigurerAdapter.class})
@@ -54,6 +59,18 @@ public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.con
     UserService userService;
 
 
+   @Bean
+    public LocaleResolver localeResolver() {
+        AcceptHeaderLocaleResolver slr = new AcceptHeaderLocaleResolver();
+        slr.setDefaultLocale(Locale.KOREA);
+//        List localeList = new ArrayList();
+//        localeList.add(Locale.KOREA);
+//        localeList.add(Locale.CHINA);
+//        localeList.add(Locale.US);
+//        slr.setSupportedLocales(localeList);
+        return slr;
+    }
+
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(new HandlerMethodArgumentResolver() {
@@ -68,7 +85,7 @@ public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.con
                 ApiHeader rval = null;
                 if(json==null || json.isEmpty()){
                     if(parameter.hasParameterAnnotation(Valid.class) || parameter.hasParameterAnnotation(Validated.class))
-                        throw  new ErrorException(new Error(Code.E20001));
+                        throw  new ErrorMsgException(MsgCode.E20001, HttpStatus.INTERNAL_SERVER_ERROR);
                     else
                         return new ApiHeader();
                 } else {
@@ -84,7 +101,7 @@ public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.con
                     } catch (BindException e) {
                         throw e;
                     } catch (Exception e) {
-                        throw new ErrorException(new Error(Code.E20002), e);
+                        throw new ErrorMsgException(MsgCode.E20002, HttpStatus.INTERNAL_SERVER_ERROR);
                     }
                 }
 				rval = userService.headerToUserAndDevMerge(rval);
@@ -107,6 +124,29 @@ public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.con
     }
 
 
+    //filter
+    @Bean
+    public FilterRegistrationBean commonsRequestLoggingFilter() {
+//        CommonsRequestLoggingFilter filter = new CommonsRequestLoggingFilter();
+//        filter.setIncludeQueryString(true);
+//        filter.setIncludePayload(true);
+//        filter.setMaxPayloadLength(10000);
+//        filter.setIncludeHeaders(false);
+//        filter.setAfterMessagePrefix("REQUEST DATA : ");
+
+//        CommonsRequestLoggingFilter filter = new CommonsRequestLoggingFilter();
+//        filter.setIncludeClientInfo(true);
+//        filter.setIncludeQueryString(true);
+//        filter.setIncludePayload(true);
+//        LogRequestFilter filter = new LogRequestFilter();
+        RequestLoggingFilter filter = new RequestLoggingFilter();
+//        RequestDumperFilter filter = new RequestDumperFilter();
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(filter);
+        registrationBean.setOrder(5);
+        return registrationBean;
+    }
+
     @Bean(name = "sessionFactory") @Autowired
     public SessionFactory getSessionFactory(HibernateEntityManagerFactory g) {
         return g.getSessionFactory();
@@ -119,24 +159,6 @@ public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.con
         return transactionManager;
     }
 
-    ////////////////////hibernate view //////////////////////////////////
-    @Bean
-    public FilterRegistrationBean openSessionInViewFilter() {
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        OpenSessionInViewFilter filter = new OpenSessionInViewFilter();
-        registrationBean.setFilter(filter);
-        registrationBean.setOrder(5);
-        return registrationBean;
-    }
-    @Bean
-    public FilterRegistrationBean openEntityManagerInViewFilter() {
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean(new OpenEntityManagerInViewFilter());
-        OpenEntityManagerInViewFilter filter = new OpenEntityManagerInViewFilter();
-        registrationBean.setFilter(filter);
-        registrationBean.setOrder(5);
-        return registrationBean;
-    }
-    ///////////////////////////////////////////////////////////////////
     //리소스 패스 설정
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

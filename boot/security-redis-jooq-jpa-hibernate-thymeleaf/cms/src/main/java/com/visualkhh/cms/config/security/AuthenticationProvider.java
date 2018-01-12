@@ -23,20 +23,15 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class AuthenticationProvider implements org.springframework.security.authentication.AuthenticationProvider {
 
-	@Autowired
-	UserDetailsService userDetailsService;
-	@Autowired
-	AuthRepository authRepository;
-	@Autowired
-	MessageSourceAccessor messageSource;
-	@Autowired
-	ShaPasswordEncoder shaPasswordEncoder;
-	@Autowired
-	HttpServletRequest httpServletRequest;
+	@Autowired UserDetailsService userDetailsService;
+	@Autowired AuthRepository authRepository;
+	@Autowired MessageSourceAccessor messageSource;
+	@Autowired ShaPasswordEncoder shaPasswordEncoder;
+	@Autowired HttpServletRequest httpServletRequest;
 	@Value("${project.properties.salt}")
 	String salt;
 
-    @Transactional //http://jdm.kr/blog/141
+	//@Transactional //http://jdm.kr/blog/141
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		WebAuthenticationDetails detail = (WebAuthenticationDetails) authentication.getDetails();
@@ -44,14 +39,14 @@ public class AuthenticationProvider implements org.springframework.security.auth
 //	    RequestUtil.getRequest();
 		String username = (String)authentication.getPrincipal();
 		String password = (String)authentication.getCredentials();
-	    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+		UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 		log.info("Login try ip :  -> "+remoteIP+" input id("+username+") info:"+userDetails);
 		if(null == userDetails || userDetails.isAccountNonLocked()==false || userDetails.isAccountNonExpired() == false || userDetails.isEnabled() == false || userDetails.isCredentialsNonExpired() == false) {
-			throw new UsernameNotFoundException(messageSource.getMessage("msg.error.login.fail"));
+			throw new UsernameNotFoundException("Login Fail");
 		}
 
 		if(!shaPasswordEncoder.isPasswordValid(userDetails.getPassword(), password, salt)){    //실패
-			throw new BadCredentialsException(messageSource.getMessage("msg.error.login.fail"));
+			throw new BadCredentialsException("Login Fail");
 		}
 
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password, userDetails.getAuthorities());
