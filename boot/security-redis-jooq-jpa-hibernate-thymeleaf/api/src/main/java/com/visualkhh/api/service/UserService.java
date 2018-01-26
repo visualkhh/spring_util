@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.EntityManager;
 import java.time.ZonedDateTime;
 
 @Service
@@ -28,6 +29,7 @@ public class UserService {
     @Autowired UserDvcRepository userDvcRepository;
     @Autowired DvcInfoRepository dvcInfoRepository;
     @Autowired SessionFactory sessionFactory;
+    @Autowired EntityManager entityManager;
     public User saveUser(User user) {
         return userRepository.save(user);
     }
@@ -50,7 +52,8 @@ public class UserService {
     }
     public Integer setUserDvcAgeCdAndGenCd(Integer userDvcSeq, String ageCd, String genCd) {
         //userDvcRepository.setUserDvcAgeCdAndGenCd(userDvcSeq, genCd, ageCd);
-        Session s = ((SessionHolder) TransactionSynchronizationManager.getResource(sessionFactory)).getSession();
+//        Session s = ((SessionHolder) TransactionSynchronizationManager.getResource(sessionFactory)).getSession();
+        Session s = entityManager.unwrap(org.hibernate.Session.class);
         Query q = s.createQuery("update UserDvc as root set root.ageCd=:ageCd, root.genCd=:genCd where root.userDvcSeq=:userDvcSeq");
         q.setParameter("userDvcSeq",userDvcSeq);
         q.setParameter("ageCd",ageCd);

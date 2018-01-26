@@ -108,12 +108,16 @@ apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'nu.studer.jooq'
 
-
+test {
+	filter {
+		includeTestsMatching "com.khh.api.test.deploy.*"
+	}
+}
 jooq {
-	prod(sourceSets.main) {
+	gen(sourceSets.main) {
 		jdbc {
 			driver = 'com.mysql.cj.jdbc.Driver'
-			url = 'jdbc:mysql://123.123.123.123:3306/prod?serverTimezone=Asia/Seoul'
+			url = "jdbc:mysql://123.123.123.123:3306/$jooqTarget?serverTimezone=Asia/Seoul"
 			user = '****'
 			password = '****'
 		}
@@ -144,7 +148,7 @@ jooq {
 			}
 			database {
 				name = 'org.jooq.util.mysql.MySQLDatabase'
-				inputSchema = 'prod'
+				inputSchema = "$jooqTarget"
 //				customTypes {
 //					customType{
 //						name = 'ZonedDateTime'
@@ -179,65 +183,6 @@ jooq {
 				validationAnnotations = false
 				routines = false
 //				javaTimeTypes = true
-			}
-			target {
-				packageName = 'com.visualkhh.jooq'
-				directory = 'jooq/src/main/java'
-			}
-		}
-	}
-
-
-	dev(sourceSets.main) {
-		jdbc {
-			driver = 'com.mysql.cj.jdbc.Driver'
-			url = 'jdbc:mysql://123.123.123.123:3306/dev?serverTimezone=Asia/Seoul'
-			user = '****'
-			password = '****'
-		}
-		generator {
-			name = 'org.jooq.util.DefaultGenerator'
-			strategy {
-				name = null
-				matchers {
-					tables {
-						table {
-							expression = '^T_(.*?)$'
-							tableIdentifier {
-								transform = 'UPPER'
-								expression = '$1'
-							}
-							tableClass {
-								transform = 'PASCAL'
-								expression = 'J_$1'
-							}
-						}
-					}
-				}
-			}
-			database {
-				name = 'org.jooq.util.mysql.MySQLDatabase'
-				inputSchema = 'dev'
-				forcedTypes {
-					forcedType {
-						userType = 'java.time.ZonedDateTime'
-						converter = 'com.visualkhh.common.config.converter.ZonedDateTimeConverter'
-						expression = '(.*?)Dt$'
-					}
-				}
-			}
-			generate {
-				relations = true
-				deprecated = false
-				records = true
-				immutablePojos = false
-				fluentSetters = true
-				pojos = false
-				pojosEqualsAndHashCode = false
-				jpaAnnotations = false
-				springAnnotations = false
-				validationAnnotations = false
-				routines = false
 			}
 			target {
 				packageName = 'com.visualkhh.jooq'

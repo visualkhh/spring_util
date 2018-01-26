@@ -14,15 +14,14 @@ Documents
 
 
 
-##### JOOK Generate Gradle 방법
+##### JOOQ Generate Gradle 방법
+> - 리얼 : gradle generateOmnifitJooqSchemaSource -PjooqTarget=khh
+> - 개발 : gradle generateOmnifitJooqSchemaSource -PjooqTarget=khh_dev
 
-> - 리얼 : gradle generateProdJooqSchemaSource
-> - 개발 : gradle generateDevJooqSchemaSource
 
 ##### Spring Boot Executable jar make
-
-> - 리얼 : gradle build -x test -x generateProdJooqSchemaSource
-> - 개발 : gradle build -x test -x generateDevJooqSchemaSource
+> - 리얼 : gradle build -PjooqTarget=khh
+> - 개발 : gradle build -PjooqTarget=khh_dev
 
 
 ##### 실행 VM options 지정

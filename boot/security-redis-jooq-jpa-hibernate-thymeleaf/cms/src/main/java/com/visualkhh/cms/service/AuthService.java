@@ -18,8 +18,7 @@ import javax.persistence.PersistenceContext;
 @Service @Slf4j @Repository
 public class AuthService {
 
-	@Autowired
-	private SessionFactory sessionFactory;
+	@Autowired private EntityManager entityManager;
 	@Autowired
 	private HibernateTransactionManager hibernateTransactionManager;
 //	@Autowired
@@ -43,9 +42,10 @@ public class AuthService {
 
 
 //		hibernateTransactionManager.
-		SessionHolder gg = (SessionHolder)TransactionSynchronizationManager.getResource(sessionFactory);
-		Session s = hibernateTransactionManager.getSessionFactory().getCurrentSession();
-		
+//		SessionHolder gg = (SessionHolder)TransactionSynchronizationManager.getResource(sessionFactory);
+//		Session s = hibernateTransactionManager.getSessionFactory().getCurrentSession();
+		Session s = entityManager.unwrap(org.hibernate.Session.class);
+
 
 		//		log.info("--{} {}",sessionFactory,hibernateTransactionManager);
 //		Session s = gg.getSession();

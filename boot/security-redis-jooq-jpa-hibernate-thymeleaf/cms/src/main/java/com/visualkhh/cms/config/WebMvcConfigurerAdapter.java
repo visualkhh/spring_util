@@ -65,17 +65,7 @@ public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.con
 //		}
 //		return entityManagerFactory.unwrap(SessionFactory.class);
 //	}
-	@Bean(name = "sessionFactory") @Autowired
-	public SessionFactory getSessionFactory(HibernateEntityManagerFactory g) {
-		return g.getSessionFactory();
-	}
 
-	@Bean @Autowired
-	public HibernateTransactionManager transactionManager(SessionFactory s) {
-		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-		transactionManager.setSessionFactory(s);
-		return transactionManager;
-	}
 
 
 

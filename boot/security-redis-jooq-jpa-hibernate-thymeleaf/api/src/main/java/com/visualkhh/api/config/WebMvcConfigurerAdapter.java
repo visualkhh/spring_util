@@ -147,17 +147,7 @@ public class WebMvcConfigurerAdapter extends org.springframework.web.servlet.con
         return registrationBean;
     }
 
-    @Bean(name = "sessionFactory") @Autowired
-    public SessionFactory getSessionFactory(HibernateEntityManagerFactory g) {
-        return g.getSessionFactory();
-    }
 
-    @Bean @Autowired
-    public HibernateTransactionManager transactionManager(SessionFactory s) {
-        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(s);
-        return transactionManager;
-    }
 
     //리소스 패스 설정
     @Override

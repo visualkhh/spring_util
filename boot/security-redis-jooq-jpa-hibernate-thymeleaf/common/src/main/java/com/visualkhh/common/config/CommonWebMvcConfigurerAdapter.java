@@ -6,7 +6,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.omnicns.web.spring.message.CustomReloadableResourceBundleMessageSource;
+import org.hibernate.SessionFactory;
+import org.hibernate.jpa.HibernateEntityManagerFactory;
 import org.hibernate.validator.HibernateValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.web.DefaultErrorAttributes;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -17,6 +20,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.support.OpenSessionInViewFilter;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.scheduling.TaskScheduler;
@@ -170,27 +174,37 @@ public class CommonWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter{
 	}
 
 
+	@Bean(name = "sessionFactory") @Autowired
+	public SessionFactory getSessionFactory(HibernateEntityManagerFactory g) {
+		return g.getSessionFactory();
+	}
 
+	@Bean @Autowired
+	public HibernateTransactionManager transactionManager(SessionFactory s) {
+		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+		transactionManager.setSessionFactory(s);
+		return transactionManager;
+	}
 
 	/////////hibernate view //////////////////////////////////
-	@Bean
-	public FilterRegistrationBean openSessionInViewFilter() {
-		FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-		OpenSessionInViewFilter filter = new OpenSessionInViewFilter();
-		registrationBean.setFilter(filter);
-//		registrationBean.addUrlPatterns("/*");
-//		registrationBean.setOrder(Integer.MAX_VALUE);
-		registrationBean.setOrder(-900);
-		return registrationBean;
-	}
-	@Bean
-	public FilterRegistrationBean openEntityManagerInViewFilter() {
-		FilterRegistrationBean registrationBean = new FilterRegistrationBean(new OpenEntityManagerInViewFilter());
-		OpenEntityManagerInViewFilter filter = new OpenEntityManagerInViewFilter();
-		registrationBean.setFilter(filter);
-		registrationBean.setOrder(5);
-		return registrationBean;
-	}
+//	@Bean
+//	public FilterRegistrationBean openSessionInViewFilter() {
+//		FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+//		OpenSessionInViewFilter filter = new OpenSessionInViewFilter();
+//		registrationBean.setFilter(filter);
+////		registrationBean.addUrlPatterns("/*");
+////		registrationBean.setOrder(Integer.MAX_VALUE);
+//		registrationBean.setOrder(-900);
+//		return registrationBean;
+//	}
+//	@Bean
+//	public FilterRegistrationBean openEntityManagerInViewFilter() {
+//		FilterRegistrationBean registrationBean = new FilterRegistrationBean(new OpenEntityManagerInViewFilter());
+//		OpenEntityManagerInViewFilter filter = new OpenEntityManagerInViewFilter();
+//		registrationBean.setFilter(filter);
+//		registrationBean.setOrder(5);
+//		return registrationBean;
+//	}
 
     /*
      preHandle  boolean    1. 클라이언트의 요청을 컨트롤러에 전달 하기 전에 호출
