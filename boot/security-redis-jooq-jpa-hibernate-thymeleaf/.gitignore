@@ -251,8 +251,6 @@ classes/
 /src/main/resources/application-local.yaml
 /src/main/resources/logback-local.xml
 /log/
-test/
-test/*
 /src/main/java/com/omnicns/omnifit2/api/jooq/
 /jooq/
 /cms/src/main/angular/
