@@ -96,7 +96,7 @@ allprojects {
 		compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
 		compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
 
-
+		testCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.3.1'
 		testCompile('org.springframework.boot:spring-boot-starter-test')
 		testCompile('org.springframework.security:spring-security-test')
 //		testCompile group: 'junit', name: 'junit', version: '4.12'
@@ -114,10 +114,14 @@ test {
 	}
 }
 jooq {
+	def targetJooq="dev";
+	if(project.hasProperty('jooqTarget')){
+		targetJooq = "$jooqTarget"
+	}
 	gen(sourceSets.main) {
 		jdbc {
 			driver = 'com.mysql.cj.jdbc.Driver'
-			url = "jdbc:mysql://123.123.123.123:3306/$jooqTarget?serverTimezone=Asia/Seoul"
+			url = "jdbc:mysql://123.123.123.123:3306/$targetJooq?serverTimezone=Asia/Seoul"
 			user = '****'
 			password = '****'
 		}
@@ -148,7 +152,7 @@ jooq {
 			}
 			database {
 				name = 'org.jooq.util.mysql.MySQLDatabase'
-				inputSchema = "$jooqTarget"
+				inputSchema = "$targetJooq"
 //				customTypes {
 //					customType{
 //						name = 'ZonedDateTime'
