@@ -1,0 +1,39 @@
+spring:
+  profiles:
+    run-polling-time: 100
+    include:
+      - core
+      - db
+      - default
+#    active: core,db,default
+  pid:
+    file: monitor-app.pid
+
+---
+spring:
+  profiles: default
+project:
+  run-polling-time: 5000
+  properties:
+    cellFileName: ltecbcinfo.csv
+    batchLimit: 300
+    jsonFile: cell
+    versionFile: gudtlr
+    runDateTime: 2011/01/01 06:20
+logging:
+  config: classpath:logback-spring.xml
+---
+spring:
+  profiles: local
+#logging:
+#  config: classpath:logback-local.xml
+---
+spring:
+  profiles: dev
+logging:
+  config: classpath:logback-dev.xml
+---
+spring:
+  profiles: prod
+logging:
+  config: classpath:logback-prod.xml

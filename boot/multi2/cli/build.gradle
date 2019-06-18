@@ -1,0 +1,5 @@
+dependencies {
+    compile group: 'com.oracle', name: 'ojdbc6', version: '11.2.0.3'
+    compile('com.zaxxer:HikariCP:2.7.4')
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+}

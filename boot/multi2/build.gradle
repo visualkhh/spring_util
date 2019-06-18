@@ -1,0 +1,156 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.5.RELEASE'
+    id 'java'
+    id 'base'
+}
+group = 'com.lgu.cbc'
+
+
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+
+
+//전체 프로젝트 적용
+allprojects {
+    apply plugin: 'idea'
+    repositories {
+        mavenCentral()
+        maven { url "http://maven.omnicns.co.kr:8081/nexus/content/repositories/releases/" }
+    }
+
+    clean.doFirst {
+        //	delete "${rootDir}/api-library/auto-generated-classes/"
+        //	println "${rootDir}/api-library/auto-generated-classes/"
+        //	file('src/main/someFile.txt').delete()
+        //	file('src/main/libs').deleteDir()
+        println "${projectDir}/out"
+        println "${buildDir}"
+        delete "${projectDir}/out"
+        delete "${buildDir}"
+    }
+}
+//서브 프로젝트 적용
+subprojects { subprojects ->
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
+//	implementation 'org.springframework.boot:spring-boot-starter-cache'
+        compile('com.zaxxer:HikariCP:2.7.4')
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+        compileOnly 'org.projectlombok:lombok'
+        compile('org.modelmapper:modelmapper:1.1.0')
+        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+        compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+        compile group: 'commons-codec', name: 'commons-codec', version:'1.10' //보안 base64를 이용하기 위해 추가함
+        compile group: 'commons-io', name: 'commons-io', version: '2.6'
+        annotationProcessor 'org.projectlombok:lombok'
+        compile group: 'io.netty', name: 'netty-all', version: '4.1.36.Final'
+        compile fileTree(dir: 'libs', includes: ['*.jar'])
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+
+    task info {
+        doLast {
+            println "========================================================="
+            println "\t project.group = $project.group"
+            println "\t project.name = $project.name"
+            println "\t project.parent = $project.parent.name"
+            println "\t project.version = $project.version"
+            println "========================================================="
+        }
+    }
+
+}
+//
+//clean.doFirst {
+////	delete "${rootDir}/api-library/auto-generated-classes/"
+////	println "${rootDir}/api-library/auto-generated-classes/"
+////	file('src/main/someFile.txt').delete()
+////	file('src/main/libs').deleteDir()
+//    println "${projectDir}/out"
+//    delete "${projectDir}/out"
+//    println "== ${buildDir} =="
+//    delete "${buildDir}"
+//}
+//task cleanBuildDir(type: Delete) {
+//    delete "${projectDir}/out"
+//}
+//tasks.clean.dependsOn(cleanBuildDir)
+//
+//apply plugin: 'io.spring.dependency-management'
+//
+//version = '0.0.1-SNAPSHOT'
+//targetCompatibility = 1.8
+//sourceCompatibility = 1.8
+//configurations {
+//    compileOnly {
+//        extendsFrom annotationProcessor
+//    }
+//}
+//
+//repositories {
+//    mavenCentral()
+//}
+//
+//dependencies {
+////	implementation 'org.springframework.boot:spring-boot-starter-aop'
+////	implementation 'org.springframework.boot:spring-boot-starter-cache'
+////	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//    implementation 'org.springframework.boot:spring-boot-starter-validation'
+//    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+//    compileOnly 'org.projectlombok:lombok'
+//    annotationProcessor 'org.projectlombok:lombok'
+//    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//}
+
+project(':core') {
+    dependencies {
+        compile project(':common')
+    }
+}
+
+project(':cbpp') {
+    dependencies {
+        compile project(':common')
+        compile project(':core')
+    }
+}
+
+project(':cgpp') {
+    dependencies {
+        compile project(':common')
+        compile project(':core')
+    }
+}
+project(':cli') {
+    dependencies {
+        compile project(':common')
+        compile project(':core')
+    }
+}
+project(':cell') {
+    dependencies {
+        compile project(':common')
+        compile project(':core')
+    }
+}
+project(':tlo') {
+    dependencies {
+        compile project(':common')
+        compile project(':core')
+    }
+}
+project(':monitor') {
+    dependencies {
+        compile project(':common')
+        compile project(':core')
+    }
+}
+

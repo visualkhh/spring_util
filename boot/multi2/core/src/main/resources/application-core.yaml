@@ -1,0 +1,5 @@
+project:
+  run-polling-time: 60000
+  properties:
+    haIp: localhost
+    haPort: 0

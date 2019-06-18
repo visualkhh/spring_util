@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds">
+<!--	<include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%-5level|%thread|%logger{36}|%method[%line]|%msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>log/cell.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>log/cbpp.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%-5level|%thread|%logger{36}|%method[%line]|%msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="TLO" class="ch.qos.logback.classic.net.SocketAppender">
+		<RemoteHost>192.168.11.78</RemoteHost>
+<!--		<RemoteHost>localhost</RemoteHost>-->
+		<Port>7979</Port>
+		<reconnectionDelay>10000</reconnectionDelay>
+		<includeCallerData>false</includeCallerData>
+	</appender>
+
+
+<!--	<root level="OFF">-->
+<!--		<appender-ref ref="STDOUT" />-->
+<!--	</root>-->
+	<logger name="com.lgu.cbc" level="ALL">
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<logger name="com.lgu.cbc.core.CbcApplicationBase" level="ALL">
+		<appender-ref ref="TLO" />
+	</logger>
+	<logger name="com.lgu.cbc.cell" level="ALL">
+		<appender-ref ref="TLO" />
+	</logger>
+	<logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
+	<logger name="org.hibernate.SQL" level="DEBUG"/>
+	<logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
+</configuration>
+

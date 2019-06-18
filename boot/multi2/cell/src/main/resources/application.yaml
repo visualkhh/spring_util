@@ -1,0 +1,35 @@
+spring:
+  profiles:
+    run-polling-time: 100
+    include:
+      - core
+      - db
+      - default
+#    active: core,db,default
+  pid:
+    file: cell-app.pid
+
+---
+spring:
+  profiles: default
+project:
+  run-polling-time: 60000
+  properties:
+    cellFileName: 11
+logging:
+  config: classpath:logback-spring.xml
+---
+spring:
+  profiles: local
+#logging:
+#  config: classpath:logback-local.xml
+---
+spring:
+  profiles: dev
+logging:
+  config: classpath:logback-dev.xml
+---
+spring:
+  profiles: prod
+logging:
+  config: classpath:logback-prod.xml

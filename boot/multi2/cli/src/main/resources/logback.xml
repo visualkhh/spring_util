@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds">
+	<!--<include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%-5level|%thread|%logger{36}|%method[%line]|%msg%n</pattern>
+		</encoder>
+	</appender>
+	<!--<logger name="org.hibernate.type.descriptor.sql.BasicBinder"                                level="TRACE"/>-->
+	<logger name="org.hibernate.type"                                level="TRACE"/>
+	<logger name="org.springframework"                                level="ERROR"/>
+	<root level="DEBUG">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>
+

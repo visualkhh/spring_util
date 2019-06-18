@@ -1,0 +1,24 @@
+rootProject.name = 'cbc-5g'
+
+String [] modules = ['common', 'core', 'cbpp', 'cgpp', 'cli', 'tlo', 'cell', 'monitor']
+//String [] modules = ['common']
+include modules
+
+// root directory에 하위 modules에 설정된 값들 디렉토리 만들기
+modules.each {
+    def projectDir = new File(rootDir, it)
+    //sub directory create
+    if (!projectDir.exists()) {
+        projectDir.mkdirs()
+    }
+
+}
+////////lib
+def modulesMap = [:]
+modulesMap.each{ key, value->
+    println (rootProject.name+'  '+key+"-------"+value)
+    include key
+    if (value?.trim()) {
+        project(":${key}").projectDir = new File(value)
+    }
+}
