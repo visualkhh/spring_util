@@ -25,13 +25,13 @@
 	</appender>
 
 
-<!--	<root level="OFF">-->
-<!--		<appender-ref ref="STDOUT" />-->
-<!--	</root>-->
-	<logger name="com.lgu.cbc" level="ALL">
+	<root level="INFO">
 		<appender-ref ref="STDOUT" />
-		<appender-ref ref="TLO" />
-	</logger>
+	</root>
+<!--	<logger name="com.lgu.cbc" level="ALL">-->
+<!--		<appender-ref ref="STDOUT" />-->
+<!--		<appender-ref ref="TLO" />-->
+<!--	</logger>-->
 	<logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
 	<logger name="org.hibernate.SQL" level="DEBUG"/>
 	<logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>

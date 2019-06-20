@@ -1,5 +1,13 @@
 dependencies {
+
+    implementation 'org.springframework.shell:spring-shell-starter:2.0.1.RELEASE'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     compile group: 'com.oracle', name: 'ojdbc6', version: '11.2.0.3'
     compile('com.zaxxer:HikariCP:2.7.4')
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+}
+repositories {
+    maven {
+        url 'https://repo.spring.io/libs-snapshot'
+    }
 }
