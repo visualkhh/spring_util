@@ -1,0 +1,58 @@
+<div id="content">
+    <div class="row">
+        <sa-big-breadcrumbs [items]="['menu.clinical.participant','Detail']" icon="list-ul" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+    </div>
+
+
+
+    <h6 class="text-right" *ngIf="user">
+        <a (click)="modal.show(user)"><i class="fa fa-user"></i> {{'ParticipantPerson' | i18n}} : {{user.nm}} [{{user.useCd | i18n}}]</a>
+    </h6>
+    <hr class="simple">
+    <ul id="myTab1" class="nav nav-tabs bordered">
+        <li [class.active]="tabState == 0">
+            <a (click)="tabState = 0"><i class="fa fa-fw fa-lg fa-mortar-board"></i> {{'Conformity' | i18n}}</a>
+        </li>
+        <li [class.active]="tabState == 1">
+            <a (click)="tabState = 1"><i class="fa fa-fw fa-lg fa-bullseye"></i> {{'Concentration' | i18n}}</a>
+        </li>
+        <li [class.active]="tabState == 2">
+            <a (click)="tabState = 2"><i class="fa fa-fw fa-lg fa-align-justify"></i> {{'HistoryManagement' | i18n}}</a>
+        </li>
+<!--        <li dropdown class="dropdown">-->
+<!--            <a dropdownToggle>Dropdown <b class="caret"></b></a>-->
+<!--            <ul *dropdownMenu class="dropdown-menu">-->
+<!--                <li [class.active]="tabState == 2">-->
+<!--                    <a (click)="tabState = 2">@fat</a>-->
+<!--                </li>-->
+<!--                <li [class.active]="tabState == 3">-->
+<!--                    <a (click)="tabState = 3">@mdo</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </li>-->
+<!--        <li class="pull-right">-->
+<!--            <a (click)="(null)">-->
+<!--                <div class="sparkline txt-color-pinkDark text-align-right" data-sparkline-height="18px"-->
+<!--                     data-sparkline-width="90px" data-sparkline-barwidth="7">-->
+<!--                    5,10,6,7,4,3-->
+<!--                </div>-->
+<!--            </a>-->
+<!--        </li>-->
+    </ul>
+
+    <tabset class="padding-10">
+        <tab [active]="tabState == 0" *ngIf="tabState == 0">
+            <app-participant-conformity *ngIf="user" [user]="user"></app-participant-conformity>
+        </tab>
+        <tab [active]="tabState == 1" *ngIf="tabState == 1">
+            <app-participant-concentration *ngIf="user" [user]="user"></app-participant-concentration>
+        </tab>
+        <tab [active]="tabState == 2" *ngIf="tabState == 2">
+            <app-participant-history *ngIf="user" [user]="user"></app-participant-history>
+        </tab>
+    </tabset>
+
+</div>
+
+<app-participant-modal (complete)="getUser()"></app-participant-modal>
+

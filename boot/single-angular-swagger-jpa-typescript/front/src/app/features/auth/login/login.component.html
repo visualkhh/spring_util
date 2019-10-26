@@ -1,0 +1,64 @@
+<!--<header id="header" >-->
+<!--    <div id="logo-group">-->
+<!--        <span id="logo"> <img src="/assets/img/logo-header-black.png" alt="SmartAdmin"> </span>-->
+<!--    </div>-->
+<!--&lt;!&ndash;    <span id="extr-page-header-space"> <span class="hidden-mobile hiddex-xs">Need an account?</span> <a routerLink="/auth/register" class="btn btn-danger">Create account</a> </span>&ndash;&gt;-->
+<!--</header>-->
+<div id="main" role="main" class="animated fadeInDown">
+
+    <div id="content" class="container">
+        <div class="row" style="margin-top:20px; text-align: center">
+            <img width="70%" src="assets/img/logo-login.png">
+        </div>
+        <div class="row" style="margin: 20px;">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <form #from [formGroup]="formdata" action="/security/sign-in" method="post" class="smart-form client-form" (ngSubmit)="submit(formdata.value)">
+                    <input type="hidden" name="_csrf" formControlName="_csrf">
+<!--                    <header>-->
+<!--                        {{'Login' | i18n}}-->
+<!--                    </header>-->
+                    <fieldset>
+                        <section>
+                            <label class="label">{{'Id' | i18n}}</label>
+                            <label class="input"> <i class="icon-append fa fa-user"></i>
+                                <input type="text" name="username" formControlName="username">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i>
+                                    Please enter id</b></label>
+                        </section>
+                        <section>
+                            <label class="label"> {{'Password' | i18n}}</label>
+                            <label class="input"> <i class="icon-append fa fa-lock"></i>
+                                <input type="password" name="password" formControlName="password">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter
+                                    your password</b> </label>
+
+                            <div class="note" style="color:red">
+                                {{ note | i18n }}
+                                <!--<a routerLink="/auth/forgot-password">Forgot password?</a> -->
+                            </div>
+                        </section>
+                        <!--
+                      <section>
+                        <label class="checkbox">
+                          <input type="checkbox" name="remember" checked>
+                          <i></i>Stay signed in</label>
+                      </section>
+                      -->
+                    </fieldset>
+                    <footer style="background: rgb(255, 255, 255); border-top: 0px solid">
+                        <input class="btn btn-primary" type="submit" value=" {{'Login' | i18n}}">
+<!--                        <input class="btn btn-primary" type="submit" [disabled]="!formdata.valid" value="Log In">-->
+<!--                        <input class="btn btn-primary" type="submit" value=" {{'Login' | i18n}}">-->
+                        <!--          <input type="submit" (click)="login($event)" class="btn btn-primary">-->
+                        <!--            Sign in-->
+                        <!--          </input>-->
+                    </footer>
+                </form>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </div>
+</div>

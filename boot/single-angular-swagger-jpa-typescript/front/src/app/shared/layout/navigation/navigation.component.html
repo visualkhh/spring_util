@@ -1,0 +1,25 @@
+<aside id="left-panel">
+
+    <!--<sa-login-info></sa-login-info>-->
+
+    <nav *ngIf="userService.userDetails">
+        <ul>
+            <li  *ngFor="let auth of userService.getAuths(1)" class="open">
+                <a>
+                    <i class="{{auth.menuIcon}}"></i> <span class="menu-item-parent">{{auth.menuNm}}</span>
+                </a>
+                <ul style="display: block;">
+                    <li *ngFor="let subAuth of userService.getAuths(2, auth.urlSeq)" [routerLinkActive]="['active']">
+                        <a [routerLink]="subAuth.url">{{subAuth.menuNm}}</a>
+                    </li>
+                </ul>
+            </li>
+
+            <!--<li aside-minifychat></li>-->
+        </ul>
+
+    </nav>
+
+<!-- <sa-minify-menu></sa-minify-menu> -->
+
+</aside>

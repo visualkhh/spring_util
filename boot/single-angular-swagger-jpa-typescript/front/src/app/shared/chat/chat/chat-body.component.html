@@ -1,0 +1,16 @@
+<div id="chat-body" class="chat-body custom-scroll">
+  <ul>
+    <li class="message" *ngFor="let message of messages">
+      <img class="message-picture online" src="{{message.user.picture}}">
+
+      <div class="message-text">
+        <time>
+          {{message.date | moment : 'YYYY-MM-DD'}}
+        </time>
+        <a (click)="messageTo(message.user)" class="username">{{message.user.username}}</a>
+        <div [innerHTML]="message.body"></div>
+
+      </div>
+    </li>
+  </ul>
+</div>

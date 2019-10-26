@@ -1,0 +1,20 @@
+<form>
+  <legend>
+    Draggable Events
+  </legend>
+  <ul id="external-events" class="list-unstyled">
+
+    <li saDraggableEvent [event]="event" *ngFor="let event of calendar.samples">
+      <span [class]="event.class" description="event.description" icon="event.icon">
+        {{event.title}}</span>
+    </li>
+
+  </ul>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" id="drop-remove" class="checkbox style-0" [(ngModel)]="removeAfterDrop" name="drop-remove" (ngModelChange)="toggleRemoveAfterDrop()"
+      />
+      <span>remove after drop</span>
+    </label>
+  </div>
+</form>

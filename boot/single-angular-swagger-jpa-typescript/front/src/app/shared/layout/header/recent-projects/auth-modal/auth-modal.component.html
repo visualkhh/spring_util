@@ -1,0 +1,72 @@
+<div class="modal-header">
+  <button type="button" class="close" (click)="close.emit(true)"> &times;</button>
+  <h6 class="modal-title">
+    <small><i class="fa fa-circle text-muted margin-right-5"></i></small>
+    {{ 'Update' | i18n}}
+  </h6>
+</div>
+
+<div class="modal-body" style="display: inline-block">
+  <div class="col-sm-12 form-horizontal">
+    <form [formGroup]="infoForm" class="col-sm-12 smart-form padding-5">
+      <div class="form-group col-sm-12 padding-per-1">
+        <label class="control-label text-left col-sm-4">*{{'No' | i18n}}</label>
+        <div class="col-sm-8">
+          <input type="hidden" name="admSeq" formControlName="admSeq" placeholder="{{'No' | i18n}}" class="form-control" [(ngModel)]="data.admSeq" readonly>
+          {{ data.admSeq }}
+        </div>
+      </div>
+      <div class="form-group col-sm-12 padding-per-1">
+        <label class="control-label text-left col-sm-4">*{{'Id' | i18n}}</label>
+        <div class="col-sm-8">
+          {{ data.admLginId }}
+        </div>
+      </div>
+      <div class="form-group col-sm-12 padding-per-1">
+        <label class="control-label text-left col-sm-4">*{{'Name' | i18n}}</label>
+        <div class="col-sm-8">
+          <input type="text" name="admNm" formControlName="admNm" placeholder="{{'Name' | i18n}}" class="form-control" [(ngModel)]="data.admNm">
+        </div>
+      </div>
+      <div class="form-group col-sm-12 padding-per-1">
+        <label class="control-label text-left col-sm-4">{{'Password' | i18n}}</label>
+        <div class="col-sm-8">
+          <input type="password" name="admLginPw" formControlName="admLginPw" class="form-control" #admLginPw [(ngModel)]="data.admLginPw">
+        </div>
+      </div>
+      <div class="form-group col-sm-12 padding-per-1">
+        <label class="control-label text-left col-sm-4">{{'Password' | i18n}} {{'word.ok' | i18n}}</label>
+        <div class="col-sm-8">
+          <input type="password" name="admLginPwc" formControlName="admLginPwc" id="admLginPwc" #admLginPwc class="form-control">
+        </div>
+      </div>
+      <div class="form-group col-sm-12 padding-per-1">
+        <label class="control-label text-left col-sm-4">{{'Email' | i18n}}</label>
+        <div class="col-sm-8">
+          <input type="text" name="email" formControlName="email" class="form-control" [(ngModel)]="data.email">
+        </div>
+      </div>
+      <div class="form-group col-sm-12 padding-per-1">
+        <label class="control-label text-left col-sm-4">*{{'Status' | i18n}}</label>
+        <div class="col-sm-8">
+          <select class="form-control" name="useYn" formControlName="useYn" id="useYn" [(ngModel)]="data.useYn">
+            <option value="Y">{{'Use' | i18n}} </option>
+            <option value="N">{{'NotUse' | i18n}} </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group col-sm-12 padding-per-1">
+        <label class="control-label text-left col-sm-4">{{'RegistDt' | i18n}}</label>
+        <div class="col-sm-8">
+          <!--<input type="text" name="regDt" formControlName="regDt"  class="form-control" [(ngModel)]="data.regDt" readonly> -->
+          {{ data.regDt | moment: 'YYYY-MM-DD HH:mm:ss' }}
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-footer text-center">
+  <button type="button" class="btn btn-primary" (click)="update(data)">{{'Update' | i18n}}</button>
+  <button type="button" class="btn btn-success padding-5" (click)="close.emit(true)">{{'Close' | i18n}}</button>
+</div>

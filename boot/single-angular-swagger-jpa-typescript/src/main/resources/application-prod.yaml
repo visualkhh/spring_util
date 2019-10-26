@@ -1,0 +1,17 @@
+spring:
+  profiles: prod
+  jpa:
+    show-sql: false
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mariadb://1.1.1.1/c
+    username: cc
+    password: cc!
+server:
+  port: 8081
+logging:
+  config: classpath:logback-prod.xml
+
+project:
+  properties:
+    swagger-host: fafa.fwfw.co.kr

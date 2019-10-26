@@ -1,0 +1,63 @@
+<div id="content">
+    <div class="no-margin">
+        <div class="col-sm-12 headTitle">
+            <div class="row well no-margin">
+                <form class="row">
+                    <fieldset class="smart-form">
+                        <div class="row">
+                            <div class="col col-sm-10">
+                                <label class="col-sm-1 text-right">{{'DateScope' | i18n}}</label>
+                                <section class="col col-sm-3">
+                                    <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                                        <input type="text" name="date" id="startdate" [saUiDatepicker]="{minRestrict:'#enddate', dateFormat:'yy.mm.dd'}" placeholder="{{'Select' | i18n}} {{'Date' | i18n}}" (change)="selectStartDate($event)" (dateChange)="selectStartDate($event)"/>
+                                    </label>
+                                </section>
+                                <section class="col col-sm-3">
+                                    <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                                        <input type="text" name="date" id="enddate" [saUiDatepicker]="{maxRestrict:'#startdate', dateFormat:'yy.mm.dd'}" placeholder="{{'Select' | i18n}} {{'Date' | i18n}}" (change)="selectEndDate($event)" (dateChange)="selectEndDate($event)"/>
+                                    </label>
+                                </section>
+                            </div>
+                            <div class="col col-sm-2">
+                                <section class="col col-sm-12">
+                                </section>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="row margin-top-10 margin-bottom-10">
+                <div class="col-md-12">
+                    <button *ngIf="userService.isAceept() && userService.isAcceptUrl(router.url, 'GET')" type="button" class="btn btn-info margin-right-5 pull-right" (click)="search()">{{'Search' | i18n}}</button>
+                    <button type="button" class="btn btn-primary margin-right-5 pull-right" (click)="router.navigate(['/clinical/participant'])">{{'List' | i18n}}</button>
+                </div>
+            </div>
+
+
+            <div class="well">
+                <sa-datatable [options]="options" paginationLength="true" tableClass="table table-striped table-bordered table-hover" id="bbsTable" width="100%">
+                    <thead>
+                        <tr>
+<!--                            <th class="text-center">{{'Seq' | i18n}}</th>-->
+                            <th class="text-center">{{'ParticipantDate' | i18n}}</th>
+                            <th class="text-center">{{'Monday' | i18n}}</th>
+                            <th class="text-center">{{'Tuesday' | i18n}}</th>
+                            <th class="text-center">{{'Wednesday' | i18n}}</th>
+                            <th class="text-center">{{'Thursday' | i18n}}</th>
+                            <th class="text-center">{{'Friday' | i18n}}</th>
+                            <th class="text-center">{{'Saturday' | i18n}}</th>
+                            <th class="text-center">{{'Sunday' | i18n}}</th>
+                            <th class="text-center">{{'Conformity' | i18n}}</th>
+                            <th class="text-center">{{'Conformity' | i18n}} {{'Notify' | i18n}}</th>
+                        </tr>
+                    </thead>
+                </sa-datatable>
+
+            </div>
+        </div>
+    </div>
+</div>
+<app-conformity-details-modal></app-conformity-details-modal>
+

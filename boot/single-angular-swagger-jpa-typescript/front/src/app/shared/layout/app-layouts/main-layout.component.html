@@ -1,0 +1,16 @@
+<sa-header></sa-header>
+
+<sa-navigation></sa-navigation>
+
+<div id="main" role="main" [@routerTransition]="getState(o)">
+
+  <!--<sa-layout-switcher></sa-layout-switcher>-->
+
+  <sa-ribbon></sa-ribbon>
+
+  <router-outlet #o="outlet"></router-outlet>
+</div>
+
+<sa-footer></sa-footer>
+
+<sa-shortcut></sa-shortcut>

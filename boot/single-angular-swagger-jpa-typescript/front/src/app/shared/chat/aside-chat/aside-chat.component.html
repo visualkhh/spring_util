@@ -1,0 +1,16 @@
+
+<a href="#" (click)="openToggle($event)"><i class="fa fa-lg fa-fw fa-comment-o"><em
+  class="bg-color-pink flash animated1">!</em></i>&nbsp;<span
+  class="menu-item-parent">Smart Chat API <sup>beta</sup></span></a>
+<ul #chatUsersList>
+  <li>
+    <div class="display-users">
+      <input class="form-control chat-user-filter" placeholder="Filter" type="text"
+              [(ngModel)]="filter" (ngModelChange)="onFilter()"/>
+      <dl>
+        <aside-chat-user *ngFor="let user of users" [user]="user"></aside-chat-user>
+      </dl>
+
+    </div>
+  </li>
+</ul>

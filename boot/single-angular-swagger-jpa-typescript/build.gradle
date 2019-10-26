@@ -1,0 +1,294 @@
+
+buildscript {
+	ext {
+		springBootVersion = '1.5.10.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+		maven {
+			url "http://maven.omnicns.co.kr/nexus/content/repositories/releases/"
+		}
+		maven {
+			url 'https://plugins.gradle.org/m2/'
+		}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'cz.habarta.typescript-generator:typescript-generator-gradle-plugin:2.+'
+		classpath 'cz.habarta.typescript-generator:typescript-generator-spring:2.+'
+
+	}
+}
+
+
+//전체 프로젝트 적용
+allprojects {
+
+	apply plugin: 'java'
+	apply plugin: 'idea'
+	apply plugin: 'org.springframework.boot'
+//	apply plugin: 'war'
+//	apply plugin: 'groovy'
+	apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'cz.habarta.typescript-generator'
+	version = "0.0.1"
+
+	targetCompatibility = 1.8
+	sourceCompatibility = 1.8
+	//인코딩 모두 적용
+	def defaultEncoding = 'UTF-8'
+	//AbstractCompile 모든 JVM을 통한 컴파일일 경우
+	//하위로는 GroovyCompile   JavaCompile   AbstractScalaCompile
+	tasks.withType(AbstractCompile).each {
+		it.options.encoding = defaultEncoding
+	}
+	tasks.withType(Javadoc) { Javadoc javadoc ->
+		javadoc.options.encoding = defaultEncoding
+		javadoc.options.addStringOption('Xdoclint:all,-missing', '-quiet')
+	}
+    idea {
+        module {
+            outputDir file('build/classes/main')
+            testOutputDir file('build/classes/test')
+        }
+    }
+
+	repositories {
+		mavenCentral()
+		maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
+		maven { url "http://maven.omnicns.co.kr/nexus/content/repositories/releases/" }
+	}
+
+	dependencies {
+		compile('org.springframework.boot:spring-boot-starter-aop')
+//		compile('org.springframework.boot:spring-boot-starter-data-redis')
+//		compile('org.springframework.boot:spring-boot-starter-jooq')
+//		compile('org.springframework.boot:spring-boot-starter-cache')
+		compile("org.springframework.boot:spring-boot-starter-mail")
+		compile('org.springframework.boot:spring-boot-starter-security')
+		compile('org.springframework.boot:spring-boot-starter-validation')
+		compile('org.springframework.boot:spring-boot-starter-web')
+		compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+
+		// https://mvnrepository.com/artifact/javax.validation/validation-api
+//		compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+
+		// 실시간 반영하기
+		compile("org.springframework.boot:spring-boot-devtools")
+
+//		compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity4')
+		compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '3.0.2.RELEASE'
+		compile group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.0.9.RELEASE'
+
+		compile('org.springframework.boot:spring-boot-configuration-processor')
+//		compile('org.springframework.session:spring-session-data-redis')
+		compile("org.springframework.boot:spring-boot-starter-data-jpa")
+//		compile("org.hibernate:hibernate-core:5.2.12.Final")
+		compile("org.hibernate:hibernate-java8")
+		compile "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.8.+"
+		compile('com.fasterxml.jackson.datatype:jackson-datatype-jdk8')
+		compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+//	compile("com.fasterxml.jackson.core:jackson-databind:2.2.3")
+//	compile("org.springframework.security.oauth:spring-security-oauth2")
+//	compile ("io.jsonwebtoken:jjwt")
+//	runtime('com.h2database:h2')
+		compile('com.zaxxer:HikariCP:2.7.4')
+		compile('org.modelmapper:modelmapper:1.1.0')
+//		compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.6'
+//		compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.13'
+		compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.3.0'
+
+		compile('org.projectlombok:lombok:1.16.6')
+		compile group: 'com.omnicns', name: 'common-java', version: '0.0.22'
+		compile group: 'com.omnicns', name: 'common-jsp', version: '0.0.2'
+		compile group: 'com.omnicns', name: 'common-spring', version: '0.0.15'
+		compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+		compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+		compile group: 'commons-codec', name: 'commons-codec', version:'1.10' //보안 base64를 이용하기 위해 추가함
+		compile group: 'commons-io', name: 'commons-io', version: '2.6'
+
+
+		//Swagger
+		compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.6.1'
+		compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.6.1'
+
+
+		// Batch
+		compile('org.springframework.boot:spring-boot-starter-batch')
+
+//		compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.8.1'
+		testCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.3.1'
+//		compile(group: 'org.assertj', name: 'assertj-core', version: '1.5.0')
+
+		testCompile('org.springframework.boot:spring-boot-starter-test')
+		testCompile('org.springframework.security:spring-security-test')
+		testCompile('org.springframework.batch:spring-batch-test')
+//		testCompile group: 'junit', name: 'junit', version: '4.12'
+
+	}
+
+}
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+
+group = 'com.omnicns.omnifit2'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+springBoot {
+	executable = true
+}
+bootRepackage {
+	mainClass = 'com.omnicns.medicine.MedicineApplication'
+}
+jar {
+//	baseName = 'omnifit2-api'
+//	version = '0.0.1-SNAPSHOT'
+//	archiveName = "api.jar"
+
+	manifest {
+		attributes  'Title': 'omnifit2-cms', 'Version': version, 'Main-Class': bootRepackage.mainClass
+	}
+	archiveName 'medicine.jar'
+	dependsOn configurations.runtime
+	from {
+		configurations.compile.collect {it.isDirectory()? it: zipTree(it)}
+	}
+}
+test {
+	// exclude '**/*FailedTestExample*'
+	filter {
+		includeTestsMatching "com.omnicns.medicine.test.deploy.*"
+	}
+}
+//task visualkhh {
+//	println(project.hasProperty('jooqTarget'));
+//}
+
+//서브 프로젝트 적용
+//subprojects { subprojects ->
+//}
+
+clean.doFirst {
+//	delete "${rootDir}/api-library/auto-generated-classes/"
+//	println "${rootDir}/api-library/auto-generated-classes/"
+//	file('src/main/someFile.txt').delete()
+//	file('src/main/libs').deleteDir()
+	println "== ${buildDir} =="
+	delete "${buildDir}"
+}
+clean.doLast {
+//	generateOmnifitDevJooqSchemaSource.exe
+//	println "${buildDir}--- "+tasks.getByPath(":generateOmnifitJooqSchemaSource").path;
+//	tasks.generateOmnifitJooqSchemaSource.execute()
+}
+//project(':api') {
+//	dependencies {
+//		compile project(':common')
+//	}
+//}
+//sourceSets {
+//	main {
+//		resources {
+////			srcDirs = ["$projectDir/src/main/angular", "$projectDir/src/main/resources"]
+////			srcDirs = ["$projectDir/src/main/webapp", "$projectDir/src/main/resources"]
+//			srcDirs = ["$projectDir/src/main/dist", "$projectDir/src/main/resources"]
+//		}
+//	}
+//}
+processResources {
+	dependsOn "buildAngular"
+}
+
+def webappDir = "$projectDir/src/main/resources/webapp"
+def templatesDir = "$projectDir/src/main/resources/templates"
+//def templatesDir = "$projectDir"
+def angularDir = "$projectDir/front"
+//task tt(){
+//	println "$webappDir"
+//}
+task buildWebAppAngular(type:Exec, dependsOn: 'installAngular') {
+	def targetNodePath="";
+	if(project.hasProperty('nodePath')){
+		targetNodePath = "$nodePath/";
+	}
+
+	// installAngular should be run prior to this taskª
+	println("workingDir: ${angularDir}")
+	workingDir "$angularDir"
+	inputs.dir "$angularDir"
+	// Add task to the standard build group
+	group = BasePlugin.BUILD_GROUP
+	// ng doesn't exist as a file in windows -> ng.cmd
+//	def targetAngular="dev";
+//	if(project.hasProperty('angularTarget')){
+//		targetAngular = "$angularTarget"
+//	}
+//	commandLine "${targetNodePath}npm", "run", "build-spring"
+	println('targetNodePath: ' + targetNodePath)
+	commandLine "${targetNodePath}node", "node_modules/@angular/cli/bin/ng", "build"
+}
+task buildAngular(type: Copy, dependsOn: 'buildWebAppAngular') {
+	from "${webappDir}/index.html"
+	into "${templatesDir}"
+	print("buildAngular END : ${webappDir} ${templatesDir}")
+}
+
+
+task installAngular(type:Exec) {
+	def targetNodePath="";
+	if(project.hasProperty('nodePath')){
+		targetNodePath = "$nodePath/";
+	}
+	dependsOn generateTypeScript
+	workingDir "$angularDir"
+	inputs.dir "$angularDir"
+	group = BasePlugin.BUILD_GROUP
+	if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")){
+		commandLine "${targetNodePath}npm.cmd", "install"
+	} else {
+		commandLine "${targetNodePath}npm", "install"
+//		println("${targetNodePath}npm install")
+	}
+}
+
+task wowwow(type:Exec) {
+
+}
+generateTypeScript {
+//	classes = [
+////			'com.omnicns.medicine.cms.MedicineApplication'
+//			'com.omnicns.medicine.domain.security.UserDetails'
+////			'com.omnicns.medicine.domain.security.Auth'
+//	];
+	customTypeNaming = [
+			'org.springframework.security.core.userdetails.UserDetails:UserDetailsOfSpring',
+			'com.omnicns.medicine.domain.security.Auth:UserDetailAuth'
+	]
+//	customTypeNamingFunction(i, b){
+//		print(i)
+//		print(b)
+//	}
+//	customTypeNaming
+	classPatterns = [
+			'com.omnicns.medicine.domain.*',
+			'com.omnicns.medicine.domain.security.*',
+			'com.omnicns.medicine.model.*',
+			'com.omnicns.medicine.model.error.*',
+			'com.omnicns.medicine.model.api.*',
+			'com.omnicns.medicine.model.msg.*',
+	]
+	outputFileType = 'implementationFile'
+	jsonLibrary = 'jackson2'
+	outputKind = 'module'
+	outputFile = "${angularDir}/src/app/model/commomModels.ts"
+	scanSpringApplication = true
+	generateSpringApplicationClient = true
+//	outputFileType = 'implementationFile' //values are: declarationFile (.d.ts) or implementationFile (.ts)
+//	outputKind = 'module' // values are: global, module, ambientModule
+//	excludeClasses =
+}
+
+//build.dependsOn generateTypeScript

@@ -1,0 +1,61 @@
+<ng-template #brdModalTemplate>
+    <div class="modal-header">
+        <button type="button" class="close" (click)="bsModalRef.hide()"> &times;</button>
+        <h6 class="modal-title">
+            <small><i class="fa fa-circle text-muted margin-right-5"></i></small>
+            {{ 'Conformity' | i18n}} {{ 'Detail' | i18n}}
+        </h6>
+    </div>
+
+    <div class="modal-body">
+        <fieldset style="padding-top: 10px">
+            <div class="row"><div class="col col-12"><h6><small><i class="fa fa-square text-muted"></i></small> {{'ParticipantDate' | i18n}}  ({{startDt | moment: 'YYYY.MM.DD'}} ~ {{endDt | moment: 'YYYY.MM.DD'}})</h6></div></div>
+            <div class="row">
+                <sa-datatable [options]="options" paginationLength="true" tableClass="table table-striped table-bordered table-hover" id="bbsTable" width="100%">
+                    <thead>
+                    <tr>
+                        <th class="text-center" width="15%">{{'Date' | i18n}}</th>
+                        <th class="text-center" width="7%">{{'Start' | i18n}} {{'Time' | i18n}}</th>
+                        <th class="text-center" width="7%">{{'End' | i18n}} {{'Time' | i18n}}</th>
+                        <th class="text-center" width="60%">{{'Contents' | i18n}}</th>
+                    </tr>
+                    </thead>
+                </sa-datatable>
+            </div>
+        </fieldset>
+<!--        <form class="smart-form client-form" [formGroup]="formGroup" novalidate="novalidate">-->
+<!--            <div class="col-sm-12 form-horizontal">-->
+<!--                <div class="form-group col-sm-12" *ngIf="detail">-->
+<!--                    <label class="control-label text-left col-sm-2">{{'RegistDt' | i18n}}</label>-->
+<!--                    <div class="col-sm-10">-->
+<!--                        <input class="form-control" type="text" name="regDt" placeholder="{{'RegistDt' | i18n}}" [readonly]="detail" [class.modalInputReadOnly]="detail" [value]="(detail.regDt | moment:'YYYY-MM-DD HH:mm:ss') || ''">-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="form-group col-sm-12">-->
+<!--                    <label class="control-label text-left col-sm-2">*{{'Subject' | i18n}}</label>-->
+<!--                    <div class="col-sm-10">-->
+<!--                        <input class="form-control" type="text" name="titl" formControlName="titl" placeholder="{{'Subject' | i18n}}" [ngModel]="detail ? detail.titl : ''">-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="form-group col-sm-12">-->
+<!--                    <label class="control-label text-left col-sm-2">{{'Contents' | i18n}}</label>-->
+<!--                    <div class="col-sm-10">-->
+<!--                        <label class="textarea">-->
+<!--                            <textarea rows="10" name="cont" formControlName="cont" placeholder="{{'Contents' | i18n}}" [ngModel]="detail ? detail.cont : ''"></textarea>-->
+<!--                        </label>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </form>-->
+    </div>
+
+    <div class="modal-footer text-center">
+        <div class="row">
+            <div class="col-3 pull-right">
+                <button type="button" class="btn btn-success" (click)="bsModalRef.hide()">{{'Close' | i18n}}</button>
+            </div>
+        </div>
+    </div>
+</ng-template>

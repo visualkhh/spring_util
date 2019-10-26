@@ -1,0 +1,54 @@
+#https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/
+#https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+spring:
+  pid:
+    file: medicine-app.pid
+#  data:
+#    rest:
+#      max-page-size: 2147483647
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+      naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      enable_lazy_load_no_trans: true
+      database-platform: org.hibernate.dialect.MySQLDialect
+#      database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+      hibernate:
+        current_session_context_class: org.springframework.orm.hibernate4.SpringSessionContext
+#        current_session_context_class: thread
+        jdbc:
+          time_zone: UTC
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mariadb://1.1.1.1:22/c
+    username: c
+    password: c!
+#  mail:
+#    host: localhost
+#    port: localhost
+  messages:
+#    always-use-message-format: false # Set whether to always apply the MessageFormat rules, parsing even messages without arguments.
+    cache-seconds: -1 # Loaded resource bundle files cache expiration, in seconds. When set to -1, bundles are cached forever.
+    basename: classpath:/messages/message # Comma-separated list of basenames, each following the ResourceBundle convention.
+    encoding: UTF-8
+  thymeleaf:
+    cache: false
+  #jackson.serialization.write_dates_as_timestamps: false
+  jackson.serialization.WRITE_DATES_AS_TIMESTAMPS: false
+  http:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+server:
+  port: 8081
+  session:
+    timeout: 3600
+##################
+project:
+  properties:
+    angular-path: classpath:/webapp
+    salt: 11111111112222222222111111111122
+    private-key: 11111111112222222222111111111122
+    swagger-host: localhost:8081

@@ -1,0 +1,156 @@
+<ng-template #brdModalTemplate>
+    <div class="modal-header">
+        <button type="button" class="close" (click)="bsModalRef.hide()"> &times;</button>
+        <h6 class="modal-title">
+            <small><i class="fa fa-circle text-muted margin-right-5"></i></small>
+            {{ 'ParticipantPerson' | i18n}} {{ (detail.regDt?'Detail':'Register') | i18n}}
+        </h6>
+    </div>
+
+    <div class="modal-body">
+        <form class="smart-form client-form  margin-right-5" [formGroup]="formGroup"  novalidate="novalidate">
+            <fieldset style="padding-top: 10px">
+                <div class="row"><div class="col col-12"><h6><small><i class="fa fa-square text-muted"></i></small> {{'BasicInfo' | i18n}}</h6></div></div>
+                <div class="row">
+                    <label class="label col col-2 text-right">*{{'Name' | i18n}}</label>
+                    <section class="col col-4">
+                        <label class="input">
+                            <input type="text" name="nm" formControlName="nm" placeholder="{{'Name' | i18n}}" [(ngModel)]="detail.nm">
+                        </label>
+                    </section>
+                    <label class="label col col-2 text-right">*{{'Gender' | i18n}}</label>
+                    <section class="col col-4">
+                        <label class="select">
+                            <select *ngIf="i18n"  name="genCd" formControlName="genCd" [(ngModel)]="detail.genCd" >
+                                <option *ngFor="let item of i18n.getCodes('GEC'); let first = first; let last = last" [value]="item.cd"> {{item.cdNm}}</option>
+                            </select> <i></i>
+                        </label>
+                    </section>
+                </div>
+                <div class="row">
+                    <label class="label col col-2 text-right">*{{'Birth' | i18n}}</label>
+                    <section class="col col-4">
+                        <label class="input">
+<!--                            <input type="text" name="birdt" placeholder="{{'Birth' | i18n}}"  formControlName="birdt" [saUiDatepicker]="{minRestrict:'#finishdate', dateFormat:'yy.mm.dd'}" [(ngModel)]="detail.birdt | moment:'YYYY-MM-DD'">&ndash;&gt;-->
+<!--                            <input *ngIf="detail && detail.birdt" type="text" name="birdt" placeholder="{{'Birth' | i18n}}"  formControlName="birdt" [saUiDatepicker]="{minRestrict:'#finishdate', dateFormat:'yy.mm.dd'}" [(ngModel)]="detail.birdt" >-->
+                            <i class="icon-prepend fa fa-calendar"></i>
+                            <input type="text" name="birdt" formControlName="birdt" placeholder="{{'Birth' | i18n}}" [saUiDatepicker]="{dateFormat:'yy.mm.dd'}" (change)="changeBirtDt($event)" (dateChange)="changeBirtDt($event)">
+                        </label>
+                    </section>
+                    <label class="label col col-2 text-right">*{{'Phone' | i18n}}</label>
+                    <section class="col col-4">
+                        <label class="input">
+                            <input  type="text" name="cpon" formControlName="cpon" placeholder="{{'Phone' | i18n}}" [(ngModel)]="detail.cpon">
+                        </label>
+                    </section>
+                </div>
+            </fieldset>
+
+
+            <fieldset>
+                <div class="row"><div class="col col-12"><h6><small><i class="fa fa-square text-muted"></i></small> {{'GuardianInfo' | i18n}}</h6></div></div>
+                <div class="row">
+                    <label class="label col col-2 text-right">*{{'Name' | i18n}}</label>
+                    <section class="col col-4">
+                        <label class="input">
+                            <input type="text" name="gadNm" formControlName="gadNm" placeholder="{{'Guardian' | i18n}} {{'Name' | i18n}}" [(ngModel)]="detail.gadNm">
+                        </label>
+                    </section>
+                    <label class="label col col-2 text-right">*{{'Relationship' | i18n}}</label>
+                    <section class="col col-4">
+                        <label class="select">
+                            <select *ngIf="i18n"  name="gadRltspCd" formControlName="gadRltspCd" [(ngModel)]="detail.gadRltspCd">
+                                <option *ngFor="let item of i18n.getCodes('PER')" [value]="item.cd"> {{item.cdNm}}</option>
+                            </select> <i></i>
+                        </label>
+                    </section>
+                </div>
+                <div class="row">
+                    <label class="label col col-2 text-right">*{{'Phone' | i18n}}</label>
+                    <section class="col col-4">
+                        <label class="input">
+                            <input type="text" name="gadCpon" formControlName="gadCpon" placeholder="{{'Guardian' | i18n}} {{'Phone' | i18n}}"  [(ngModel)]="detail.gadCpon">
+                        </label>
+                    </section>
+                    <label class="label col col-2 text-right">*{{'Email' | i18n}}</label>
+                    <section class="col col-4">
+                        <label class="input">
+                            <input type="text" name="gadEmail" formControlName="gadEmail" placeholder="{{'Guardian' | i18n}} {{'Email' | i18n}}" [(ngModel)]="detail.gadEmail">
+                        </label>
+                    </section>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="row"><div class="col col-12"><h6><small><i class="fa fa-square text-muted"></i></small> {{'ParticipantInfo' | i18n}}</h6></div></div>
+                <div class="row">
+                    <label class="label col col-2 text-right">*{{'Group' | i18n}}</label>
+                    <section class="col col-4">
+                        <label class="select">
+                            <select *ngIf="i18n"  name="ptcpGrpCd" formControlName="ptcpGrpCd" [(ngModel)]="detail.ptcpGrpCd">
+                                <option *ngFor="let item of i18n.getCodes('PTC')" [value]="item.cd"> {{item.cdNm}}</option>
+                            </select> <i></i>
+                        </label>
+                    </section>
+                    <label class="label col col-2 text-right">*{{'ParticipantYn' | i18n}}</label>
+                    <section class="col col-4">
+                        <label class="select">
+                            <select *ngIf="i18n"  name="ptcpCd" formControlName="ptcpCd" [(ngModel)]="detail.ptcpCd">
+                                <option *ngFor="let item of i18n.getCodes('PTP')" [value]="item.cd"> {{item.cdNm}}</option>
+                            </select> <i></i>
+                        </label>
+                    </section>
+                </div>
+                <div class="row">
+                    <label class="label col col-2 text-right">*{{'ParticipantDate' | i18n}}</label>
+                    <section class="col col-3" style="padding-right: 0">
+                        <label class="input">
+                            <i class="icon-prepend fa fa-calendar"></i>
+                            <input type="text" name="ptcpStDt" formControlName="ptcpStDt" placeholder="{{'Participant' | i18n}} {{'StartDt' | i18n}}" [saUiDatepicker]="{dateFormat:'yy.mm.dd'}" (change)="changePtcpStDt($event)" (dateChange)="changePtcpStDt($event)">
+                        </label>
+                    </section>
+                    <section class="col col-3" style="padding-right: 0">
+                        <label class="input">
+                            <i class="icon-prepend fa fa-calendar"></i>
+                            <input type="text" name="ptcpEndDt" formControlName="ptcpEndDt" placeholder="{{'Participant' | i18n}} {{'EndDt' | i18n}}" [saUiDatepicker]="{dateFormat:'yy.mm.dd'}" (change)="changePtcpEndDt($event)" (dateChange)="changePtcpEndDt($event)">
+                        </label>
+                    </section>
+                    <label class="label col col-2 text-right">{{'DeviceSerial' | i18n}}</label>
+                    <section class="col col-2" style="padding-left: 0">
+                        <label class="input">
+<!--                            <input type="text" name="gadEmail" formControlName="gadEmail" placeholder="{{'Guardian' | i18n}} {{'Email' | i18n}}" [(ngModel)]="detail.gadEmail">-->
+                            <input  type="text" disabled="disabled"  readonly name="lstSerialNo"  [value]="detail.lstSerialNo||''">
+                        </label>
+                    </section>
+                </div>
+
+                <div class="row">
+                    <label class="label col col-2 text-right">{{'Contents' | i18n}}</label>
+                    <section class="col col-10">
+                        <label class="textarea">
+                            <textarea rows="5" name="cont" formControlName="cont" placeholder="{{'Contents' | i18n}}" [(ngModel)]="detail.cont"></textarea>
+                        </label>
+                    </section>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    <div class="modal-footer text-center">
+        <div class="row">
+            <!--<button *ngIf="modalStatus && brdDetail.useYn=='N'" class="btn btn-danger" (click)="bbsDelete(brdDetail)">{{'Delete' | i18n}}-->
+            <div class="col-3 pull-right">
+                <button type="button" class="btn btn-success" (click)="bsModalRef.hide()">{{'Close' | i18n}}</button>
+            </div>
+            <div class="col-3 pull-right margin-right-5">
+                <button *ngIf="!detail.regDt && userService.isAcceptUrl(router.url, 'POST')" class="btn btn-primary" (click)="create()">{{'Register' | i18n}}</button>
+            </div>
+            <div class="col-3 pull-right margin-right-5">
+                <button *ngIf="detail.regDt && userService.isAcceptUrl(router.url, 'PUT')" class="btn btn-info" (click)="update()">{{'Update' | i18n}}</button>
+            </div>
+            <div class="col-3 pull-right margin-right-5">
+                <button *ngIf="detail.regDt && userService.isAcceptUrl(router.url, 'DELETE')" class="btn btn-danger" (click)="delete()">{{'Delete' | i18n}}</button>
+            </div>
+        </div>
+    </div>
+</ng-template>

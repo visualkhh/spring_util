@@ -1,0 +1,81 @@
+<div id="content">
+    <div class="no-margin">
+        <div class="col-sm-12 headTitle">
+            <div class="row well no-margin">
+                <form class="row">
+                    <fieldset class="smart-form">
+                        <div class="row">
+                            <div class="col col-sm-6">
+                                <label class="col-sm-2 text-right">{{'DateScope' | i18n}}</label>
+                                <section class="col col-sm-5">
+                                    <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                                        <input type="text" name="date" id="startdate" [saUiDatepicker]="{minRestrict:'#enddate', dateFormat:'yy.mm.dd'}" placeholder="{{'Select' | i18n}} {{'Date' | i18n}}" (change)="selectStartDate($event)" (dateChange)="selectStartDate($event)"  (keyup.enter)="search()"/>
+                                    </label>
+                                </section>
+                                <section class="col col-sm-5">
+                                    <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                                        <input type="text" name="date" id="enddate" [saUiDatepicker]="{maxRestrict:'#startdate', dateFormat:'yy.mm.dd'}" placeholder="{{'Select' | i18n}} {{'Date' | i18n}}" (change)="selectEndDate($event)" (dateChange)="selectEndDate($event)"  (keyup.enter)="search()"/>
+                                    </label>
+                                </section>
+                            </div>
+                            <div class="col col-sm-6">
+                                <label class="col-sm-2 text-right">︎{{'Name' | i18n}}︎︎</label>
+                                <section class="col col-sm-4">
+                                    <label class="input">
+                                        <input type="text"  name="nm" class="form-control searchWord" placeholder="{{'Name' | i18n}}" [(ngModel)]="where.nm" (keyup.enter)="search()">
+                                    </label>
+                                </section>
+                                <label class="col-sm-2 text-right">︎{{'Phone' | i18n}}︎︎</label>
+                                <section class="col col-sm-4">
+                                    <label class="input">
+                                        <input type="text"  name="cpon" class="form-control searchWord" placeholder="{{'Phone' | i18n}}" [(ngModel)]="where.cpon" (keyup.enter)="search()">
+                                    </label>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-sm-6">
+                                <label class="col-sm-2 text-right">{{'CompletYn' | i18n}}</label>
+                                <section class="col col-sm-4">
+                                    <label class="select">
+                                        <select *ngIf="i18n"  name="comCd" [(ngModel)]="where.comCd">
+                                            <option value="">{{'All' | i18n}}</option>
+                                            <option *ngFor="let item of i18n.getCodes('COM')" [value]="item.cd"> {{item.cdNm}}</option>
+                                        </select> <i></i> </label>
+                                </section>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="row margin-top-10 margin-bottom-10">
+                <div class="col-md-12">
+                    <button *ngIf="userService.isAceept() && userService.isAcceptUrl(router.url, 'GET')" type="button" class="btn btn-info margin-right-5 pull-right" (click)="search()">{{'Search' | i18n}}</button>
+                </div>
+            </div>
+
+            <div class="well">
+                <sa-datatable [options]="options" paginationLength="true" tableClass="table table-striped table-bordered table-hover" id="bbsTable" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="text-center" width="1%">{{'Seq' | i18n}}</th>
+                            <th class="text-center" width="15%">{{'Application' | i18n}} {{'Date' | i18n}}</th>
+                            <th class="text-center" width="5%">{{'Name' | i18n}}</th>
+                            <th class="text-center" width="5%">{{'Phone' | i18n}}</th>
+                            <th class="text-center" width="5%">{{'Gender' | i18n}}</th>
+                            <th class="text-center" width="5%">{{'Age' | i18n}}</th>
+                            <th class="text-center" width="20%">{{'Group' | i18n}}</th>
+                            <th class="text-center" width="20%">{{'Type' | i18n}}</th>
+                            <th class="text-center">{{'ConcentrationGame' | i18n}}</th>
+                            <th class="text-center">{{'Provision' | i18n}}{{'CompletYn' | i18n}}</th>
+                        </tr>
+                    </thead>
+                </sa-datatable>
+
+            </div>
+        </div>
+    </div>
+</div>
+<app-gift-modal (complete)="modalComplete($event)"></app-gift-modal>
+

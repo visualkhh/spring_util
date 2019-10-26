@@ -1,0 +1,109 @@
+<div id="content">
+    <div class="row">
+        <sa-big-breadcrumbs [items]="['menu.clinical.participant']" icon="list-ul" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+    </div>
+    <div class="no-margin">
+        <div class="col-sm-12 headTitle">
+            <div class="row well no-margin">
+                <form class="row">
+                    <fieldset class="smart-form">
+                        <div class="row">
+                            <div class="col col-sm-6">
+                                <label class="col-sm-2 text-right">{{'ParticipantDate' | i18n}}</label>
+                                <section class="col col-sm-5">
+                                    <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                                        <!--https://vitalets.github.io/bootstrap-datepicker/-->
+                                        <input type="text" name="ptcpStDt" id="startdate" [saUiDatepicker]="{minRestrict:'#finishdate', dateFormat:'yy.mm.dd'}" placeholder="{{'StartDt' | i18n}}" (change)="ptcpStDtChange($event)" (dateChange)="ptcpStDtChange($event)"/>
+                                    </label>
+                                </section>
+                                <section class="col col-sm-5">
+                                    <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                                        <input type="text" name="ptcpEndDt" id="finishdate" [saUiDatepicker]="{maxRestrict:'#startdate', dateFormat:'yy.mm.dd'}" placeholder="{{'EndDt' | i18n}}" (change)="ptcpEndDtChange($event)" (dateChange)="ptcpEndDtChange($event)"/>
+                                    </label>
+                                </section>
+                            </div>
+                            <div class="col col-sm-6">
+                                <label class="col-sm-2 text-right">{{'ParticipantYn' | i18n}}</label>
+                                <section class="col col-sm-4">
+                                    <label class="select">
+                                        <select *ngIf="i18n"  name="ptcpCd" [(ngModel)]="where.ptcpCd">
+                                            <option value="">{{'All' | i18n}}</option>
+                                            <option *ngFor="let item of i18n.getCodes('PTP')" [value]="item.cd"> {{item.cdNm}}</option>
+                                        </select> <i></i> </label>
+                                </section>
+                                <label class="col-sm-2 text-right">{{'BeforeWeekConformity' | i18n}}</label>
+                                <section class="col col-sm-4">
+                                    <label class="select">
+                                        <select *ngIf="i18n" name="beforeWeekConformity" [(ngModel)]="where.beforeWeekConformity">
+                                            <option value="">{{'All' | i18n}}</option>
+                                            <option *ngFor="let item of i18n.getCodes('CFT')" [value]="item.cd"> {{item.cdNm}}</option>
+                                        </select> <i></i> </label>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-sm-6">
+                                <label class="col-sm-2 text-right">{{'Group' | i18n}}</label>
+                                <section class="col col-sm-4">
+                                    <label class="select">
+                                        <select *ngIf="i18n" name="ptcpGrpCd" [(ngModel)]="where.ptcpGrpCd">
+                                            <option value="">{{'All' | i18n}}</option>
+                                            <option *ngFor="let item of i18n.getCodes('PTC')" [value]="item.cd"> {{item.cdNm}}</option>
+                                        </select> <i></i> </label>
+                                </section>
+                                <label class="col-sm-2 text-right">{{'ParticipantPerson' | i18n}}</label>
+                                <section class="col col-sm-4">
+                                    <label class="input">
+                                        <input type="text" name="nm" [(ngModel)]="where.nm">
+                                    </label>
+                                </section>
+                            </div>
+                            <div class="col col-sm-6">
+                                <label class="col-sm-2 text-right">{{'Phone' | i18n}}</label>
+                                <section class="col col-sm-4">
+                                    <label class="input">
+                                        <input type="text" name="cpon" [(ngModel)]="where.cpon">
+                                    </label>
+                                </section>
+                                <label class="col-sm-2 text-right">{{'DeviceSerial' | i18n}}</label>
+                                <section class="col col-sm-4">
+                                    <label class="input">
+                                        <input type="text" name="lstSerialNo" [(ngModel)]="where.lstSerialNo">
+                                    </label>
+                                </section>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="row margin-top-10 margin-bottom-10">
+                <div class="col-md-12">
+                    <button *ngIf="userService.isAceept() && userService.isAcceptUrl(router.url, 'GET')" type="button" class="btn btn-info margin-right-5 pull-right" (click)="search()">{{'Search' | i18n}}</button>
+                    <button *ngIf="userService.isAceept() && userService.isAcceptUrl(router.url, 'POST')" type="button" class="btn btn-primary margin-right-5 pull-right" (click)="showRegDialog()">{{'Register' | i18n}}</button>
+                </div>
+            </div>
+
+            <div class="well">
+                <sa-datatable [options]="options" paginationLength="true" tableClass="table table-striped table-bordered table-hover" id="bbsTable" width="100%">
+                    <thead>
+                    <tr>
+                        <th class="text-center">{{'Seq' | i18n}}</th>
+                        <th class="text-center">{{'ParticipantPerson' | i18n}}</th>
+                        <th class="text-center">{{'Phone' | i18n}}</th>
+                        <th class="text-center">{{'Gender' | i18n}}</th>
+                        <th class="text-center">{{'Age' | i18n}}</th>
+                        <th class="text-center">{{'DeviceSerial' | i18n}}</th>
+                        <th class="text-center">{{'Group' | i18n}}</th>
+                        <th class="text-center">{{'BeforeWeekConformity' | i18n}}</th>
+                        <th class="text-center">{{'ParticipantDate' | i18n}}</th>
+                        <th class="text-center">{{'ParticipantYn' | i18n}}</th>
+                        <th class="text-center">{{'Use' | i18n}}</th>
+                    </tr>
+                    </thead>
+                </sa-datatable>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-participant-modal (complete)="modalComplete($event)"></app-participant-modal>

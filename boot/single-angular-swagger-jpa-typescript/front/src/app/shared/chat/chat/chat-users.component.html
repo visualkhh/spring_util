@@ -1,0 +1,24 @@
+<div id="chat-container" [class.open]="isOpen">
+  <span class="chat-list-open-close" (click)="openToggle()"><i class="fa fa-user"></i><b>!</b></span>
+
+  <div class="chat-list-body custom-scroll">
+    <ul id="chat-users">
+      <li *ngFor="let user of users | fieldFilter : 'username' : filter " >
+        <a (click)="messageTo(user)"><img [src]="user.picture">{{user.username}} <span
+          class="badge badge-inverse">{{user.username.length}}</span><span class="state"><i
+          class="fa fa-circle txt-color-green pull-right"></i></span></a>
+      </li>
+    </ul>
+  </div>
+  <div class="chat-list-footer">
+    <div class="control-group">
+      <form class="smart-form">
+        <section>
+          <label class="input" >
+            <input type="text" [(ngModel)]="filter" id="filter-chat-list" name="chatUsersFilter" placeholder="Filter">
+          </label>
+        </section>
+      </form>
+    </div>
+  </div>
+</div>

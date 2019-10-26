@@ -1,0 +1,71 @@
+<div id="content">
+    <div class="no-margin">
+        <div class="col-sm-12 headTitle">
+            <div class="row well no-margin">
+                <form class="row">
+                    <fieldset class="smart-form">
+                        <div class="row">
+                            <div class="col col-sm-10">
+                                <label class="col-sm-1 text-right">{{'DateScope' | i18n}}</label>
+                                <section class="col col-sm-3">
+                                    <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                                        <input type="text" name="date" id="startdate" [saUiDatepicker]="{minRestrict:'#enddate', dateFormat:'yy.mm.dd'}" placeholder="{{'Select' | i18n}} {{'Date' | i18n}}" (change)="selectStartDate($event)" (dateChange)="selectStartDate($event)"/>
+                                    </label>
+                                </section>
+                                <section class="col col-sm-3">
+                                    <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                                        <input type="text" name="date" id="enddate" [saUiDatepicker]="{maxRestrict:'#startdate', dateFormat:'yy.mm.dd'}" placeholder="{{'Select' | i18n}} {{'Date' | i18n}}" (change)="selectEndDate($event)" (dateChange)="selectEndDate($event)"/>
+                                    </label>
+                                </section>
+<!--                                <label class="col-sm-1 text-right"> ▶︎{{'Accept' | i18n}}▶︎︎</label>-->
+<!--                                <section class="col col-sm-3" style="padding-right: 0">-->
+<!--                                    <label class="input text-center" *ngIf="where">-->
+<!--                                        {{where.fromDate | moment : 'YYYY.MM.DD'}} {{(where.fromDate | moment : 'dddd') | i18n}}-->
+<!--                                    </label>-->
+<!--                                </section>-->
+<!--                                <section class="col col-sm-1 text-align-center" style="padding: 0"> ~ </section>-->
+<!--                                <section class="col col-sm-3" style="padding-left: 0">-->
+<!--                                    <label class="input text-center" *ngIf="where">-->
+<!--                                        {{where.toDate | moment : 'YYYY.MM.DD'}} {{(where.toDate | moment : 'dddd') | i18n}}-->
+<!--                                    </label>-->
+<!--                                </section>-->
+                            </div>
+                            <div class="col col-sm-2">
+                                <section class="col col-sm-12">
+<!--                                    <button style="padding: 10px 15px;" *ngIf="userService.isAceept() && userService.isAcceptUrl(router.url, 'GET')" type="button" class="btn btn-info margin-right-5 pull-right" (click)="search()">{{'Search' | i18n}}</button>-->
+                                </section>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+            <div class="row margin-top-10 margin-bottom-10">
+                <div class="col-md-12">
+                    <button *ngIf="userService.isAceept() && userService.isAcceptUrl(router.url, 'GET')" type="button" class="btn btn-info margin-right-5 pull-right" (click)="search()">{{'Search' | i18n}}</button>
+                    <button type="button" class="btn btn-primary margin-right-5 pull-right" (click)="router.navigate(['/clinical/participant'])">{{'List' | i18n}}</button>
+                </div>
+            </div>
+
+            <div class="well">
+                <sa-datatable [options]="options" paginationLength="true" tableClass="table table-striped table-bordered table-hover" id="bbsTable" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="text-center">{{'Seq' | i18n}}</th>
+                            <th class="text-center">{{'Date' | i18n}}</th>
+                            <th class="text-center">{{'Start' | i18n}} {{'Time' | i18n}}</th>
+                            <th class="text-center">{{'End' | i18n}} {{'Time' | i18n}}</th>
+                            <th class="text-center">{{'Contents' | i18n}}</th>
+                            <th class="text-center">{{'Concentration' | i18n}}</th>
+                            <th class="text-center">{{'Score' | i18n}}</th>
+                            <th class="text-center">{{'Rating' | i18n}}</th>
+                        </tr>
+                    </thead>
+                </sa-datatable>
+
+            </div>
+        </div>
+    </div>
+</div>
+<app-conformity-details-modal></app-conformity-details-modal>
+

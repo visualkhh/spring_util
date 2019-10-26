@@ -1,0 +1,56 @@
+<form id="add-event-form">
+  <fieldset>
+    <div class="form-group">
+      <label>Select Event Icon</label>
+      <div class="btn-group btn-group-sm btn-group-justified">
+
+        <label *ngFor="let icon of icons"
+               class="btn btn-default"
+               [saToggleActive]="icon === activeIcon"
+               (click)="setIcon(icon)">
+          <i class="fa text-muted {{icon}}"></i>
+
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Event Title</label>
+      <input [(ngModel)]="title" class="form-control" id="title"
+             name="title" maxLength="40" type="text"
+             placeholder="Event Title"/>
+    </div>
+    <div class="form-group">
+      <label>Event Description</label>
+        <textarea [(ngModel)]="description" name="description"
+                  class="form-control"
+                  placeholder="Please be brief" rows="3" max-length="40"
+                  id="description"></textarea>
+      <p class="note">Maxlength is set to 40 characters</p>
+    </div>
+
+    <div class="form-group">
+      <label>Select Event Color</label>
+      <div class="btn-group btn-group-sm btn-group-justified btn-select-tick">
+
+        <label *ngFor="let colorClassName of colorClassNames"
+               [saToggleActive]="colorClassName == activeColorClass"
+               class="btn {{colorClassName.bg}}" (click)="setColorClass(colorClassName)">
+
+          <i class="fa fa-check {{colorClassName.txt}}"></i>
+        </label>
+      </div>
+    </div>
+
+  </fieldset>
+  <div class="form-actions">
+    <div class="row">
+      <div class="col-md-12">
+        <button class="btn btn-default" type="button" id="add-event"
+                (click)="addEventSample()">
+          Add Event
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

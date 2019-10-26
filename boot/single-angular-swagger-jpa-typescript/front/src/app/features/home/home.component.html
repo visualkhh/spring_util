@@ -1,0 +1,52 @@
+<sa-widgets-grid>
+    <article class="col-sm-6 padding-5 margin-top-10">
+        <div sa-widget [editbutton]="false" color="blueDark">
+            <header>
+                <h2>Dash board1</h2>
+            </header>
+            <div>
+                <div class="widget-body no-padding">
+                    test
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <article class="col-sm-6 padding-5 margin-top-10 pull-right">
+        <div sa-widget [editbutton]="false" color="blueDark">
+            <header>
+                <h2>{{'Notice' | i18n}}</h2>
+            </header>
+            <div>
+                <div class="widget-body no-padding">
+                    <div class="well">
+                        <!-- datatable div -->
+                        <sa-datatable [options]="noticeOptions" paginationLength="true" tableClass="table table-striped table-bordered table-hover" id="noticeTable" width="100%">
+                            <thead>
+                            <tr>
+                                <th class="text-center" data-class="expand">
+                                    <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>
+                                    {{'Subject' | i18n}}
+                                </th>
+                            </tr>
+                            </thead>
+                        </sa-datatable>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" color="blueDark">
+            <header>
+                <h2>Dash board3</h2>
+            </header>
+            <div>
+                <div class="widget-body no-padding">
+                    test
+                </div>
+            </div>
+        </div>
+    </article>
+</sa-widgets-grid>

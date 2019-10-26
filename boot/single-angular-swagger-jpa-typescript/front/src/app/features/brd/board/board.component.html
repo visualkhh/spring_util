@@ -1,0 +1,50 @@
+<div id="content">
+    <div class="row">
+        <sa-big-breadcrumbs [items]="[cateCd]" icon="list-ul" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+    </div>
+
+    <div class="no-margin">
+        <div class="col-sm-12 headTitle">
+            <div class="row well no-margin">
+                <form id="checkout-form" class="col col-sm-9">
+                    <fieldset class="smart-form">
+                        <div class="col-sm-5">
+                            <label class="col-sm-4">{{'Subject' | i18n}}</label>
+                            <div class="col-sm-7">
+                                <i class="icon-append fa fa-search" (click)="search()"></i>
+<!--                                <input type="text"  name="search" class="form-control searchWord" placeholder="{{'SearchWord' | i18n}}" [(ngModel)]="where.search" (ngModelChange)="search()" (keyup.enter)="search()">-->
+                                <input type="text"  name="search" class="form-control searchWord" placeholder="{{'SearchWord' | i18n}}" [(ngModel)]="where.search" (keyup.enter)="search()">
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="row margin-top-10 margin-bottom-10">
+                <div class="col-md-12">
+                    <button *ngIf="userService.isAceept() && userService.isAcceptUrl(router.url, 'POST')" type="button" class="btn btn-primary pull-right" (click)="showRegDialog()">{{'Register' | i18n}}</button>
+                    <button *ngIf="userService.isAceept() && userService.isAcceptUrl(router.url, 'GET')" type="button" class="btn btn-info margin-right-5 pull-right" (click)="search()">{{'Search' | i18n}}</button>
+                </div>
+            </div>
+
+
+            <div class="well">
+                <sa-datatable [options]="options" paginationLength="true" tableClass="table table-striped table-bordered table-hover" id="bbsTable" width="100%">
+                    <thead>
+                    <tr>
+                        <th class="text-center">{{'Seq' | i18n}}</th>
+                        <th class="text-center" data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>
+                            {{'Subject' | i18n}}
+                        </th>
+                        <th class="text-center">{{'Status' | i18n}}</th>
+                        <th class="text-center"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i>
+                            {{'RegistDt' | i18n}}
+                        </th>
+                    </tr>
+                    </thead>
+                </sa-datatable>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-brd-modal (complete)="modalComplete($event)"></app-brd-modal>

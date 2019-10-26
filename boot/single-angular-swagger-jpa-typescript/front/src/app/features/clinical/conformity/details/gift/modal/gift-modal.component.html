@@ -1,0 +1,60 @@
+<ng-template #template>
+    <div class="modal-header">
+        <button type="button" class="close" (click)="bsModalRef.hide()"> &times;</button>
+        <h6 class="modal-title">
+            <small><i class="fa fa-circle text-muted margin-right-5"></i></small>
+            {{ 'Detail' | i18n}}
+        </h6>
+    </div>
+
+    <div class="modal-body">
+        <form class="smart-form client-form" [formGroup]="formGroup" novalidate="novalidate">
+            <div class="col-sm-12 form-horizontal">
+                <div class="form-group col-sm-12" *ngIf="detail">
+                    <label class="control-label text-left col-sm-2">{{'RegistDt' | i18n}}</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" name="regDt" placeholder="{{'RegistDt' | i18n}}" [readonly]="detail" [class.modalInputReadOnly]="detail" [value]="(detail.regDt | moment:'YYYY-MM-DD HH:mm:ss') || ''">
+                    </div>
+                </div>
+                <div class="form-group col-sm-12" *ngIf="detail">
+                    <label class="control-label text-left col-sm-2">{{'RequestDt' | i18n}}</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" name="reqDt" placeholder="{{'RequestDt' | i18n}}" [readonly]="detail" [class.modalInputReadOnly]="detail" [value]="(detail.reqDt | moment:'YYYY-MM-DD HH:mm:ss') || ''">
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-12" *ngIf="detail">
+                    <label class="control-label text-left col-sm-2">{{'Contents' | i18n}}</label>
+                    <div class="col-sm-10">
+                        <label class="textarea">
+                            <textarea rows="10" name="cont" formControlName="cont" placeholder="{{'Contents' | i18n}}" [ngModel]="detail.cont"></textarea>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-12" *ngIf="detail">
+                    <label class="control-label text-left col-sm-2">*{{'Provision'|i18n}}{{'CompletYn' | i18n}}</label>
+                    <div class="col-sm-10">
+                        <label class="select">
+                            <select *ngIf="i18n"  name="comCd" formControlName="comCd" [(ngModel)]="detail.comCd">
+                                <option *ngFor="let item of i18n.getCodes('COM')" [value]="item.cd"> {{item.cdNm}}</option>
+                            </select> <i></i> </label>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer text-center">
+        <div class="row">
+            <!--<button *ngIf="modalStatus && brdDetail.useYn=='N'" class="btn btn-danger" (click)="bbsDelete(brdDetail)">{{'Delete' | i18n}}-->
+            <div class="col-3 pull-right">
+                <button type="button" class="btn btn-success" (click)="bsModalRef.hide()">{{'Close' | i18n}}</button>
+            </div>
+            <div class="col-3 pull-right margin-right-5">
+                <button *ngIf="detail && userService.isAcceptUrl(router.url, 'PUT')" class="btn btn-info" (click)="update()">{{'Update' | i18n}}</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
