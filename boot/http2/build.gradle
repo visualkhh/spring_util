@@ -14,6 +14,22 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// https://mvnrepository.com/artifact/io.undertow/undertow-core
+//	compile group: 'io.undertow', name: 'undertow-core', version: '2.0.28.Final'
+//	compile group: 'io.undertow', name: 'undertow-servlet', version: '2.0.28.Final'
+//	compile group: 'org.eclipse.jetty.http2', name: 'http2-server', version: '9.4.24.v20191120'
+////	compile group: 'org.eclipse.jetty.alpn', name: 'alpn-api', version: '1.1.3.v20160715'
+//	compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.24.v20191120'
+//	compile group: 'org.eclipse.jetty', name: 'jetty-alpn-server', version: '9.4.24.v20191120'
+////	compile group: 'org.eclipse.jetty', name: 'jetty-alpn-server', version: '9.2.12.v20150709'
+
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-undertow', version: '2.2.2.RELEASE'
+
+//	compile group: 'org.springframework.boot', name: 'spring-boot-starter-jetty', version: '2.2.2.RELEASE'
+
+//Thanks for using https://jar-download.com
+
+
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}

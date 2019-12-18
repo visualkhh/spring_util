@@ -1,20 +1,18 @@
 package com.example.demo.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-@RestController
+import javax.servlet.ServletRequest;
+
+@Controller
 public class TestController {
-    @GetMapping({"","/"})
-    public String heallo() {
-        return "helloaa";
-    }
-    @GetMapping("/whatever")
-    public String whatever() {
-        return "whatevessssr";
-    }
-    @GetMapping("/hello")
-    public String hello() {
-        return "hello";
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String test(ServletRequest servletRequest, Model model) {
+        model.addAttribute("ip", servletRequest.getRemoteAddr());
+        return "index";
     }
 }

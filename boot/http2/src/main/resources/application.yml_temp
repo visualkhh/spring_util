@@ -1,0 +1,13 @@
+server:
+  port: 8443
+  compression:
+    enabled: true
+  http2:
+    enabled: true
+  ssl:
+    enabled: true
+    key-store: classpath:keystore.p12
+    key-store-password: 123456
+    key-store-type: PKCS12
+    protocol: TLSv1.2
+    key-alias: spring
