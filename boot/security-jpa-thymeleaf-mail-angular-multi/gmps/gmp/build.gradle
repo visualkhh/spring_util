@@ -1,0 +1,79 @@
+processResources {
+    dependsOn "buildAngular"
+}
+
+bootJar {
+    baseName "neuro-scan-dx"
+//    launchScript()
+}
+
+def webappDir = "$projectDir/src/main/resources/webapp"
+def templatesDir = "$projectDir/src/main/resources/templates"
+def angularDir = project(':gmp-angular').projectDir
+
+
+generateTypeScript {
+    dependsOn ':web-core:generateTypeScript'
+    customTypeNaming = [
+            'org.springframework.security.core.userdetails.UserDetails:UserDetailsOfSpring',
+            'com.genome.dx.wcore.model.security.GrantedObjAuthority:UserDetailGrantedObjAuthority'
+    ]
+    classPatterns = [
+            'com.genome.dx.gmp.domain.**',
+            'com.genome.dx.gmp.model.**',
+    ]
+    //http://www.habarta.cz/typescript-generator/doc/ModulesAndNamespaces.html
+    outputFileType = 'implementationFile'  //values are: declarationFile (.d.ts) or implementationFile (.ts)
+    jsonLibrary = 'jackson2'
+    outputKind = 'module'  // values are: global, module, ambientModule
+    outputFile = "${angularDir}/generate/models.ts"
+    scanSpringApplication = true
+    generateSpringApplicationClient = true
+}
+
+
+task installAngular(type: Exec) {
+    dependsOn generateTypeScript
+    doFirst {
+        def targetNodePath = "";
+        if (project.hasProperty('nodePath')) {
+            targetNodePath = "$nodePath/";
+        }
+//        tasks.generateTypeScript.execute()
+        workingDir "$angularDir"
+//        inputs.dir "$angularDir"
+//        group = BasePlugin.BUILD_GROUP
+        if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")) {
+            commandLine "${targetNodePath}npm.cmd", "install"
+        } else {
+            commandLine "${targetNodePath}npm", "install"
+        }
+    }
+}
+
+task buildWebAppAngular(type:Exec) {
+    dependsOn 'installAngular'
+    dependsOn ':gmp-angular:webCoreNodeModuleToMyNodeModuleLink'
+    doFirst {
+        def targetNodePath = "";
+        if (project.hasProperty('nodePath')) {
+            targetNodePath = "$nodePath/";
+        }
+        workingDir "$angularDir"
+//        inputs.dir "$angularDir"
+//        group = BasePlugin.BUILD_GROUP
+        commandLine "${targetNodePath}node", "node_modules/@angular/cli/bin/ng", "build"
+    }
+}
+
+task buildAngular(type: Copy, dependsOn: 'buildWebAppAngular') {
+    doFirst {
+        from "${webappDir}/index.html"
+        into "${templatesDir}"
+        print("buildAngular END : ${webappDir} ${templatesDir}")
+    }
+}
+
+
+
+

@@ -1,0 +1,24 @@
+<main role="main">
+    <web-core-inline-navigation *ngIf="router && router.url" [url]="router.url"></web-core-inline-navigation>
+
+    <div class="d-flex flex-column p-3 my-3 rounded" style="border: 1px solid #c8c8c8">
+        <h6 class="border-bottom border-gray pb-2 mb-0">
+            <i-feather name="align-left" class="head-icon mr-2" style="height: 15px; width: 15px"></i-feather>
+            {{'Policy' | i18n}}
+        </h6>
+        <quill-editor [(ngModel)]="policy.plcyCont" [styles]="{height: '200px'}" (onContentChanged)=handleContentChange($event)></quill-editor>
+        <div><button class="btn btn-primary btn-sm float-right my-2" style="width: 120px" (click)="policySave()">{{'Save' | i18n}}</button></div>
+    </div>
+    <div class="d-flex flex-column p-3 my-3 rounded" style="border: 1px solid #c8c8c8">
+        <h6 class="border-bottom border-gray pb-2 mb-0">
+            <i-feather name="align-right" class="head-icon mr-2" style="height: 15px; width: 15px"></i-feather>
+            {{'Terms' | i18n}}
+        </h6>
+        <quill-editor [(ngModel)]="terms.plcyCont" [styles]="{height: '200px'}" (onContentChanged)=handleContentChange($event)></quill-editor>
+        <div><button class="btn btn-primary btn-sm float-right my-2" style="width: 120px" (click)="termsSave()">{{'Save' | i18n}}</button></div>
+    </div>
+
+<!--    <div>-->
+<!--        <quill-view-html [content]="policy.plcyCont" theme="snow"></quill-view-html>-->
+<!--    </div>-->
+</main>

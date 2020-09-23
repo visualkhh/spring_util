@@ -1,0 +1,66 @@
+bootJar { enabled = false }
+jar { enabled = true }
+dependencies {
+//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '2.2.1.RELEASE'
+//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version: '2.2.1.RELEASE'
+//		compile('org.springframework.boot:spring-boot-starter-data-redis')
+//		compile('org.springframework.boot:spring-boot-starter-jooq')
+//		compile('org.springframework.boot:spring-boot-starter-cache')
+//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '2.3.1.RELEASE'
+//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version: '2.3.1.RELEASE'
+//    implementation 'org.springframework.boot:spring-boot-starter-tomcat'
+//    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.7.0'
+//    compile group: 'org.apache.oltu.oauth2', name: 'org.apache.oltu.oauth2.client', version: '1.0.1'
+    compile("org.springframework.boot:spring-boot-starter-mail")
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-mail')
+
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '3.0.2.RELEASE'
+    compile group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.0.9.RELEASE'
+
+    // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
+//    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+
+}
+
+def angularDir = project(':web-core-angular').projectDir
+//tasks.register('generateTS') {
+////    doFirst {
+//        println('zzzhhhhhhhhhhhh')
+////    }
+//}
+
+
+generateTypeScript {
+    dependsOn ':core:messagePropertiesToJsonWebCoreAngular'
+    doFirst {
+        println("generateTypeScript????????")
+        customTypeNaming = [
+                'org.springframework.security.core.userdetails.UserDetails:UserDetailsOfSpring',
+//                'org.springframework.data.domain.PageRequest:PageRequestOfSpring',
+//            'com.genome.dx.wcore.domain.security.Auth:UserDetailAuth',
+                'com.genome.dx.wcore.model.security.GrantedObjAuthority:UserDetailGrantedObjAuthority'
+        ]
+        classPatterns = [
+                'com.genome.dx.wcore.domain.**',
+                'com.genome.dx.wcore.model.**',
+//                'com.genome.dx.wcore.config.http.**',
+//                'com.genome.dx.wcore.code.**',
+
+                'com.genome.dx.core.domain.**',
+                'com.genome.dx.core.model.**',
+//                'com.genome.dx.core.code.**',
+        ]
+        //http://www.habarta.cz/typescript-generator/doc/ModulesAndNamespaces.html
+        outputFileType = 'implementationFile'  //values are: declarationFile (.d.ts) or implementationFile (.ts)
+        jsonLibrary = 'jackson2'
+        outputKind = 'module'  // values are: global, module, ambientModule
+        outputFile = "${angularDir}/generate/models.ts"
+        scanSpringApplication = true
+        generateSpringApplicationClient = true
+    }
+}

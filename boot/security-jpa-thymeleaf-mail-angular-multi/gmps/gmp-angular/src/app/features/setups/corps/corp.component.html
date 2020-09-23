@@ -1,0 +1,24 @@
+<main role="main">
+    <web-core-inline-navigation *ngIf="router && router.url" [url]="router.url"></web-core-inline-navigation>
+
+    <div class="d-flex align-items-center p-3 my-3 rounded" style="border: 1px solid #c8c8c8">
+        <div class="p-2 flex-grow-1 bd-highlight">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="search">{{'Search' | i18n}}</label>
+                    <input type="text" id="search" name="search" class="form-control mx-sm-3" placeholder="{{'Name' | i18n}}" [(ngModel)]="where.corpGrpNm" (keyup.enter)="search()" autofocus>
+                </div>
+            </form>
+        </div>
+        <div class="p-2 bd-highlight">
+            <button *ngIf="isSearch()" type="button" class="btn btn-secondary btn-sm mx-1" style="width: 100px" (click)="search()">{{'Search' | i18n}}</button>
+            <button *ngIf="isRegister()" type="button" class="btn btn-primary btn-sm mx-1" style="width: 100px" (click)="register()">{{'Register' | i18n}}</button>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column p-3 my-3 rounded" style="border: 1px solid #c8c8c8">
+        <web-core-corp-datatable [where]="where" (response)="response($event)"></web-core-corp-datatable>
+    </div>
+</main>
+
+<web-core-corp-modal (complete)="registerComplete()"></web-core-corp-modal>

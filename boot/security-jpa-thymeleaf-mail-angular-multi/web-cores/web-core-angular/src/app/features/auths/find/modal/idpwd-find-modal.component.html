@@ -1,0 +1,47 @@
+<ng-template #modalTemplate>
+    <div class="modal-header">
+        <h6 class="modal-title" id="exampleModalLabel">
+            <i-feather name="info" class="head-icon mr-2" style="height: 15px; width: 15px"></i-feather>
+            {{'FindID_PWD' | i18n}}
+        </h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <ul class="nav nav-tabs mb-2 nav-pills nav-fill">
+            <li class="nav-item">
+                <a class="nav-link" [class.active] = "isIDMode()" href="#" (click)="changeIDMode()">{{'FindID' | i18n}}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [class.active] = "isPWDMode()" href="#" (click)="changePWDMode()">{{'FindPWD' | i18n}}</a>
+            </li>
+        </ul>
+
+        <form [formGroup]="infoForm" autocomplete="off" class="p-2">
+            <div class="form-group row" *ngIf="isPWDMode()">
+                <label for="admLginId" class="col-sm-3 col-form-label">* {{'Id' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="admLginId" name="admLginId" formControlName="admLginId" placeholder="{{'Id' | i18n}}" [readonly]="infoForm?.get('admSeq')?.value">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="admNm" class="col-sm-3 col-form-label">* {{'Name' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="admNm" name="admNm" formControlName="admNm" placeholder="{{'Name' | i18n}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="email" class="col-sm-3 col-form-label">* {{'Email' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="email" class="form-control" id="email" name="email" formControlName="email" placeholder="{{'Email' | i18n}}">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer" style="padding: 3px;">
+        <button type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-primary btn-sm" (click)="find()">{{'Yes' | i18n}}</button>
+        <button type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-secondary btn-sm" data-dismiss="modal" (click)="no()">{{'Close' | i18n}}</button>
+    </div>
+
+</ng-template>

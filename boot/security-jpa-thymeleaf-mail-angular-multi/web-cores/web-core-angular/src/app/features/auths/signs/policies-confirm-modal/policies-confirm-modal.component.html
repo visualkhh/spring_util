@@ -1,0 +1,39 @@
+<ng-template #modalTemplate>
+    <div class="modal-header">
+        <h6 class="modal-title">
+            <i-feather name="info" class="head-icon mr-2" style="height: 15px; width: 15px"></i-feather>
+            {{'SignMembership' | i18n}}
+        </h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <h6>
+            <i-feather name="align-left" class="head-icon mr-2" style="height: 15px; width: 15px"></i-feather>
+            {{'Terms' | i18n}}
+        </h6>
+        <div style="height: 200px; border: 1px solid #ccc; overflow-y: scroll; margin: 20px 0; background-color: white">
+            <quill-view-html [content]="terms.plcyCont" theme="snow"></quill-view-html>
+        </div>
+        <div class="form-group form-check" style="text-align: right">
+            <input type="checkbox" class="form-check-input" id="policyConfirm" [(ngModel)]="confirm.terms">
+            <label class="form-check-label" for="policyConfirm">{{'msg.confirmed.upinfo' | i18n}}</label>
+        </div>
+        <h6>
+            <i-feather name="align-right" class="head-icon mr-2" style="height: 15px; width: 15px"></i-feather>
+            {{'Policy' | i18n}}
+        </h6>
+        <div style="height: 200px; border: 1px solid #ccc; overflow-y: scroll; margin: 20px 0; background-color: white">
+            <quill-view-html [content]="policy.plcyCont" [style]="{height: '350px', overflow: 'scroll', margin: '20px 0'}" theme="snow"></quill-view-html>
+        </div>
+        <div class="form-group form-check" style="text-align: right">
+            <input type="checkbox" class="form-check-input" id="termsConfirm" [(ngModel)]="confirm.policy">
+            <label class="form-check-label" for="termsConfirm">{{'msg.confirmed.upinfo' | i18n}}</label>
+        </div>
+    </div>
+    <div class="modal-footer" style="padding: 3px;">
+        <button type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-primary btn-sm" (click)="confirmCheckAndClose()">{{'word.ok' | i18n}}</button>
+        <button type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-secondary btn-sm" data-dismiss="modal" (click)="close()">{{'Close' | i18n}}</button>
+    </div>
+</ng-template>

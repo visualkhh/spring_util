@@ -37,10 +37,10 @@ war.doLast {
 }
 
 repositories {
-	maven { url "http://119.206.205.172:8081/nexus/content/repositories/releases/" }
+	maven { url "http://maven.omnicns.co.kr/nexus/content/repositories/releases/" }
      maven { url "https://code.lds.org/nexus/content/groups/main-repo" }
      maven { url "http://repo1.maven.org/maven2/" }
-     maven { url "http://www.egovframe.go.kr/maven/" }
+	maven { url "http://maven.egovframe.kr:8080/maven/" }
      maven { url "http://repo.maven.apache.org/maven2" }
 }
 

@@ -1,0 +1,37 @@
+<!--<sa-header></sa-header>-->
+
+<!--<sa-navigation></sa-navigation>-->
+
+<!--<div id="main" role="main" [@routerTransition]="getState(o)">-->
+
+<!--  <sa-layout-switcher></sa-layout-switcher>-->
+
+<!--  <sa-ribbon></sa-ribbon>-->
+
+<!--  <router-outlet #o="outlet"></router-outlet>-->
+<!--</div>-->
+
+<!--<sa-footer></sa-footer>-->
+
+<!--<sa-shortcut></sa-shortcut>-->
+
+<component-header></component-header>
+<component-navigation></component-navigation>
+
+
+<!--<div [@routerTransition]="getState(o)">main-->
+<main role="content" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+    <router-outlet></router-outlet>
+    <component-footer></component-footer>
+</main>
+
+<!--<div class="d-flex flex-column h-100 col-md-9 ml-sm-auto col-lg-10 px-md-4">-->
+<!--    <div>aa</div>-->
+<!--    <div>aa</div>-->
+<!--    <div>aa</div>-->
+<!--    <div>aa</div>-->
+<!--    <div>aa</div>-->
+
+<!--    -->
+<!--</div>-->
+

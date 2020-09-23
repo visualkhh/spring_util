@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds">
+    <!--    	<include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+    <springProperty name="applicationName" source="spring.application.name" defaultValue="gg"/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%-5level|%thread|%logger{36}|%method[%line]|%msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.home:-log}/${applicationName}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.home:-log}/${applicationName}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!--            <maxHistory>30</maxHistory>-->
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%-5level|%thread|%logger{36}|%method[%line]|%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="FILE"/>
+    </root>
+<!--    <logger name=g"org.springframework" level="OFF"></logger>-->
+<!--    <logger name="org.springframework.web.reactive.function.client.ExchangeFilterFunction" level="TRACE"></logger>-->
+<!--    <logger name="reactor.netty.http.client.HttpClient" level="DEBUG"/>-->
+
+<!--    <logger name="org.springframework" level="OFF"></logger>-->
+<!--    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>-->
+<!--    <logger name="org.springframework.web.reactive.function.client.ExchangeFunctions" level="TRACE"/>-->
+<!--    <logger name="reactor.netty" level="TRACE"/>-->
+<!--    <logger name="logging.level.reactor.netty.http.client.HttpClient" level="TRACE"/>-->
+<!--    <logger name="org.hibernate.SQL" level="DEBUG"/>-->
+<!--    <logger name="org.hibernate.metamodel.model.convert.internal.NamedEnumValueConverter" level="TRACE"/>-->
+<!--    <logger name="org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener" level="OFF"/>-->
+</configuration>
+

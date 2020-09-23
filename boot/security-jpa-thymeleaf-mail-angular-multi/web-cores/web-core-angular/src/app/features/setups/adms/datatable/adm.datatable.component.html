@@ -1,0 +1,25 @@
+<web-core-datatable [options]="options" [paginationLength]="!strip" [pageInfo]="!strip" [pageNavigation]="!strip"
+                    tableClass="table table-striped table-bordered table-hover table-radius">
+    <thead>
+    <tr>
+        <th class="text-right" data-hide="mobile-p">No</th>
+        <th class="text-center">{{'Seq' | i18n}}</th>
+        <th class="text-left">{{'Id' | i18n}}</th>
+        <th class="text-left">{{'Name' | i18n}}</th>
+        <th class="text-left">{{'Affiliation' | i18n}}</th>
+        <th class="text-left">{{'Email' | i18n}}</th>
+        <th class="text-left">{{'Job' | i18n}}</th>
+        <th class="text-left">{{'CORP' | i18n}}</th>
+        <th class="text-center">{{'ROLE' | i18n}} </th>
+        <th class="text-center">{{'UseDate' | i18n}} </th>
+        <th class="text-center">{{'Status' | i18n}} </th>
+        <th class="text-center">{{'RegistDt' | i18n}}</th>
+        <th class="text-center">{{'AccessHistory' | i18n}}</th>
+    </tr>
+    </thead>
+</web-core-datatable>
+
+<web-core-adm-modal (complete)="admComplet($event)"></web-core-adm-modal>
+<web-core-basic-modal [config]=" {class: 'modal-xl'}" [title]="'AccessHistory'|i18n">
+    <web-core-history-datatable type="URL"></web-core-history-datatable>
+</web-core-basic-modal>

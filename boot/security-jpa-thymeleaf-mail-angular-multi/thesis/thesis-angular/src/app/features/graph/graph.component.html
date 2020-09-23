@@ -1,0 +1,89 @@
+<h3>graph</h3>
+<div class="row" *ngIf="flotData">
+    <web-core-flot-chart [data]="flotData.barChartData"
+                         [options]="flotExamples.barChartDemoOptions"></web-core-flot-chart>
+</div>
+
+
+<div class="row" *ngIf="chartjsData">
+    <article class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div>
+            <header>
+                <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+                <h2>Line Chart</h2>
+            </header>
+            <div>
+                <div class="widget-body">
+                    <web-core-chart-js type="line" [data]="chartjsData['line-chart']"></web-core-chart-js>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <header>
+                <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+                <h2>Radar Chart</h2>
+            </header>
+            <div>
+                <div class="widget-body">
+                    <web-core-chart-js type="radar" [data]="chartjsData['radar-chart']"></web-core-chart-js>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <header>
+                <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+                <h2>Polar Chart</h2>
+            </header>
+            <div>
+                <div class="widget-body">
+                    <web-core-chart-js type="polarArea" [data]="chartjsData['polar-chart']"></web-core-chart-js>
+                </div>
+            </div>
+        </div>
+
+    </article>
+
+    <article class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+        <div>
+            <header>
+                <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+                <h2>Bar Chart</h2>
+            </header>
+            <div>
+                <div class="widget-body">
+                    <web-core-chart-js type="bar" [data]="chartjsData['bar-chart']"></web-core-chart-js>
+                </div>
+            </div>
+        </div>
+
+
+        <div>
+            <header>
+                <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+                <h2>Doughnut Chart</h2>
+            </header>
+            <div>
+                <div class="widget-body">
+                    <web-core-chart-js type="doughnut" [data]="chartjsData['doughnut-chart']"></web-core-chart-js>
+                </div>
+            </div>
+        </div>
+
+
+        <div>
+            <header>
+                <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+                <h2>Pie Chart</h2>
+            </header>
+            <div>
+                <div class="widget-body">
+                    <web-core-chart-js type="pie" [data]="chartjsData['pie-chart']"></web-core-chart-js>
+                </div>
+            </div>
+        </div>
+
+    </article>
+</div>

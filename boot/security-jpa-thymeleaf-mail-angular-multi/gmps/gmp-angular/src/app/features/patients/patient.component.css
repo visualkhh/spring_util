@@ -1,0 +1,9 @@
+.form-horizontal .form-group {
+    margin: 0 !important;
+}
+.searchWord {
+    padding-left: 3px;
+}
+.icon-append {
+    right: 12px;
+}

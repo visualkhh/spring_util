@@ -1,0 +1,131 @@
+<ng-template #modalTemplate>
+
+    <div class="modal-header">
+        <h6 class="modal-title" id="exampleModalLabel">
+            <i-feather name="info" class="head-icon mr-2" style="height: 15px; width: 15px"></i-feather>
+            {{'DiseaseResearch' | i18n}}
+        </h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+
+        <div class="p-3 my-3 rounded" style="border: 1px solid #c8c8c8">
+            <h6 class="border-bottom border-gray pb-2 mb-0">{{'SearchContition' | i18n}}</h6>
+            <div class="d-flex">
+                <div class="p-2 flex-grow-1  bd-highlight">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="top">* TOP</label>
+                                <select class="form-control col-7" id="top" name="top"  [(ngModel)]="where.top">
+                                    <option value="1" selected="">1</option>
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="type">* {{'SearchTargetData' | i18n}}</label>
+                                <div class="form-inline form-group form-check" id="type">
+                                    <input class="form-check-input" type="checkbox" id="phenoType" name="phenoType" [(ngModel)]="where.phenoType">
+                                    <label class="form-check-label" for="phenoType">
+                                        Phenotype
+                                    </label>
+                                    <input class="form-check-input ml-2" type="checkbox" id="vcf" name="vcf" [(ngModel)]="where.vcf">
+                                    <label class="form-check-label" for="vcf">
+                                        VCF
+                                    </label>
+<!--                                    <input class="form-check-input ml-2" type="checkbox" id="mri" name="mri" [(ngModel)]="where.mri">-->
+<!--                                    <label class="form-check-label" for="mri">-->
+<!--                                        MRI-->
+<!--                                    </label>-->
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="p-2 justify-content-end  align-items-center align-self-center bd-highlight">
+                    <a class="btn btn-sm btn-outline-secondary" (click)="resetWhere()">reset</a>
+                    <button type="button" class="btn btn-secondary btn-sm ml-1" style="width: 100px" (click)="search()">{{'Search' | i18n}}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-3 my-3 rounded" style="border: 1px solid #c8c8c8" *ngIf="ptntInfo">
+            <h6 class="border-bottom border-gray pb-2 mb-0">{{'Patient' | i18n}} {{'BasicInfo' | i18n}}</h6>
+            <div class="d-flex">
+                <div class="p-2 flex-grow-1  bd-highlight">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>{{'Number' | i18n}}: </label>
+                                <span class="ml-2">{{ptntInfo.ptntSeq}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <label>{{'Name' | i18n}}: </label>
+                                <span class="ml-2">{{ptntInfo.ptntNm}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <label>{{'Gender' | i18n}}: </label>
+                                <span class="ml-2">{{ptntInfo.gen | i18n}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <label>{{'Age' | i18n}}: </label>
+                                <span class="ml-2">{{ptntInfo.age}}</span>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="p-3 my-3 rounded" style="border: 1px solid #c8c8c8">
+            <h6 class="border-bottom border-gray pb-2 mb-0">{{'SearchedEvidenceList' | i18n}}</h6>
+            <div class="d-flex">
+                <div class="p-2 flex-grow-1  bd-highlight">
+                    <table class="table  table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th class="text-center">{{'SearchCase'|i18n}}</th>
+                            <th class="text-center">{{'Ranking'|i18n}}</th>
+                            <th class="text-center">Similarity</th>
+                            <th class="text-center">{{'Diagnosis'|i18n}}</th>
+                            <th class="text-center">OMIM</th>
+                            <th class="text-center">{{'ResultDetails'|i18n}}</th>
+                        </tr>
+                        </thead>
+                        <tbody *ngIf="evidences">
+                        <tr *ngFor="let it of evidences; let i = index">
+                            <td class="text-right align-middle" style="vertical-align: middle" (click)="getReasonDetail(it.customId)"><a>{{it.customId}}</a></td>
+                            <td class="text-right align-middle" style="vertical-align: middle">{{i + 1}}</td>
+                            <td class="text-right align-middle" style="vertical-align: middle">
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" [style.width]="it.score * 100+'%'" aria-valuemin="0" aria-valuemax="100">{{it.score * 100 | number}}%</div>
+                                </div>
+                            </td>
+                            <td class="text-left align-middle" style="vertical-align: middle">{{it.diseaseName}}</td>
+                            <td class="text-center align-middle" style="vertical-align: middle"> <a *ngIf="0 < it.omimNumber"  target="_blank" [href]="'https://www.omim.org/entry/' + it.omimNumber">{{it.omimNumber}}</a> </td>
+                            <td class="text-center align-middle" style="vertical-align: middle">
+                                <a class="btn btn-sm btn-secondary" [target]="'target'+it.customId" [href]="'/#/patients/' + ptntInfo.ptntSeq+ '/results/'+it.customId + '?viewtype=strip'">
+<!--                                <a class="btn btn-sm btn-secondary" [target]="'target'+it.customId" (click)="newWindowPatientResult(it)">-->
+<!--                                <a class="btn btn-sm btn-secondary" [target]="'target'+it.customId"  [routerLink]="['/patients/' + ptntInfo.ptntSeq+ '/results/'+it.customId]" [queryParams]="{viewtype: 'strip'}">-->
+                                    {{'CheckDetail' | i18n}}
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer" style="padding: 3px;">
+        <button type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-secondary btn-sm" data-dismiss="modal" (click)="no()">{{'Close' | i18n}}</button>
+        <!--        <button type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-primary btn-sm" (click)="update()">{{'Yes' | i18n}}</button>-->
+    </div>
+
+</ng-template>
+

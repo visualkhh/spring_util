@@ -1,0 +1,198 @@
+<div id="content">
+
+    <h4 class='m-2 text-center'>
+        <i-feather name="info" class="head-icon mr-2"></i-feather>
+        {{'ResultDetails' | i18n}}
+    </h4>
+
+    <div class="p-3 m-3 rounded" style="border: 1px solid #c8c8c8">
+        <div class="row">
+            <div class="col-6">
+                <h6 class="border-bottom border-gray pb-2 mb-0">{{'InputPatient' | i18n}}</h6>
+                <table class="table table-bordered" *ngIf="inputInfo">
+                    <tr>
+                        <th>{{'Name' | i18n}}</th>
+                        <td>{{inputInfo.name}}</td>
+                    </tr>
+                    <tr>
+                        <th>{{'Age' | i18n}}</th>
+                        <td>{{inputInfo.age}}</td>
+                    </tr>
+                    <tr>
+                        <th>{{'Gender' | i18n}}</th>
+                        <td>{{inputInfo.gender | i18n}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-6">
+                <h6 class="border-bottom border-gray pb-2 mb-0">Evidence</h6>
+                <table class="table table-bordered" *ngIf="custom">
+                    <tr>
+                        <th>Evidence ID</th>
+                        <td>{{custom.customId}}</td>
+                    </tr>
+                    <tr>
+                        <th>{{'DiseaseName' | i18n}}</th>
+                        <td>{{custom.diseaseName}}</td>
+                    </tr>
+                    <tr>
+                        <th>OMIM</th>
+                        <td>
+                            <a target="_blank" [href]="'https://www.omim.org/entry/' + custom.omimNumber">{{custom.omimNumber}}</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="p-3 m-3 rounded" style="border: 1px solid #c8c8c8">
+        <div class="row">
+            <div class="col-6">
+                <h6 class="border-bottom border-gray pb-2 mb-0">{{'InputPatient' | i18n}} Phenotype</h6>
+                <table class="table  table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th class="text-center">HPOterm</th>
+                        <th class="text-center">Feature</th>
+                    </tr>
+                    </thead>
+                    <tr *ngFor="let term of inputInfoTerms" [ngStyle]="{'background-color': term.dup?'#ffc':'#fff'}">
+                        <td class="text-center">{{term.id}}</td>
+                        <td class="text-center">{{term.name}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-6">
+                <h6 class="border-bottom border-gray pb-2 mb-0">Evidence Phenotype</h6>
+                <table class="table  table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th class="text-center">HPOterm</th>
+                        <th class="text-center">Feature</th>
+                    </tr>
+                    </thead>
+                    <tr *ngFor="let term of customTerms" [ngStyle]="{'background-color': term.dup?'#ffc':'#fff'}">
+                        <td class="text-center">{{term.id}}</td>
+                        <td class="text-center">{{term.name}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-3 m-3 rounded" style="border: 1px solid #c8c8c8">
+        <div class="row">
+            <div class="col-12"  style="width: 100%;height: 500px; overflow: scroll">
+                <h6 class="border-bottom border-gray pb-2 mb-0">{{'Target'|i18n}} Variant</h6>
+                <table class="table  table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Tier ID</th>
+                        <th class="text-center">Gene</th>
+                        <th class="text-center">Disease</th>
+                        <th class="text-center">OMIM</th>
+                        <th class="text-center">Inheritance</th>
+                        <th class="text-center">Chr</th>
+                        <th class="text-center">Start</th>
+                        <th class="text-center">End</th>
+                        <th class="text-center">Ref</th>
+                        <th class="text-center">Alt</th>
+                        <th class="text-center">refread</th>
+                        <th class="text-center">altread</th>
+                        <th class="text-center">totalread</th>
+                        <th class="text-center">het_hom</th>
+                        <th class="text-center">Func_refGene</th>
+                        <th class="text-center">ExonicFunc_refGene</th>
+                        <th class="text-center">AAChange_refGene</th>
+                        <th class="text-center">esp6500_all</th>
+                        <th class="text-center">ExAC_ALL</th>
+                        <th class="text-center">ExAC_AFR</th>
+                        <th class="text-center">ExAC_AMR</th>
+                        <th class="text-center">ExAC_EAS</th>
+                        <th class="text-center">ExAC_FIN</th>
+                        <th class="text-center">ExAC_NFE</th>
+                        <th class="text-center">ExAC_OTH</th>
+                        <th class="text-center">ExAC_SAS</th>
+                        <th class="text-center">1000g2015aug_all</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let it of inputVariantInfo">
+                            <tr [ngStyle]="{'background-color': it.sameCount?'#ffc':'#fff'}">
+                                <td class="text-center" [attr.rowspan]="it.sub.length">{{it.tierId}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length">{{it.gene}}</td>
+                                <td class="text-center">{{it.sub[0].disease}}</td>
+                                <td class="text-center"><a *ngIf="0 < it['sub'][0].omim" target="_blank" [href]="'https://www.omim.org/entry/' +it.sub[0].omim">{{it.sub[0].omim}}</a></td>
+                                <td class="text-center">{{it.sub[0].inheritance}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length">{{it.inputVariant?.chr}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length">{{it.inputVariant?.start}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length">{{it.inputVariant?.end}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length" style="word-break:break-all;">{{it.inputVariant?.ref}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length" style="word-break:break-all;">{{it.inputVariant?.alt}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length" style="word-break:break-all;">{{it.refread}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length">{{it.altread}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length">{{it.totalread}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length">{{it.hetHom}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length">{{it.inputVariant?.funcRefgene}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length">{{it.inputVariant?.exonicfuncRefgene}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length" style="word-break:break-all;">{{it.inputVariant?.aachangeRefgene}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length">{{it.inputVariant?.esp6500All}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length">{{it.inputVariant?.exacAll}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length">{{it.inputVariant?.exacAfr}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length">{{it.inputVariant?.exacAmr}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length">{{it.inputVariant?.exacEas}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length">{{it.inputVariant?.exacFin}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length">{{it.inputVariant?.exacNfe}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length">{{it.inputVariant?.exacOth}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length">{{it.inputVariant?.exacSas}}</td>
+                                <td class="text-center" [attr.rowspan]="it.sub.length">{{it.inputVariant?._1000g2015augAll}}</td>
+                            </tr>
+
+                            <tr *ngFor="let sit of it['sub'] | slice:1" [ngStyle]="{'background-color': it.sameCount?'#ffc':'#fff'}">
+                                <td class="text-center">{{sit.disease}}</td>
+                                <td class="text-center"><a *ngIf="0 < sit.omim" target="_blank" [href]="'https://www.omim.org/entry/' + sit.omim">{{sit.omim}}</a></td>
+                                <td class="text-center">{{sit.inheritance}}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <div class="p-3 m-3 rounded" style="border: 1px solid #c8c8c8">
+        <div class="row">
+            <div class="col-12">
+                <h6 class="border-bottom border-gray pb-2 mb-0">{{'Result'|i18n}} Variant</h6>
+                <table class="table  table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Gene</th>
+                        <th class="text-center">Disease</th>
+                        <th class="text-center">OMIM</th>
+                        <th class="text-center">Inhinheritance</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="custom">
+                            <td class="text-center" [ngStyle]="{'background-color': custom.sameCount?'#ffc':'#fff'}">{{custom.geneSymbol}}</td>
+                            <td class="text-center" [ngStyle]="{'background-color': custom.sameCount?'#ffc':'#fff'}">{{custom.diseaseName}}</td>
+                            <td class="text-center" [ngStyle]="{'background-color': custom.sameCount?'#ffc':'#fff'}"><a *ngIf="0 < custom.diseaseName" target="_blank" [href]="'https://www.omim.org/entry/' + custom.omimNumber">{{custom.omimNumber}}</a></td>
+                            <td class="text-center" [ngStyle]="{'background-color': custom.sameCount?'#ffc':'#fff'}">{{custom.inheritance}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

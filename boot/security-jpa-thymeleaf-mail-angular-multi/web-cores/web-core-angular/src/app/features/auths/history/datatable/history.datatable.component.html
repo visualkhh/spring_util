@@ -1,0 +1,17 @@
+<web-core-datatable [options]="options" [paginationLength]="!strip" [pageInfo]="!strip" [pageNavigation]="!strip"
+                    tableClass="table table-striped table-bordered table-hover table-radius">
+    <thead>
+    <tr>
+        <th data-hide="text-center">No</th>
+        <th data-hide="text-center">actSeq</th>
+        <th data-hide="text-center">admSeq</th>
+        <th data-class="text-left">{{'Type' | i18n}}</th>
+        <th data-class="text-left">URL</th>
+        <th data-class="text-left">Request</th>
+        <th data-class="text-left">Response</th>
+        <th data-class="text-center">{{'Time' | i18n}}</th>
+        <th data-class="text-center">IP</th>
+    </tr>
+    </thead>
+</web-core-datatable>
+<web-core-brd-modal (complete)="table.draw()"></web-core-brd-modal>

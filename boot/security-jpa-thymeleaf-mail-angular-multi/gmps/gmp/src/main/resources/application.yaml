@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    include:
+      - core
+      - db
+      - web-core
+      - default
+
+server:
+  port: 8085
+
+
+---
+
+
+spring:
+  profiles: default
+  application:
+    name: gmp
+
+project:
+  properties:
+    email-from: omnicns@omnicns.com
+logging:
+  config: classpath:logback-spring.xml

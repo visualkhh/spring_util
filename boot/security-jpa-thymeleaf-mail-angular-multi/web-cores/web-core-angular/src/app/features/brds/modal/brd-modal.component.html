@@ -1,0 +1,65 @@
+<ng-template #modalTemplate>
+    <div class="modal-header">
+        <h6 class="modal-title">
+            <i-feather name="info" class="head-icon mr-2" style="height: 15px; width: 15px"></i-feather>
+            {{brd?.cateCd | i18n}} {{'Detail' | i18n}}
+        </h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="formGroup">
+            <div class="form-group row" *ngIf="undefined != brd.brdSeq">
+                <label for="regDt" class="col-sm-2 col-form-label col-form-label-sm">{{'RegistDt' | i18n}}</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control form-control-sm" formControlName="regDt" id="regDt" name="regDt" placeholder="{{'RegistDt' | i18n}}" readonly [value]="(brd.regDt | moment)">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="titl" class="col-sm-2 col-form-label col-form-label-sm">{{'Subject' | i18n}}</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control form-control-sm" formControlName="titl" id="titl" name="titl" placeholder="{{'Subject' | i18n}}" [readonly]="((isRegister()) ? false : !isUpdate())" [(ngModel)]="brd.titl">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="cont" class="col-sm-2 col-form-label col-form-label-sm">{{'Contents' | i18n}}</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" placeholder="{{'Contents' | i18n}}" formControlName="cont" id="cont" name="cont" rows="10" [(ngModel)]="brd.cont" [readonly]="((isRegister()) ? false : !isUpdate())"></textarea>
+                </div>
+            </div>
+            <div class="form-group row" *ngIf="brd?.adm?.admNm">
+                <label for="admNm" class="col-sm-2 col-form-label col-form-label-sm">{{'Register' | i18n}}</label>
+                <div class="col-sm-10">
+                    <input class="form-control" formControlName="admNm" id="admNm" name="admNm" rows="10" [(ngModel)]="brd.adm.admNm" readonly>
+                </div>
+            </div>
+
+            <div class="form-group row" *ngIf="undefined != brd?.admSeq && brd?.cateCd === 'BCC004'">
+                    <label for="answer" class="col-sm-2 col-form-label col-form-label-sm">{{'Answer' | i18n}}</label>
+                    <div class="col-sm-10 input-group">
+                        <input type="text" class="form-control form-control-sm" formControlName="answer" id="answer" name="answer" placeholder="{{'Answer' | i18n}}" [readonly]="((isRegister()) ? false : !isUpdate())" [(ngModel)]="answer.cont">
+                        <div class="input-group-append" *ngIf="isAnswer()">
+                            <button class="btn btn-outline-secondary btn-sm fa fa-pencil" type="button" (click)="registerAnswer()"></button>
+                        </div>
+                    </div>
+
+                    <label *ngIf="brd?.brds?.length" class="col-sm-2 col-form-label col-form-label-sm" style="text-align: right"><span class="mr-2 my-1 fa fa-comments-o"></span></label>
+                    <div *ngIf="brd?.brds?.length" class="col-sm-10">
+                        <div *ngFor="let it of brd?.brds" class="row mt-2">
+                            <div class="col-9"><span class="mr-2 my-1 fa fa-pencil-square-o"></span>{{it.cont}}</div>
+                            <div class="col-3">{{it.regDt | moment: 'YY.MM.DD'}}</div>
+
+                        </div>
+                    </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer" style="padding: 3px;">
+        <button *ngIf="isDelete()" type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-danger btn-sm" (click)="delete()">{{'Delete' | i18n}}</button>
+        <button *ngIf="isRegister()" type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-primary btn-sm" (click)="register()">{{'Register' | i18n}}</button>
+        <button *ngIf="isUpdate()" type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-primary btn-sm" (click)="update()">{{'Update' | i18n}}</button>
+        <button type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-secondary btn-sm" data-dismiss="modal" (click)="close()">{{'Close' | i18n}}</button>
+        <!--        <button type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-primary btn-sm" (click)="update()">{{'Yes' | i18n}}</button>-->
+    </div>
+</ng-template>

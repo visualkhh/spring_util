@@ -1,0 +1,75 @@
+rootProject.name = 'neuro-scan-dx'
+
+String[] cores = ['core']
+
+String[] webCores = ['web-core-angular', 'web-core']
+String[] thesis = ['thesis-angular', 'thesis']
+String[] gmps = ['gmp-angular', 'gmp']
+String[] khids = ['khid-angular', 'khid']
+String[] tools = ['tool']
+String[] buildSrc = ['buildSrc']
+//String[] modules = ['gmp', 'khid', 'thesis']
+
+//include buildSrc
+
+webCores.each {
+    include it
+    def projectDir = new File("${rootProject.projectDir}/web-cores", it)
+    if (!projectDir.exists()) {projectDir.mkdirs()}
+    project(":${it}").projectDir = projectDir
+}
+thesis.each {
+    include it
+    def projectDir = new File("${rootProject.projectDir}/thesis", it)
+    if (!projectDir.exists()) {projectDir.mkdirs()}
+    project(":${it}").projectDir = projectDir
+}
+gmps.each {
+    include it
+    def projectDir = new File("${rootProject.projectDir}/gmps", it)
+    if (!projectDir.exists()) {projectDir.mkdirs()}
+    project(":${it}").projectDir = projectDir
+}
+khids.each {
+    include it
+    def projectDir = new File("${rootProject.projectDir}/khids", it)
+    if (!projectDir.exists()) {projectDir.mkdirs()}
+    project(":${it}").projectDir = projectDir
+}
+
+
+tools.each {
+    include it
+    def projectDir = new File("${rootProject.projectDir}/tools", it)
+    if (!projectDir.exists()) {projectDir.mkdirs()}
+    project(":${it}").projectDir = projectDir
+}
+cores.each {
+    include it
+    def projectDir = new File("${rootProject.projectDir}/cores", it)
+    if (!projectDir.exists()) {projectDir.mkdirs()}
+    project(":${it}").projectDir = projectDir
+}
+
+
+
+
+// root directory에 하위 modules에 설정된 값들 디렉토리 만들기
+//modules.each {
+//    def projectDir = new File(rootDir, it)
+//    //sub directory create
+//    if (!projectDir.exists()) {
+//        projectDir.mkdirs()
+//    }
+//}
+
+////////lib
+//def modulesMap = [:]
+//modulesMap.each { key, value ->
+//    println(rootProject.name + '  ' + key + "-------" + value)
+//    include key
+//    if (value?.trim()) {
+//        project(":${key}").projectDir = new File(value)
+//    }
+//}
+

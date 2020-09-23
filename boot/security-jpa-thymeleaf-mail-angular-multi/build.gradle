@@ -1,0 +1,233 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url "http://maven.omnicns.co.kr/nexus/content/repositories/releases/" }
+    }
+    dependencies {
+        classpath 'cz.habarta.typescript-generator:typescript-generator-gradle-plugin:2.+'
+        classpath 'cz.habarta.typescript-generator:typescript-generator-spring:2.+'
+
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.1.5.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+//    id 'org.springframework.boot' version '2.2.1.RELEASE'
+//    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+//    id 'org.springframework.boot' version '2.2.8.RELEASE'
+//    id 'org.springframework.boot' version '2.3.1.RELEASE'
+//    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+    id 'base'
+
+}
+group = 'com.genome.dx'
+java {
+//    sourceCompatibility = JavaVersion.VERSION_12
+    sourceCompatibility = JavaVersion.VERSION_1_8
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs.add("--enable-preview")
+}
+tasks.test {
+    useJUnitPlatform()
+    jvmArgs("--enable-preview")
+}
+
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+//전체 프로젝트 적용
+allprojects {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    repositories {
+        mavenCentral()
+        maven { url "https://repo1.maven.org/maven2" }
+        maven { url 'https://plugins.gradle.org/m2/' }
+        maven { url "http://maven.omnicns.co.kr/nexus/content/repositories/releases/" }
+    }
+
+    if (!it.name.endsWith('angular')) {
+        clean.doFirst {
+            //	delete "${rootDir}/api-library/auto-generated-classes/"
+            //	println "${rootDir}/api-library/auto-generated-classes/"
+            //	file('src/main/someFile.txt').delete()
+            //	file('src/main/libs').deleteDir()
+            println "${projectDir}/out"
+            println "${projectDir}/src/main/resources/webapp"
+            println "${buildDir}"
+            delete "${projectDir}/out"
+            delete "${projectDir}/src/main/resources/webapp"
+            delete "${buildDir}"
+        }
+    } else {
+        println "${projectDir}/generate"
+        delete "${projectDir}/generate"
+    }
+
+}
+//서브 프로젝트 적용
+subprojects { it ->
+    if (!it.name.endsWith('angular')) {
+        apply plugin: 'java'
+        apply plugin: 'org.springframework.boot'
+        apply plugin: 'io.spring.dependency-management'
+        apply plugin: 'cz.habarta.typescript-generator'
+        //    classpath "org.openapitools:openapi-generator-gradle-plugin:4.2.0"
+        dependencies {
+            implementation 'org.springframework.boot:spring-boot-starter-aop'
+            implementation 'org.springframework.boot:spring-boot-starter-cache'
+            implementation 'org.springframework.boot:spring-boot-starter-validation'
+            annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+            //        compile group: 'com.oracle', name: 'ojdbc6', version: '11.2.0.3'
+            compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.13'
+
+            compile 'org.projectlombok:lombok'
+            annotationProcessor 'org.projectlombok:lombok'
+            testAnnotationProcessor 'org.projectlombok:lombok'
+            testCompileOnly 'org.projectlombok:lombok'
+
+            compile('org.modelmapper:modelmapper:1.1.0')
+            compile group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
+            compile group: 'com.google.guava', name: 'guava', version: '28.0-jre'
+            compile 'io.swagger:swagger-annotations:1.5.22'
+            compile "com.google.code.findbugs:jsr305:3.0.2"
+            compile 'io.gsonfire:gson-fire:1.8.3'
+            compile group: 'org.codehaus.janino', name: 'janino', version: '3.0.13'
+            compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+            compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+            compile group: 'commons-codec', name: 'commons-codec', version: '1.10' //보안 base64를 이용하기 위해 추가함
+            compile group: 'commons-io', name: 'commons-io', version: '2.6'
+            compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.7.0'
+            compile("org.hibernate:hibernate-java8")
+            compile "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.8.+"
+            //        compile group: 'io.netty', name: 'netty-all', version: '4.1.36.Final'
+
+            implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+            compile group: 'com.zaxxer', name: 'HikariCP', version: '3.2.0'
+            testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+
+            compile group: 'com.omnicns', name: 'common-java', version: '0.0.22'
+            compile group: 'com.omnicns', name: 'common-jsp', version: '0.0.2'
+            compile group: 'com.omnicns', name: 'common-spring', version: '0.0.15'
+
+            compile fileTree(dir: "$project.rootDir/libs", includes: ['*.jar'])
+            compile fileTree(dir: "$project.projectDir/libs", includes: ['*.jar'])
+
+
+            // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
+            compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.10.1'
+
+
+            //        compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.2.4.RELEASE'
+            compile 'com.h2database:h2'
+
+
+            // https://mvnrepository.com/artifact/com.fasterxml.uuid/java-uuid-generator
+            //        compile group: 'com.fasterxml.uuid', name: 'java-uuid-generator', version: '3.2.0'
+
+        }
+
+        task info {
+            doLast {
+                println "info======================================================"
+                println "\t project.group = $project.group"
+                println "\t project.name = $project.name"
+                println "\t project.parent = $project.parent.name"
+                println "\t project.version = $project.version"
+                println "========================================================="
+            }
+        }
+
+        clean.doFirst {
+            println "clean====================================================="
+            println "\t buildDir = ${buildDir}"
+            delete "${buildDir}"
+            println "=========================================================="
+        }
+        clean.doLast {
+        }
+    }
+}
+project(':core') {
+    dependencies {
+    }
+}
+
+project(':web-core') {
+    dependencies {
+        compile project(':core')
+    }
+}
+
+project(':gmp') {
+    dependencies {
+        compile project(':core')
+        compile project(':web-core')
+    }
+}
+
+project(':khid') {
+    dependencies {
+        compile project(':core')
+        compile project(':web-core')
+    }
+}
+
+project(':thesis') {
+    dependencies {
+        compile project(':core')
+        compile project(':web-core')
+    }
+}
+
+project(':tool') {
+    dependencies {
+        compile project(':core')
+    }
+}
+
+//Project[] modules = [project(':gmp'), project(':khid'), project(':thesis')]
+//task allBootJar(group: 'build') {
+//    doLast {
+//        modules.each {
+//            dependsOn it.bootJar
+//        }
+//    }
+//}
+//task allBootJarCopy(group: 'build', type: Copy) {
+//
+//    dependsOn allBootJar
+//
+//    modules.each {
+//        from "${it.buildDir}/libs/${it.name}.jar"
+//    }
+//    into "$buildDir/libs"
+//}
+//task allBootJarZip(group: 'build', type: Zip) {
+//
+//    dependsOn allBootJar
+//
+//    archiveFileName = "bootJars.zip"
+//    destinationDirectory = file("$buildDir/libs")
+//    modules.each {
+//        from "${it.buildDir}/libs/${it.name}.jar"
+//    }
+//}
+
+//tasks.register('hhh') {
+//    println ('zzzhhhhhhhhhhhh')
+//}
+

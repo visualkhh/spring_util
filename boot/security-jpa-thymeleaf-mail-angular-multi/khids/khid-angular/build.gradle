@@ -1,0 +1,23 @@
+dependencies {
+}
+
+
+//task ngBuild(type: Exec, dependsOn: 'webCoreNodeModuleToMyNodeModuleLink') {
+//  def targetNodePath="";
+//  if(project.hasProperty('nodePath')){
+//    targetNodePath = "$nodePath/";
+//  }
+//  workingDir project.projectDir
+//  commandLine "${targetNodePath}node", "node_modules/@angular/cli/bin/ng", "build"
+//}
+//task webCoreNodeModuleToMyNodeModuleLink(type: Exec) {
+//  workingDir project.projectDir
+//  def sourceNodeModulesPath = "${project.projectDir}/node_modules"
+//  def targetNodeModulesPath = "${project(":web-core-angular").projectDir}/node_modules"
+//  delete targetNodeModulesPath
+//  if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")){
+//    commandLine "mklink", "/d", targetNodeModulesPath, sourceNodeModulesPath
+//  } else {
+//    commandLine "ln", "-s", sourceNodeModulesPath, targetNodeModulesPath
+//  }
+//}

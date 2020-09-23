@@ -1,0 +1,16 @@
+<web-core-datatable [options]="options" [paginationLength]="!strip" [pageInfo]="!strip" [pageNavigation]="!strip"
+                    tableClass="table table-striped table-bordered table-hover table-radius">
+    <thead>
+    <tr>
+        <th data-hide="text-center">No</th>
+        <th data-hide="text-center">{{'Seq' | i18n}}</th>
+        <th data-hide="text-center">{{'Type' | i18n}}</th>
+        <th data-class="text-center">{{'Subject' | i18n}}</th>
+        <th data-class="text-center">{{'Contents' | i18n}}</th>
+        <th data-class="text-center">{{'State' | i18n}}</th>
+        <th data-hide="text-center">{{'Register' | i18n}}</th>
+        <th data-hide="text-center">{{'RegistDt' | i18n}}</th> <!-- tablet-p-->
+    </tr>
+    </thead>
+</web-core-datatable>
+<web-core-brd-modal (complete)="table.draw()"></web-core-brd-modal>

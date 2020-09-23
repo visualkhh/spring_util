@@ -1,0 +1,142 @@
+<ng-template #modalTemplate>
+    <div class="modal-header">
+        <h6 class="modal-title" id="exampleModalLabel">
+            <i-feather name="info" class="head-icon mr-2" style="height: 15px; width: 15px"></i-feather>
+            {{'Account' | i18n}} {{(infoForm?.get('admSeq')?.value ? 'Update' : 'Register') | i18n}}
+        </h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <form [formGroup]="infoForm" autocomplete="off">
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">* Seq</label>
+                <div class="col-sm-9 col-form-label">
+                    <input type="text" name="admSeq" formControlName="admSeq" placeholder="Seq {{'AutoCreate' | i18n}}" class="form-control" readonly>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="admLginId" class="col-sm-3 col-form-label">* {{'Id' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="admLginId" name="admLginId" formControlName="admLginId" placeholder="{{'Id' | i18n}}" [readonly]="infoForm?.get('admSeq')?.value">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="admNm" class="col-sm-3 col-form-label">* {{'Name' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="admNm" name="admNm" formControlName="admNm" placeholder="{{'Name' | i18n}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="admNm" class="col-sm-3 col-form-label">{{'Affiliation' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="companyNm" name="companyNm" formControlName="companyNm" placeholder="{{'Affiliation' | i18n}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="admNm" class="col-sm-3 col-form-label">{{'Phone' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="phone" name="phone" formControlName="phone" placeholder="{{'Phone' | i18n}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="email" class="col-sm-3 col-form-label">{{'Email' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="email" class="form-control" id="email" name="email" formControlName="email" placeholder="{{'Email' | i18n}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="useCd" class="col-sm-3 col-form-label">{{'Job' | i18n}}</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="jobCd" name="jobCd" formControlName="jobCd" autocomplete="off">
+                        <option [value]="code.cd" *ngFor="let code of codeService.getChildCodes('JOB000'); let i = index">
+                            {{code.cd | i18n}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="admNm" class="col-sm-3 col-form-label">{{'Password' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="password" class="form-control" id="admLginPw" name="admLginPw" formControlName="admLginPw" placeholder="{{'Password' | i18n}}" #admLginPw>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="admNm" class="col-sm-3 col-form-label">{{'Password' | i18n}} {{'word.ok' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="password" class="form-control" id="admLginPwc" name="admLginPwc" formControlName="admLginPwc"  placeholder="{{'Password' | i18n}} {{'word.ok' | i18n}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="email" class="col-sm-3 col-form-label">{{'Home' | i18n}} URL</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="homeUrl" name="homeUrl" formControlName="homeUrl" placeholder="{{'Home' | i18n}} URL">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="corpGrpSeq" class="col-sm-3 col-form-label">{{'CORP' | i18n}}</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="corpGrpSeq" name="corpGrpSeq" formControlName="corpGrpSeq" *ngIf="corps" [attr.placeholder]="'CORP' | i18n">
+                        <option [value]="it.corpGrpSeq" *ngFor="let it of corps; let i = index">
+                            {{it.corpGrpNm}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="corpGrpSeq" class="col-sm-3 col-form-label">* {{'ROLE' | i18n}}</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="admAuth" name="admAuth" formControlName="admAuth" *ngIf="auths" [attr.placeholder]="'ROLE' | i18n">
+                        <option [value]="it.authId" *ngFor="let it of auths; let i = index">
+                            {{it.authNm}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="useCd" class="col-sm-3 col-form-label">* {{'Status' | i18n}}</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="useCd" name="useCd" formControlName="useCd">
+                        <option [value]="code.cd" *ngFor="let code of codeService.getChildCodes('USE000'); let i = index">
+                            {{code.cd | i18n}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">* {{'UpdateDt' | i18n}}</label>
+                <div class="col-sm-9 col-form-label">
+                    {{infoForm.get('updDt')?.value ?(infoForm.get('updDt')?.value | moment) :  '-'}}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">* {{'RegistDt' | i18n}}</label>
+                <div class="col-sm-9 col-form-label">
+                    {{infoForm.get('regDt')?.value ?(infoForm.get('regDt')?.value | moment) :  '-'}}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">* {{'UseDate' | i18n}}</label>
+                <div class="col-sm-9 d-flex flex-row">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="border-top-right-radius: 0px; border-bottom-right-radius: 0px;" ><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                    </div>
+                    <input type="text" [tohWebCoreDatePicker]="{dateFormat:'yy.mm.dd'}" class="form-control" id="startDt" name="startDt" formControlName="startDt" placeholder="{{'StartDt'|i18n}}" (change)="changeStartDt($event)" (dateChange)="changeStartDt($event)" style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;">
+                    <div class="m-2">~</div>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="border-top-right-radius: 0px; border-bottom-right-radius: 0px;"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                    </div>
+                    <input type="text" [tohWebCoreDatePicker]="{dateFormat:'yy.mm.dd'}" class="form-control" id="endDt" name="endDt" formControlName="endDt" placeholder="{{'EndDt'|i18n}}" (change)="changeEndDt($event)" (dateChange)="changeEndDt($event)" style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer" style="padding: 3px;">
+        <button type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-primary btn-sm" (click)="infoForm?.get('admSeq')?.value ? update() : create()">{{'Yes' | i18n}}</button>
+        <button type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-secondary btn-sm" data-dismiss="modal" (click)="no()">{{'No' | i18n}}</button>
+    </div>
+
+</ng-template>

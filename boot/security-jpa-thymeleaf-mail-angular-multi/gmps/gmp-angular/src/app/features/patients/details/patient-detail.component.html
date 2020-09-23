@@ -1,0 +1,110 @@
+<div id="content">
+    <web-core-inline-navigation *ngIf="router && router.url" [url]="router.url" [buttons]="[{text:('Patient' | i18n) + ' ' + ('List' | i18n), link: '/patients'}]"></web-core-inline-navigation>
+    <h3>{{titleI18n | i18n}}</h3>
+    <form [formGroup]="infoForm" (keydown.enter)="$event.preventDefault()">
+        <div class="p-3 my-3 rounded" style="border: 1px solid #c8c8c8">
+            <h6 class="border-bottom border-gray pb-2 mb-0">{{'Patient' | i18n}} {{'BasicInfo' | i18n}}</h6>
+            <div class="d-flex">
+                <div class="p-2 flex-grow-1  bd-highlight">
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="ptntNm">* {{'Name' | i18n}}</label>
+                            <input type="text" formControlName="ptntNm" id="ptntNm" name="ptntNm" class="form-control col-7" placeholder="{{'Name' | i18n}}" [(ngModel)]="ptntInfo.ptntNm" autofocus>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="gen">* {{'Gender' | i18n}}</label>
+                            <select class="form-control col-7" formControlName="gen" id="gen" name="gen" [(ngModel)]="ptntInfo.gen">
+                                <option [value]="code.cd" *ngFor="let code of codeService.getChildCodes('GEC000'); let i = index">
+                                    {{code.cd | i18n}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="age">* {{'Age' | i18n}}</label>
+                            <input type="number" formControlName="age" id="age" name="age" class="form-control col-7" placeholder="{{'Age' | i18n}}" [(ngModel)]="ptntInfo.age">
+                        </div>
+                    </div>
+                    <div class="form-row form-horizontal" *ngIf="ptntInfo.ptntSeq >= 0">
+                        <div class="form-group col-md-4">
+                            <label for="ptntNm">HPO {{'State' | i18n}}</label>
+                            <span class="center-block m-2 p-2 badge {{this.getStatClass(ptntInfo.hpoProcStatCd)}}">{{ptntInfo.hpoProcStatCd | i18n}}</span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="gen">MRI {{'State' | i18n}}</label>
+                            <span class="center-block m-2 p-2 badge {{this.getStatClass(ptntInfo.mriProcStatCd)}}">{{ptntInfo.mriProcStatCd | i18n}}</span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="age">VCF {{'State' | i18n}}</label>
+                            <span class="center-block m-2 p-2 badge {{this.getStatClass(ptntInfo.vcfProcStatCd)}}">{{ptntInfo.vcfProcStatCd | i18n}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-3 my-3 rounded" style="border: 1px solid #c8c8c8">
+            <div class="row">
+                <div class="col-8">
+                    <h6 class="border-bottom border-gray pb-2 mb-2">phenotype {{'Input' | i18n}}</h6>
+                    <div class="input-group mb-3">
+                        <input type="text" formControlName="search" name="search" class="form-control" placeholder="{{'Search' | i18n}}" (keyup.enter)="treeSearch();" [(ngModel)]="phenoTypeTreeWhere.search">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary fa fa-search" type="button" (click)="treeSearch()"></button>
+                            <!--                                <button class="btn btn-outline-secondary fa fa-plus" type="button" (click)="treeViewComponent.expandAll()"></button>-->
+                            <button class="btn btn-outline-secondary fa fa-minus" type="button" (click)="treeCollapseAll()"></button>
+                        </div>
+                    </div>
+                    <web-core-bootstrap-treeview *ngIf="treeViewData && treeViewData.length > 0" [data]="treeViewData" (checked)="checked($event)" (unChecked)="unChecked($event)" (renderComplet)="renderComplet($event)"></web-core-bootstrap-treeview>
+                </div>
+                <div class="col-4">
+                    <h6 class="border-bottom border-gray pb-2 mb-2">phenotype {{'Select' | i18n}}</h6>
+                    <table class="table  table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th class="text-center">HPO ID</th>
+                            <th class="text-center">Phenotype term</th>
+                            <th class="text-center">{{'Delete'|i18n}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let it of checkedPhenoTypes | keyvalue; let i = index">
+                            <td class="text-right align-middle" style="vertical-align: middle">{{it.value.id}}</td>
+                            <td class="text-right align-middle btn-link" style="cursor: pointer; vertical-align: middle" (click)="treeSelected(it.value.id)">{{it.value.text}}</td>
+                            <td class="text-center align-middle" style="vertical-align: middle">
+                                <button class="btn btn-danger btn-sm" (click)="deletePhenoType(it.value.id)">
+                                    {{'Delete' | i18n}}
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="p-3 my-3 rounded" style="border: 1px solid #c8c8c8">
+            <div class="row">
+                <div class="col-6">
+                    <h6 class="border-bottom border-gray pb-2 mb-2">MRI {{'File' | i18n}}</h6>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="mri" name="mri" #mri (change)="mriChange()">
+                        <label class="custom-file-label" for="mri">{{mriSelectedFile}}</label>
+                        <a class="btn-link" style="cursor: pointer" target="_blank" [attr.href]="'/patients/'+ptntInfo.ptntSeq+'/files/mri'" *ngIf="ptntInfo.mriFilePath">{{ptntInfo.mriFilePath | split:'/':'end'}}</a>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <h6 class="border-bottom border-gray pb-2 mb-2">VCF {{'File' | i18n}}</h6>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="vcf" name="vcf" #vcf (change)="vcfChange()">
+                        <label class="custom-file-label" for="vcf">{{vcfSelectedFile}}</label>
+                        <a class="btn-link" style="cursor: pointer" target="_blank" [attr.href]="'/patients/'+ptntInfo.ptntSeq+'/files/vcf'" *ngIf="ptntInfo.vcfFilePath">{{ptntInfo.vcfFilePath | split:'/':'end'}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="float-right mb-2">
+            <button class="btn btn-danger" style="margin-left: 10px; width:150px" (click)="delete()">{{'Delete' | i18n}}</button>
+            <button class="btn btn-primary" style="margin-left: 10px; width:150px" (click)="save()">{{'Save' | i18n}}</button>
+        </div>
+    </form>
+    <!--    <a (click)="renderComplet(1)">gg</a>-->
+</div>

@@ -1,0 +1,40 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true, // export default 를 export 한 값들을 가지는 객체로 설정
+    "importHelpers": true,
+    "target": "es2015",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "@generate/*": ["generate/*"],
+      "@app/*": ["src/app/*"],
+      "@env/*": ["src/environments/*"],
+      "@web-core/*": ["../../web-cores/web-core-angular/src/*"],
+      "@web-core-app/*": ["../../web-cores/web-core-angular/src/app/*"],
+      "@web-core-generate/*": ["../../web-cores/web-core-angular/generate/*"]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableIvy": false,
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  }
+}

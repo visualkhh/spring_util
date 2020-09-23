@@ -1,0 +1,13 @@
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://1.1.1.1:3306/genome?useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul
+    username: aa
+    password: aa
+
+
+project:
+  properties:
+    upload-path: "/home/dev/neuro-scan-dx/upload"
+logging:
+  config: classpath:logback-dev.xml

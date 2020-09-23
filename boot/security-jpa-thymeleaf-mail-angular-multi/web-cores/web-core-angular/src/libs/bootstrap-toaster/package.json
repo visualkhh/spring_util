@@ -1,0 +1,46 @@
+{
+  "name": "bootstrap-toaster",
+  "version": "1.0.0",
+  "description": "Bootstrap Toaster Component",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "js": "npm run js-compile && npm run js-minify",
+    "js-compile": "rollup --config build/rollup.config.js --sourcemap",
+    "js-minify": "uglifyjs --compress typeofs=false --mangle --comments \"/^!/\" --source-map \"content='dist/js/bootstrap-toaster.js.map',includeSources,url='bootstrap-toaster.min.js.map'\" --output dist/js/bootstrap-toaster.min.js dist/js/bootstrap-toaster.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iqbalfn/bootstrap-toaster.git"
+  },
+  "keywords": [
+    "ui",
+    "bootstrap",
+    "plugin",
+    "toast",
+    "sidebar"
+  ],
+  "author": "Iqbal Fauzi <iqbalfawz@gmail.com> (https://iqbalfn.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iqbalfn/bootstrap-toaster/issues"
+  },
+  "homepage": "https://github.com/iqbalfn/bootstrap-toaster#readme",
+  "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "babel-plugin-istanbul": "^5.1.4",
+    "grunt": "^1.0.4",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-run": "^0.8.1",
+    "rollup": "^1.11.3",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-node-resolve": "^4.2.4",
+    "uglify-js": "^3.5.11"
+  }
+}

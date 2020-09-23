@@ -1,0 +1,47 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "types": []
+  },
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts",
+//    "../../web-cores/web-core-angular/**/*.ts"
+  ],
+  "exclude": [
+    "src/test.ts",
+    "src/**/*.spec.ts",
+    "src/**/*-specs.ts",
+    "src/**/*.avoid.ts",
+    "src/**/*.0.ts",
+    "src/**/*.1.ts",
+    "src/**/*.1b.ts",
+    "src/**/*.2.ts",
+    "src/**/*.3.ts",
+    "src/**/*.4.ts",
+    "src/**/*.5.ts",
+    "src/**/*.6.ts",
+    "src/**/*.7.ts",
+    "src/**/testing",
+
+//    "../../web-cores/web-core-angular/test.ts",
+//    "../../web-cores/web-core-angular/**/*.spec.ts",
+//    "../../web-cores/web-core-angular/**/*-specs.ts",
+//    "../../web-cores/web-core-angular/e2e/src/app.e2e-spec.ts",
+//    "../../web-cores/web-core-angular/**/*.avoid.ts",
+//    "../../web-cores/web-core-angular/**/*.0.ts",
+//    "../../web-cores/web-core-angular/**/*.1.ts",
+//    "../../web-cores/web-core-angular/**/*.1b.ts",
+//    "../../web-cores/web-core-angular/**/*.2.ts",
+//    "../../web-cores/web-core-angular/**/*.3.ts",
+//    "../../web-cores/web-core-angular/**/*.4.ts",
+//    "../../web-cores/web-core-angular/**/*.5.ts",
+//    "../../web-cores/web-core-angular/**/*.6.ts",
+//    "../../web-cores/web-core-angular/**/*.7.ts",
+//    "../../web-cores/web-core-angular/**/testing"
+  ]
+}

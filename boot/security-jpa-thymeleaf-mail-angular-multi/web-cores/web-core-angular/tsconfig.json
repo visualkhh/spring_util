@@ -1,0 +1,52 @@
+{
+//  "extends": "/Users/visualkhh/source/omnicns/genome/neuro-scan-dx/thesis/thesis-angular/tsconfig.json",
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+//    "baseUrl": "../",
+//    "baseUrl": "/Users/visualkhh/source/omnicns/genome/neuro-scan-dx/thesis/thesis-angular/",
+//    "baseUrl": "../../thesis/thesis-angular/",
+//    "baseUrl": "/Users/visualkhh/source/omnicns/genome/neuro-scan-dx/thesis/thesis-angular/",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+//    "rootDir": ["../../thesis/thesis-angula"],
+    "paths": {
+//      "@app/*": ["src/app/*"],
+//      "@env/*": ["src/environments/*"],
+//      "@node_modules/*": ["../../thesis/thesis-angular/node_modules/*"],
+//      "@target_node_modules/*": ["/Users/visualkhh/source/omnicns/genome/neuro-scan-dx/thesis/thesis-angular/node_modules/*"],
+//      "@angular/*": ["../../thesis/thesis-angular/@angular/*"]
+//      "ngx-bootstrap/*": ["../../thesis/thesis-angular/node_modules/ngx-bootstrap/*"],
+      "@web-core/*": ["src/*"],
+      "@web-core-app/*": ["src/app/*"],
+      "@web-core-generate/*": ["generate/*"]
+//      "@target/*": ["../../thesis/thesis-angular/node_modules/*"],
+//      "@target_angular_project/*": ["/Users/visualkhh/source/omnicns/genome/neuro-scan-dx/thesis/thesis-angular/node_modules/*"]
+//      "*": ["../../thesis/thesis-angular/node_modules/*"]
+    },
+    "allowSyntheticDefaultImports": true
+  },
+  "angularCompilerOptions": {
+    "enableIvy": false,
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  }
+}

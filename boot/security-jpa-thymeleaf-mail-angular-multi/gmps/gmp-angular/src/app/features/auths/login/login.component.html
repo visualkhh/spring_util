@@ -1,0 +1,46 @@
+<div class="authLayout">
+
+
+    <div>
+        <img src="/assets/img/logo_1.png" width="20%"> <img src="/assets/img/logo_2.png" width="20%">
+    </div>
+
+
+    <div id="content" class="container">
+        <div style="margin-top: 100px;"></div>
+        <form class="form-signin" #from [formGroup]="formdata" method="POST" action="/securitys/sign-in" (ngSubmit)="submit(formdata.value)">
+            <input type="hidden" name="_csrf" formControlName="_csrf">
+            <img class="mb-4" src="/assets/img/logo.png" width="100px">
+            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+            <label for="username" class="sr-only">Username</label>
+            <input type="text" id="username" name="username" class="form-control my-1" formControlName="username" placeholder="ID" required autofocus>
+            <label for="password" class="sr-only">Password</label>
+            <input type="password" id="password" name="password" class="form-control" formControlName="password" placeholder="Password" required>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </form>
+        <div style="width: 400px; margin: 0 auto">
+            <div class="row my-2">
+                <div class="col-6" style="text-align: center">
+                    <button class="btn btn-outline-secondary btn-sm" style="width: 155px" (click)="showFindIdPwd()">{{'FindID_PWD' | i18n}}</button>
+                </div>
+                <div class="col-6" style="text-align: center">
+                    <button class="btn btn-outline-secondary btn-sm" style="width: 155px" (click)="showPolicySignUp()">{{'SignUp' | i18n}}</button>
+                </div>
+            </div>
+            <p class="mt-5 mb-3 text-muted" style="color:red!important; margin: 10px!important;">{{ note | i18n }}</p>
+            <div class="p-3 my-3 rounded" style="border: 1px solid #c8c8c8; background-color: rgba(255,255,255,0.6)">
+                <h5>Recent</h5>
+                <ul>
+                    <li *ngFor="let brd of notices" class="row" style="cursor: pointer" (click)="showBrdModal(brd)">
+                        -  {{brd.titl}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<web-core-brd-modal></web-core-brd-modal>
+<web-core-policies-confirm-modal (complete)="policiesComplete()"></web-core-policies-confirm-modal>
+<web-core-sign-up-modal></web-core-sign-up-modal>
+<web-core-idpwd-find-modal></web-core-idpwd-find-modal>

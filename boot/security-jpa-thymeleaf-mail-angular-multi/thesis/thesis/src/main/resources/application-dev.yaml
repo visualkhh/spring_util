@@ -1,0 +1,11 @@
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/genome
+    username: root
+    password: root
+
+
+project:
+logging:
+  config: classpath:logback-dev.xml

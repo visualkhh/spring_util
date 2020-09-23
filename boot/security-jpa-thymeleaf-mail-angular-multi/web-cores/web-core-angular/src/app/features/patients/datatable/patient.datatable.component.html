@@ -1,0 +1,19 @@
+<web-core-datatable [options]="options" [paginationLength]="!strip" [pageInfo]="!strip" [pageNavigation]="!strip"
+                    tableClass="table table-striped table-bordered table-hover table-radius">
+    <thead>
+    <tr>
+        <th data-hide="mobile-p">No</th>
+        <th class="text-center">{{'Seq' | i18n}}</th>
+        <th class="text-center">{{'Name' | i18n}}</th>
+        <th class="text-center">{{'Gender' | i18n}}</th>
+        <th class="text-center">{{'Age' | i18n}}</th>
+        <th class="text-center">Phenotype {{'Data' | i18n}}</th>
+        <th class="text-center">MRI {{'Data' | i18n}}</th>
+        <th class="text-center">VCF {{'Data' | i18n}}</th>
+        <th class="text-center">{{'Status' | i18n}} </th>
+        <th class="text-center">{{'RegistDt' | i18n}}</th>
+        <th class="text-center">{{'DiseaseResearch' | i18n}}</th>
+    </tr>
+    </thead>
+</web-core-datatable>
+<web-core-disease-modal></web-core-disease-modal>

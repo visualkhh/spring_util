@@ -1,0 +1,24 @@
+spring:
+  profiles:
+    include:
+      - core
+      - db
+      - web-core
+      - default
+
+server:
+  port: 8081
+
+
+---
+
+
+spring:
+  profiles: default
+  application:
+    name: thesis
+
+project:
+  properties:
+logging:
+  config: classpath:logback-spring.xml

@@ -1,0 +1,15 @@
+<!--<div *ngIf="url && url.length>0 && userService.getAuthDetail(url, 'GET')" class="mt-3 mb-3 {{class}}">-->
+<!--    <i-feather name="{{userService.getAuthDetail(url, 'GET').menuIcon}}" style="margin-right:5px"></i-feather>-->
+<!--    {{userService.getAuthDetail(url, 'GET').i18nCd | i18n}}-->
+<!--</div>-->
+<div class="mt-3 mb-3{{class}}" *ngIf="authDetailDepthMergeUrlDedups && authDetailDepthMergeUrlDedups.length > 0">
+    <span *ngFor="let it of authDetailDepthMergeUrlDedups; let first = first; let last = last" class="">
+        <i-feather name="{{it.menuIcon}}" style="margin-right:10px; float: left" *ngIf="last"></i-feather>
+        {{it.i18nCd | i18n}}
+        <span *ngIf="!last"> > </span>
+    </span>
+
+    <span *ngFor="let it of buttons.reverse(); let first = first; let last = last" class="mx-1 float-right">
+        <button class="{{it.class || 'btn btn-sm btn-info'}}" [routerLink]="it.link">{{it.text}}</button>
+    </span>
+</div>
