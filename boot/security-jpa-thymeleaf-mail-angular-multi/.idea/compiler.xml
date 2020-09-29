@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/install/gradle-5.6.2/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.8/448003bc1b234aac04b58e27d7755c12c3ec4236/lombok-1.18.8.jar" />
+        </processorPath>
+        <module name="neuro-scan-dx.web-core.test" />
+      </profile>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/install/gradle-5.6.2/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.8/448003bc1b234aac04b58e27d7755c12c3ec4236/lombok-1.18.8.jar" />
+          <entry name="$USER_HOME$/install/gradle-5.6.2/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/2.1.5.RELEASE/52d225c806dac65b20c0352108e0b4be0adc9bfc/spring-boot-configuration-processor-2.1.5.RELEASE.jar" />
+        </processorPath>
+        <module name="neuro-scan-dx.web-core.main" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

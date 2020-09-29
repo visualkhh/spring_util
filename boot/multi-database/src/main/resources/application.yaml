@@ -1,0 +1,58 @@
+spring:
+  application:
+    name: multi
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: false
+
+logging:
+  config: classpath:logback-spring.xml
+
+#      driver-class-name: org.h2.Driver
+#      server-port: 9095
+#      jdbc-url: jdbc:h2:./data/test_${spring.application.name}_db # ./ Project root
+#      #      jdbc-url: jdbc:h2:./data/test_db # ./ Project root
+#      #      jdbc-url: jdbc:h2:tcp://localhost:9093/./data/celldb
+#      username: sa
+#      password: password
+
+# database h2: http://www.h2database.com/html/features.html
+#      url: jdbc:h2:tcp://localhost:7071/~/test
+#      url: jdbc:h2:mem:testdb
+#      url: jdbc:h2:tcp://localhost/~/db1
+#      url: jdbc:h2:tcp://localhost/~/test
+#      url: jdbc:h2:tcp://localhost/mem:test
+projects:
+  d1:
+    hibernate:
+      property:
+        "[hibernate.dialect]": org.hibernate.dialect.H2Dialect
+        "[hibernate.show_sql]": false
+        "[hibernate.hbm2ddl.auto]": create-drop
+        "[hibernate.cache.use_second_level_cache]": false
+        "[hibernate.cache.use_query_cache]": false
+    datasource:
+      hikari:
+        jdbc-url: jdbc:h2:./data/test_d1_db
+        driver-class-name: org.h2.Driver
+        username: sa
+        password:
+  d2:
+    hibernate:
+      property:
+        "[hibernate.dialect]": org.hibernate.dialect.H2Dialect
+        "[hibernate.show_sql]": false
+        "[hibernate.hbm2ddl.auto]": create-drop
+        "[hibernate.cache.use_second_level_cache]": false
+        "[hibernate.cache.use_query_cache]": false
+    datasource:
+      hikari:
+        jdbc-url: jdbc:h2:./data/test_d2_db
+        driver-class-name: org.h2.Driver
+        username: sa
+        password:
