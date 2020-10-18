@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>home</title>
 </head>
 <body>
 home
+<h1 style="color: black;" th:text="${#messages.msg('Sign Out')}"></h1>
+<div>
+    logout
+    <form action="securitys/sign-out" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <div>
+            <input type="submit" value="logout" >
+        </div>
+    </form>
+</div>
 </body>
 </html>
