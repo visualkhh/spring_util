@@ -141,7 +141,7 @@ create table T_CODE
 
 
 # admin // 1234
-INSERT INTO test.T_ADM (ADM_SEQ, ADM_LGIN_ID, ADM_LGIN_PW, ADM_NM, USE_CD, HOME_URL, EMAIL, PHONE, COMPANY_NM, JOB_CD, LGIN_FAIL_CNT, LGIN_WAIT_DT, CORP_GRP_SEQ, UPD_DT, START_DT, END_DT, REG_DT) VALUES (1, 'admin', '$2a$10$Ntcpo2Lagef4uael9zrXQ.6H0LQG692wX0rg.sI8vGUFoYH4eZq8S', 'adminNm', 'USE001', '', null, null, null, null, null, null, 1, null, null, null, '2020-10-18 15:35:38');
+INSERT INTO test.T_ADM (ADM_SEQ, ADM_LGIN_ID, ADM_LGIN_PW, ADM_NM, USE_CD, HOME_URL, EMAIL, PHONE, COMPANY_NM, JOB_CD, LGIN_FAIL_CNT, LGIN_WAIT_DT, CORP_GRP_SEQ, UPD_DT, START_DT, END_DT, REG_DT) VALUES (1, 'admin', '$2a$10$Ntcpo2Lagef4uael9zrXQ.6H0LQG692wX0rg.sI8vGUFoYH4eZq8S', 'adminNm', 'USE001', '/home', null, null, null, null, null, null, 1, null, null, null, '2020-10-18 15:35:38');
 INSERT INTO test.T_AUTH (AUTH_ID, AUTH_NM, XPLN) VALUES ('ROLE_ADMIN', '최고', '최고관리자');
 INSERT INTO test.T_AUTH (AUTH_ID, AUTH_NM, XPLN) VALUES ('ROLE_CORP', '업체', '업체관리자');
 INSERT INTO test.T_AUTH (AUTH_ID, AUTH_NM, XPLN) VALUES ('ROLE_CROP_ADMIN', '업체 관리자', '업체 관리자');
