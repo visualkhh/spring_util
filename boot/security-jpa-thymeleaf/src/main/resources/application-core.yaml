@@ -1,0 +1,16 @@
+spring:
+  profiles: core
+  application:
+    name: core
+  pid:
+    file: ${spring.application.name}.pid
+  http:
+    log-request-details: true
+  messages:
+    #    always-use-message-format: false # Set whether to always apply the MessageFormat rules, parsing even messages without arguments.
+    basename: classpath:/messages/message # Comma-separated list of basenames, each following the ResourceBundle convention.
+    encoding: UTF-8
+    cache-duration: -1
+project:
+  properties:
+    private-key: b36a5c8f062zbb33819423z5a4849fb2

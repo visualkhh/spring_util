@@ -1,0 +1,53 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.4.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+}
+
+group = 'com.house'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url "http://maven.omnicns.co.kr/nexus/content/repositories/releases/" }
+}
+
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.13'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	compile("org.hibernate:hibernate-java8")
+	compile('org.modelmapper:modelmapper:1.1.0')
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+	compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+	compile group: 'commons-codec', name: 'commons-codec', version: '1.10' //보안 base64를 이용하기 위해 추가함
+	compile group: 'commons-io', name: 'commons-io', version: '2.6'
+	compile "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.8.+"
+	compile group: 'org.hibernate', name: 'hibernate-validator', version: '6.1.6.Final'
+	compile group: 'com.omnicns', name: 'common-java', version: '0.0.22'
+	compile group: 'com.omnicns', name: 'common-jsp', version: '0.0.2'
+	compile group: 'com.omnicns', name: 'common-spring', version: '0.0.15'
+
+	compile fileTree(dir: "$project.rootDir/libs", includes: ['*.jar'])
+	compile fileTree(dir: "$project.projectDir/libs", includes: ['*.jar'])
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation 'org.springframework.security:spring-security-test'
+}
+
+test {
+	useJUnitPlatform()
+}

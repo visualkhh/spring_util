@@ -1,0 +1,10 @@
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul
+    username: root
+    password: root
+
+
+logging:
+  config: classpath:logback-dev.xml

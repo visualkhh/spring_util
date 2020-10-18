@@ -1,0 +1,36 @@
+spring:
+  profiles: web-core
+  application:
+    name: web-core
+  http:
+    log-request-details: true
+  thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+    check-template: true
+    cache: false
+  mail:
+    default-encoding: UTF-8
+    host: localhost
+    port: 25
+    username: omnicns@omnicns.com
+    password:
+#    properties:
+#      mail.smtp.auth: true
+
+
+
+#  logging:
+#    level:
+#      org.springframework.web.reactive.function.client.ExchangeFunctions: TRACE
+
+
+
+external-communication-core:
+  serviceExecuteTimeoutSecond: 30
+  http11Protocol:
+    maxKeepAliveRequests: 1
+    connectionTimeout: 10000
+project:
+  properties:
+    front-path: classpath:/webapp
