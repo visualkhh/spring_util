@@ -27,13 +27,15 @@ import org.springframework.scheduling.concurrent.ScheduledExecutorFactoryBean;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.List;
 import java.util.Map;
 
 @Configuration
-public class CommonWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
+public class CommonWebMvcConfigurerAdapter implements WebMvcConfigurer {
+
 	@Value("${spring.messages.basename}")
     String messagesBasename = null;
 	@Value("${spring.messages.encoding}")
