@@ -3,6 +3,7 @@ package com.today.house.service;
 import com.omnicns.web.spring.message.CustomReloadableResourceBundleMessageSource;
 import com.today.house.domain.Code;
 import com.today.house.repository.CodeRepository;
+import com.today.house.repository.UrlRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -19,8 +20,8 @@ public class AnonsService {
     @Autowired
     private CodeRepository codeRepository;
 //
-//    @Autowired
-//    private UrlRepository urlRepository;
+    @Autowired
+    private UrlRepository urlRepository;
 
     @Autowired
     private CustomReloadableResourceBundleMessageSource customReloadableResourceBundleMessageSource;
@@ -29,13 +30,13 @@ public class AnonsService {
         Map<String, String> rmap = new LinkedHashMap<>();
         rmap.putAll(map);
 
-//        if ("ko_KR".equals(lang) || "ko-KR".equals(lang)) {
-//            codeRepository.findAll(new Sort(Sort.Direction.ASC, "cdOrd")).stream().forEach(it -> rmap.put(it.getCd(), it.getCdNm()));
-//            urlRepository.findAll(new Sort(Sort.Direction.ASC, "urlSeq")).stream().forEach(it -> rmap.put(it.getI18nCd(), it.getMenuNm()));
-//        } else { //("en_US".equals(lang))
-//            codeRepository.findAll(new Sort(Sort.Direction.ASC, "cdOrd")).stream().forEach(it -> rmap.put(it.getCd(), it.getCdNmEn()));
-//            urlRepository.findAll(new Sort(Sort.Direction.ASC, "urlSeq")).stream().forEach(it -> rmap.put(it.getI18nCd(), it.getMenuNmEn()));
-//        }
+        if ("ko_KR".equals(lang) || "ko-KR".equals(lang)) {
+            codeRepository.findAll(Sort.by(Sort.Direction.ASC, "cdOrd")).stream().forEach(it -> rmap.put(it.getCd(), it.getCdNm()));
+            urlRepository.findAll(Sort.by(Sort.Direction.ASC, "urlSeq")).stream().forEach(it -> rmap.put(it.getI18nCd(), it.getMenuNm()));
+        } else { //("en_US".equals(lang))
+            codeRepository.findAll(Sort.by(Sort.Direction.ASC, "cdOrd")).stream().forEach(it -> rmap.put(it.getCd(), it.getCdNmEn()));
+            urlRepository.findAll(Sort.by(Sort.Direction.ASC, "urlSeq")).stream().forEach(it -> rmap.put(it.getI18nCd(), it.getMenuNmEn()));
+        }
 
         return rmap;
     }
