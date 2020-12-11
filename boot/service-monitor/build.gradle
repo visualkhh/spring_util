@@ -1,0 +1,61 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.4.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+}
+
+group = 'com.business'
+version = '0.0.1-SNAPSHOT'
+//sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+	jcenter()
+	maven { url "http://maven.omnicns.co.kr/nexus/content/repositories/releases/" }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	compile 'org.springframework.boot:spring-boot-devtools'
+	compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-java8time', version: '3.0.1.RELEASE'
+	compile group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
+	compile('org.modelmapper:modelmapper:1.1.0')
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+	compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+	compile group: 'com.google.guava', name: 'guava', version: '28.0-jre'
+	compile group: 'com.omnicns', name: 'common-java', version: '0.0.22'
+	compile group: 'com.omnicns', name: 'common-jsp', version: '0.0.2'
+	compile group: 'com.omnicns', name: 'common-spring', version: '0.0.15'
+	compileOnly 'org.projectlombok:lombok'
+	implementation 'com.h2database:h2'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.13'
+	compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.2.1'
+	compile group: 'com.oracle', name: 'ojdbc6', version: '11.2.0.3'
+	compile fileTree(dir: "$project.rootDir/libs", includes: ['*.jar'])
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
+
+bootJar {
+//	archiveFileName = "${archiveBaseName.get()}.${archiveExtension.get()}"
+	archiveFileName = "service-monitor.${archiveExtension.get()}"
+}

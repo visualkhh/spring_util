@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>log-error</title>
+</head>
+<body>
+
+<div>자세한 내용은 아래 상세 내역을 참고해주세요.</div>
+<div>* 상세 내역</div>
+<table style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse;'>
+    <thead>
+    <tr>
+        <th style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse; background-color:#c3c3c3; padding:15px;'>발생시간</th>
+        <th style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse; background-color:#c3c3c3; padding:15px;'>host</th>
+        <th style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse; background-color:#c3c3c3; padding:15px;'>시스템</th>
+        <th style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse; background-color:#c3c3c3; padding:15px;'>타입</th>
+        <th style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse; background-color:#c3c3c3; padding:15px;'>메시지</th>
+        <th style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse; background-color:#c3c3c3; padding:15px;'>코드</th>
+        <th style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse; background-color:#c3c3c3; padding:15px;'>url_path</th>
+        <th style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse; background-color:#c3c3c3; padding:15px;'>java_class</th>
+        <th style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse; background-color:#c3c3c3; padding:15px;'>exception_class</th>
+        <th style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse; background-color:#c3c3c3; padding:15px;'>full message</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="log : ${logs}">
+        <td style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse; padding:15px;text-align: center;' th:text="${log.date}"></td>
+        <td style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse; padding:15px;text-align: center;' th:text="${log.host}"></td>
+        <td style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse; padding:15px;text-align: center;' th:text="${log.service_name == null} ? ${log.index} : ${log.service_name}"></td>
+        <td style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse; padding:15px;text-align: center;' th:text="${log.service_type == null} ? ${log.type} : ${log.service_type}"></td>
+        <td style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse; padding:15px;text-align: center;' th:text="${log.msg}"></td>
+        <td style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse; padding:15px;text-align: center;' th:text="${log.code}"></td>
+        <td style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse; padding:15px;text-align: center;' th:text="${log.url_path}"></td>
+        <td style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse; padding:15px;text-align: center;' th:text="${log.java_class}"></td>
+        <td style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse; padding:15px;text-align: center;' th:text="${log.exception_class}"></td>
+        <td style='border:1px solid black; boarder-spacing: 0px 0px; border-collapse: collapse; padding:15px;text-align: center;'>
+            <input type="text" th:value="${log.message}">
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

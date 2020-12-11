@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>측정건수</title>
+</head>
+<body>
+
+<h1>최근 <span th:text="${dayCountSize}"></span>일 측정건수</h1>
+<div style="border: #626262 solid 1px; border-radius:10px; display: inline-block; margin:10px; padding:10px">
+    <h3 style="margin-bottom: 0; margin-left: 5px">마인드케어(한국)</h3>
+    <table border="1" style='border:1px solid #9c9c9c; boarder-spacing: 0px 0px; border-collapse: collapse; margin:10px'>
+        <tr>
+            <th
+                    th:each="mindcare_kr : ${mindcare_krs}"
+                    th:with="week=${#dates.dayOfWeek(new java.text.SimpleDateFormat('yyyy-MM-dd').parse(mindcare_kr.day))}"
+                    th:style="${week == 1  ? 'background-color:#ff9999' : (week == 7 ? 'background-color:#9999ff' :'background-color:#c3c3c3')}"
+                    th:text="${#strings.substring(mindcare_kr.day, 8,10)}">
+            </th>
+            <th rowspan="2">
+                <span th:if="${mindcare_krs.size() <= 0}" th:text="없음"></span>
+                <img th:if="${mindcare_krs.size() > 0}" th:src="${mindcare_krs.barChartURL}">
+            </th>
+        </tr>
+        <tr>
+            <td style="text-align: right" th:each="mindcare_kr : ${mindcare_krs}" th:text="${mindcare_kr.count}"></td>
+        </tr>
+        </tr>
+    </table>
+</div>
+<br/>
+<div style="border: #626262 solid 1px; border-radius:10px; display: inline-block; margin:10px; padding:10px">
+    <h2>세라체크</h2>
+    <h4 style="margin-bottom: 0">일반 측정</h4>
+    <table border="1" style='border:1px solid #9c9c9c; boarder-spacing: 0px 0px; border-collapse: collapse; margin:10px'>
+        <tr>
+            <th
+                    th:each="ceracheck_neuro : ${ceracheck_neuros}"
+                    th:with="week=${#dates.dayOfWeek(new java.text.SimpleDateFormat('yyyy-MM-dd').parse(ceracheck_neuro.day))}"
+                    th:style="${week == 1  ? 'background-color:#ff9999' : (week == 7 ? 'background-color:#9999ff' :'background-color:#c3c3c3')}"
+                    th:text="${#strings.substring(ceracheck_neuro.day, 8,10)}"></th>
+            <th rowspan="2">
+                <span th:if="${ceracheck_neuros.size() <= 0}" th:text="없음"></span>
+                <img th:if="${ceracheck_neuros.size() > 0}" th:src="${ceracheck_neuros.barChartURL}">
+            </th>
+        </tr>
+        <tr>
+            <td style="text-align: right" th:each="ceracheck_neuro : ${ceracheck_neuros}" th:text="${ceracheck_neuro.count}"></td>
+        </tr>
+        </tr>
+    </table>
+    <h4 style="margin-bottom: 0">헬스 측정</h4>
+    <table border="1" style='border:1px solid #9c9c9c; boarder-spacing: 0px 0px; border-collapse: collapse; margin:10px'>
+        <tr>
+            <th
+                    th:each="ceracheck_health : ${ceracheck_healths}"
+                    th:with="week=${#dates.dayOfWeek(new java.text.SimpleDateFormat('yyyy-MM-dd').parse(ceracheck_health.day))}"
+                    th:style="${week == 1  ? 'background-color:#ff9999' : (week == 7 ? 'background-color:#9999ff' :'background-color:#c3c3c3')}"
+                    th:text="${#strings.substring(ceracheck_health.day, 8,10)}"></th>
+            <th rowspan="2">
+                <span th:if="${ceracheck_healths.size() <= 0}" th:text="없음"></span>
+                <img th:if="${ceracheck_healths.size() > 0}" th:src="${ceracheck_healths.barChartURL}">
+            </th>
+        </tr>
+        <tr>
+            <td style="text-align: right" th:each="ceracheck_health : ${ceracheck_healths}" th:text="${ceracheck_health.count}"></td>
+        </tr>
+        </tr>
+    </table>
+</div>
+<br/>
+<div style="border: #626262 solid 1px; border-radius:10px; display: inline-block; margin:10px; padding:10px">
+    <h3>마인드케어 메디컬</h3>
+    <table border="1" style='border:1px solid #9c9c9c; boarder-spacing: 0px 0px; border-collapse: collapse; margin:10px'>
+        <tr>
+            <th
+                    th:each="medicare : ${medicares}"
+                    th:with="week=${#dates.dayOfWeek(new java.text.SimpleDateFormat('yyyy-MM-dd').parse(medicare.day))}"
+                    th:style="${week == 1  ? 'background-color:#ff9999' : (week == 7 ? 'background-color:#9999ff' :'background-color:#c3c3c3')}"
+                    th:text="${#strings.substring(medicare.day, 8,10)}"></th>
+            <th rowspan="2">
+                <span th:if="${medicares.size() <= 0}" th:text="없음"></span>
+                <img th:if="${medicares.size() > 0}" th:src="${medicares.barChartURL}">
+            </th>
+        </tr>
+        <tr>
+            <td style="text-align: right" th:each="medicare : ${medicares}" th:text="${medicare.count}"></td>
+        </tr>
+        </tr>
+    </table>
+</div>
+<br/>
+<div style="border: #626262 solid 1px; border-radius:10px; display: inline-block; margin:10px; padding:10px">
+    <h3>브레인</h3>
+    <table border="1" style='border:1px solid #9c9c9c; boarder-spacing: 0px 0px; border-collapse: collapse; margin:10px'>
+        <tr>
+            <th
+                    th:each="brain : ${brains}"
+                    th:with="week=${#dates.dayOfWeek(new java.text.SimpleDateFormat('yyyy-MM-dd').parse(brain.day))}"
+                    th:style="${week == 1  ? 'background-color:#ff9999' : (week == 7 ? 'background-color:#9999ff' :'background-color:#c3c3c3')}"
+                    th:text="${#strings.substring(brain.day, 8,10)}"></th>
+            <th rowspan="2">
+                <span th:if="${brains.size() <= 0}" th:text="없음"></span>
+                <img th:if="${brains.size() > 0}" th:src="${brains.barChartURL}">
+            </th>
+        </tr>
+        <tr>
+            <td style="text-align: right" th:each="brain : ${brains}" th:text="${brain.count}"></td>
+        </tr>
+        </tr>
+    </table>
+</div>
+<br/>
+<div style="border: #626262 solid 1px; border-radius:10px; display: inline-block; margin:10px; padding:10px">
+    <h3>시니어케어</h3>
+    <table border="1" style='border:1px solid #9c9c9c; boarder-spacing: 0px 0px; border-collapse: collapse; margin:10px'>
+        <tr>
+            <th
+                    th:each="seniorcare : ${seniorcares}"
+                    th:with="week=${#dates.dayOfWeek(new java.text.SimpleDateFormat('yyyy-MM-dd').parse(seniorcare.day))}"
+                    th:style="${week == 1  ? 'background-color:#ff9999' : (week == 7 ? 'background-color:#9999ff' :'background-color:#c3c3c3')}"
+                    th:text="${#strings.substring(seniorcare.day, 8,10)}"></th>
+            <th rowspan="2">
+                <span th:if="${seniorcares.size() <= 0}" th:text="없음"></span>
+                <img th:if="${seniorcares.size() > 0}" th:src="${seniorcares.barChartURL}">
+            </th>
+        </tr>
+        <tr>
+            <td style="text-align: right" th:each="seniorcare : ${seniorcares}" th:text="${seniorcare.count}"></td>
+        </tr>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

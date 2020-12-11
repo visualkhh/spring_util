@@ -1,0 +1,126 @@
+spring:
+  application:
+    name: service-monitor
+  pid:
+    file: ${spring.application.name}.pid
+  h2:
+    console:
+      enabled: true
+    path: /h2-console
+
+server:
+  port: 8090
+
+logging:
+  config: classpath:logback-spring.xml
+
+projects:
+  properties:
+    email-from: serviceteam@company.com
+    email-serviceteam: serviceteam@company.com
+    email-business: business@company.com
+    email-company: company@company.com
+    monitor-day-count-size: 20
+  monitor:
+    hibernate:
+      property:
+        "[hibernate.dialect]": org.hibernate.dialect.H2Dialect
+        "[hibernate.show_sql]": false
+        "[hibernate.hbm2ddl.auto]": create-drop
+        "[hibernate.cache.use_second_level_cache]": false
+        "[hibernate.cache.use_query_cache]": false
+    datasource:
+      hikari:
+        jdbc-url: jdbc:h2:mem:monitor
+        driver-class-name: org.h2.Driver
+        username: sa
+        password: companypwd
+
+  brain:
+    hibernate:
+      property:
+        "[hibernate.dialect]": org.hibernate.dialect.MySQLDialect
+        "[hibernate.show_sql]": true
+        "[hibernate.hbm2ddl.auto]": none
+        "[hibernate.cache.use_second_level_cache]": false
+        "[hibernate.cache.use_query_cache]": false
+    datasource:
+      hikari:
+        jdbc-url: jdbc:mysql://1.1.1.1:3306/company?serverTimezone=Asia/Seoul
+        driver-class-name: com.mysql.jdbc.Driver
+        username: company
+        password: companypwd
+  mindcares:
+    kr:
+      hibernate:
+        property:
+          "[hibernate.dialect]": org.hibernate.dialect.Oracle10gDialect
+          "[hibernate.show_sql]": true
+          "[hibernate.hbm2ddl.auto]": none
+          "[hibernate.cache.use_second_level_cache]": false
+          "[hibernate.cache.use_query_cache]": false
+      datasource:
+        hikari:
+          jdbc-url: jdbc:oracle:thin:@1.1.1.170:1521:omnidb
+          driver-class-name: oracle.jdbc.driver.OracleDriver
+          username: company
+          password: companypwd
+    seniorcare:
+      hibernate:
+        property:
+          "[hibernate.dialect]": org.hibernate.dialect.MySQL5InnoDBDialect
+          "[hibernate.show_sql]": true
+          "[hibernate.hbm2ddl.auto]": none
+          "[hibernate.cache.use_second_level_cache]": false
+          "[hibernate.cache.use_query_cache]": false
+      datasource:
+        hikari:
+          jdbc-url: jdbc:mariadb://1.1.1.171:3306/company_hasri
+          driver-class-name: org.mariadb.jdbc.Driver
+          username: hasri
+          password: companypwd
+
+    medicare:
+      hibernate:
+        property:
+          "[hibernate.dialect]": org.hibernate.dialect.MySQL5InnoDBDialect
+          "[hibernate.show_sql]": true
+          "[hibernate.hbm2ddl.auto]": none
+          "[hibernate.cache.use_second_level_cache]": false
+          "[hibernate.cache.use_query_cache]": false
+      datasource:
+        hikari:
+          jdbc-url: jdbc:mariadb://1.1.1.170:3306/medicare
+          driver-class-name: org.mariadb.jdbc.Driver
+          username: medicare
+          password: companypwd
+
+    ceracheck:
+      hibernate:
+        property:
+          "[hibernate.dialect]": org.hibernate.dialect.MySQL5InnoDBDialect
+          "[hibernate.show_sql]": true
+          "[hibernate.hbm2ddl.auto]": none
+          "[hibernate.cache.use_second_level_cache]": false
+          "[hibernate.cache.use_query_cache]": false
+      datasource:
+        hikari:
+          jdbc-url: jdbc:mariadb://1.1.1.171:3306/company_busines
+          driver-class-name: org.mariadb.jdbc.Driver
+          username: company_dev
+          password: companypwd
+
+#  d1:
+#    hibernate:
+#      property:
+#        "[hibernate.dialect]": org.hibernate.dialect.H2Dialect
+#        "[hibernate.show_sql]": false
+#        "[hibernate.hbm2ddl.auto]": create-drop
+#        "[hibernate.cache.use_second_level_cache]": false
+#        "[hibernate.cache.use_query_cache]": false
+#    datasource:
+#      hikari:
+#        jdbc-url: jdbc:h2:./data/test_d1_db
+#        driver-class-name: org.h2.Driver
+#        username: sa
+#        password:

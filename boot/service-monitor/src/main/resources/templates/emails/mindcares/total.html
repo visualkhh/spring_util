@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>business 기준 데이터</title>
+</head>
+<body>
+<h1>business 국문향</h1>
+<h3>회원통계</h3>
+<div>
+    <table style="border: 1px solid #444444; border-collapse: collapse; text-align:center;" cellpadding="6px;" width="740px">
+        <th style="border: 1px solid #444444; background-color:#323a46; color:#98a6ad;" width="14%;">구분</th>
+        <th style="border: 1px solid #444444; background-color:#323a46; color:#98a6ad;" width="18%">시작일</th>
+        <th style="border: 1px solid #444444; background-color:#323a46; color:#98a6ad;" width="18%">종료일</th>
+        <th style="border: 1px solid #444444; background-color:#323a46; color:#98a6ad;" width="25%">전체 회원수</th>
+        <th style="border: 1px solid #444444; background-color:#323a46; color:#98a6ad;" width="25%">정회원수 (%)</th>
+        <tr>
+            <td style="border: 1px solid #444444;">누적전체</td>
+            <td style="border: 1px solid #444444;" th:text="${kr_totalSignUpUser.minRegDt}"></td>
+            <td style="border: 1px solid #444444;" th:text="${kr_totalSignUpUser.maxRegDt}"></td>
+            <td style="border: 1px solid #444444; text-align:right;font-weight: bold;" th:text="${#numbers.formatInteger(kr_totalSignUpUser.totCnt, 0, 'COMMA')}"></td>
+            <td style="border: 1px solid #444444; text-align:right;"> <span th:text="${#numbers.formatInteger(kr_totalSignUpUser.mem01, 0, 'COMMA')}"></span> (<span style="background-color:rgb(243, 209, 170)" ><span th:text="${kr_totalSignUpUser.memRat01}"></span> <span>%</span></span>)</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #444444;">이전 달</td>
+            <td style="border: 1px solid #444444;" th:text="${kr_afterMonthSignUpUser.minRegDt}"></td>
+            <td style="border: 1px solid #444444;" th:text="${kr_afterMonthSignUpUser.maxRegDt}"></td>
+            <td style="border: 1px solid #444444; text-align:right;" th:text="${#numbers.formatInteger(kr_afterMonthSignUpUser.totCnt, 0, 'COMMA')}"></td>
+            <td style="border: 1px solid #444444; text-align:right;"> <span th:text="${#numbers.formatInteger(kr_afterMonthSignUpUser.mem01, 0, 'COMMA')}"></span> (<span style="background-color:rgb(211, 245, 161)" ><span th:text="${kr_afterMonthSignUpUser.memRat01}"></span> <span>%</span></span>)</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #444444;">이전 일</td>
+            <td style="border: 1px solid #444444;" th:text="${kr_afterDaySignUpUser.minRegDt}"></td>
+            <td style="border: 1px solid #444444;" th:text="${kr_afterDaySignUpUser.maxRegDt}"></td>
+            <td style="border: 1px solid #444444; text-align:right;" th:text="${#numbers.formatInteger(kr_afterDaySignUpUser.totCnt, 0, 'COMMA')}">34</td>
+            <td style="border: 1px solid #444444; text-align:right;"> <span th:text="${#numbers.formatInteger(kr_afterDaySignUpUser.mem01, 0, 'COMMA')}"></span> (<span style="background-color:rgb(211, 245, 161)" ><span th:text="${kr_afterDaySignUpUser.memRat01}"></span> <span>%</span></span>)</td>
+        </tr>
+    </table>
+</div>
+
+<h3>측정통계</h3>
+<div>
+    <table style="border: 1px solid #444444; border-collapse: collapse; text-align:center;" cellpadding="6px;" width="740px">
+        <th style="border: 1px solid #444444; background-color:#323a46; color:#98a6ad;" width="14%">구분</th>
+        <th style="border: 1px solid #444444; background-color:#323a46; color:#98a6ad;" width="18%">시작일</th>
+        <th style="border: 1px solid #444444; background-color:#323a46; color:#98a6ad;" width="18%">종료일</th>
+        <th style="border: 1px solid #444444; background-color:#323a46; color:#98a6ad;" width="25%">전체 측정수</th>
+        <th style="border: 1px solid #444444; background-color:#323a46; color:#98a6ad;" width="25%">측정 정회원수 (%)</th>
+        <tr>
+            <td style="border: 1px solid #444444;">누적전체</td>
+            <td style="border: 1px solid #444444;" th:text="${kr_totalMeasUser.minRegDt}"></td>
+            <td style="border: 1px solid #444444;" th:text="${kr_totalMeasUser.maxRegDt}"></td>
+            <td style="border: 1px solid #444444; text-align:right;" th:text="${#numbers.formatInteger(kr_totalMeasUser.totCnt, 0, 'COMMA')}"></td>
+            <td style="border: 1px solid #444444; text-align:right;"> <span th:text="${#numbers.formatInteger(kr_totalMeasUser.memUz001, 0, 'COMMA')}"></span> (<span style="background-color:rgb(243, 209, 170)" ><span th:text="${kr_totalMeasUser.uz001Rat}"></span> <span>%</span></span>)</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #444444;">이전 달</td>
+            <td style="border: 1px solid #444444;" th:text="${kr_afterMonthMeasUser.minRegDt}"></td>
+            <td style="border: 1px solid #444444;" th:text="${kr_afterMonthMeasUser.maxRegDt}"></td>
+            <td style="border: 1px solid #444444; text-align:right;" th:text="${#numbers.formatInteger(kr_afterMonthMeasUser.totCnt, 0, 'COMMA')}"></td>
+            <td style="border: 1px solid #444444; text-align:right;"> <span th:text="${#numbers.formatInteger(kr_afterMonthMeasUser.memUz001, 0, 'COMMA')}"></span> (<span style="background-color:rgb(211, 245, 161)" ><span th:text="${kr_afterMonthMeasUser.uz001Rat}"></span> <span>%</span></span>)</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #444444;">이전 일</td>
+            <td style="border: 1px solid #444444;" th:text="${kr_afterDayMeasUser.minRegDt}"></td>
+            <td style="border: 1px solid #444444;" th:text="${kr_afterDayMeasUser.maxRegDt}"></td>
+            <td style="border: 1px solid #444444; text-align:right;" th:text="${#numbers.formatInteger(kr_afterDayMeasUser.totCnt, 0, 'COMMA')}"></td>
+            <td style="border: 1px solid #444444; text-align:right;"> <span th:text="${#numbers.formatInteger(kr_afterDayMeasUser.memUz001, 0, 'COMMA')}"></span> (<span style="background-color:rgb(211, 245, 161)" ><span th:text="${kr_afterDayMeasUser.uz001Rat}"></span> <span>%</span></span>)</td>
+        </tr>
+    </table>
+</div>
+
+<h4>전체 정회원 중 3회이상 측정회원</h4>
+<div>
+    <table style="border: 1px solid #444444; border-collapse: collapse; text-align:center;" cellpadding="6px;" width="555px">
+        <th style="border: 1px solid #444444; background-color:#323a46; color:#98a6ad;" width="66%">정회원수</th>
+        <th style="border: 1px solid #444444; background-color:#323a46; color:#98a6ad;" width="34%">3회이상 측정회원수</th>
+        <tr>
+            <td style="border: 1px solid #444444; text-align:right;" th:text="${#numbers.formatInteger(kr_manyMeasUser.totCnt, 0, 'COMMA')}"></td>
+            <td style="border: 1px solid #444444; text-align:right;"><span th:text="${#numbers.formatInteger(kr_manyMeasUser.cnt, 0, 'COMMA')}"></span> (<span style="background-color:rgb(243, 209, 170)"><span th:text="${kr_manyMeasUser.meaRat}"></span> <span>%</span></span>)</td>
+        </tr>
+    </table>
+</div>
+
+<h4>최근 일주일 간 Top 10 측정업체</h4>
+<div>
+    <table style="border: 1px solid #444444; border-collapse: collapse; text-align:center;" cellpadding="6px;" width="555px">
+        <th style="border: 1px solid #444444; background-color:#323a46; color:#98a6ad;" width="66%">업체정보</th>
+        <th style="border: 1px solid #444444; background-color:#323a46; color:#98a6ad;" width="34%">측정건수</th>
+
+        <tr
+                th:each="kr_measCrop, iterStat : ${kr_measCrops}"
+                th:style="${iterStat.even ? 'background-color: #f1f3fa;' : ''}"
+        >
+            <td style="border: 1px solid #444444;"><span th:text="${kr_measCrop.corpNm}"></span> (<span th:text="${kr_measCrop.corpId}"></span>)</td>
+            <td style="border: 1px solid #444444; text-align:right;" th:text="${#numbers.formatInteger(kr_measCrop.cnt, 0, 'COMMA')}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
