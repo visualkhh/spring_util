@@ -1,0 +1,12 @@
+<div class="navbar dropdown {{class}}">
+    <button class="btn btm-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <img src="assets/img/blank.gif" alt="{{currentLanguage.alt}}" class="flag flag-{{currentLanguage.key}}"> {{currentLanguage.title}}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" (click)="setLanguage(language)"  style="cursor: pointer" [class.active]="language==currentLanguage" *ngFor="let language of languages">
+            <img src="assets/img/blank.gif" alt="{{language.alt}}" class="flag flag-{{language.key}}"> {{language.title}}
+        </a>
+    </div>
+</div>
+

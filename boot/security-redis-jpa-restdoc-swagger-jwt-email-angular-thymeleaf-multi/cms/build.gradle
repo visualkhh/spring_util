@@ -1,0 +1,117 @@
+processResources {
+//    dependsOn "buildAngular"
+}
+
+//compileJava {
+//    dependsOn "buildAngular"
+//}
+
+bootJar {
+    dependsOn "buildAngular"
+    dependsOn asciidoctor
+
+    from ("${project.projectDir}/src/main/resources/templates/docs") {
+        into 'BOOT-INF/classes/templates/docs'
+    }
+    from ("${project.projectDir}/src/main/resources/webapp") {
+        into 'BOOT-INF/classes/webapp'
+    }
+    from (file("${project.projectDir}/src/main/resources/templates/index.html")) {
+        into 'BOOT-INF/classes/templates'
+    }
+    baseName "cms"
+}
+
+def webappDir = "$projectDir/src/main/resources/webapp"
+def templatesDir = "$projectDir/src/main/resources/templates"
+def angularDir = project(':cms-angular').projectDir
+
+dependencies {
+
+}
+ext {
+    set('snippetsDir', file("${buildDir}/generated-snippets"))
+}
+test {
+    outputs.dir snippetsDir
+    useJUnitPlatform()
+}
+
+asciidoctor {
+    dependsOn test
+    inputs.dir snippetsDir
+    separateOutputDirs = false
+    outputDir = file("${project.projectDir}/src/main/resources/templates/docs")
+}
+
+
+generateTypeScript {
+    dependsOn ':core:messagePropertiesToJsonWebCoreAngular'
+    customTypeNaming = [
+            'org.springframework.security.core.userdetails.UserDetails:UserDetailsOfSpring',
+            'com.ceragem.iot.wcore.model.security.GrantedObjAuthority:UserDetailGrantedObjAuthority'
+    ]
+    classPatterns = [
+            'com.ceragem.iot.core.code.**',
+            'com.ceragem.iot.core.domain.**',
+            'com.ceragem.iot.core.model.**',
+            'com.ceragem.iot.wcore.config.http.**',
+            'com.ceragem.iot.wcore.domain.**',
+            'com.ceragem.iot.wcore.model.**',
+            'com.ceragem.iot.cms.domain.**',
+            'com.ceragem.iot.cms.model.**',
+    ]
+    mapClasses = 'asClasses'
+    mapEnum = 'asEnum'
+    nonConstEnums = true
+    //http://www.habarta.cz/typescript-generator/doc/ModulesAndNamespaces.html
+    outputFileType = 'implementationFile'  //values are: declarationFile (.d.ts) or implementationFile (.ts)
+    jsonLibrary = 'jackson2'
+    outputKind = 'module'  // values are: global, module, ambientModule
+    outputFile = "${angularDir}/generate/models.ts"
+    scanSpringApplication = true
+    generateSpringApplicationClient = true
+}
+
+task installAngular(type: Exec) {
+    dependsOn generateTypeScript
+    doFirst {
+        def targetNodePath = "";
+        if (project.hasProperty('nodePath')) {
+            targetNodePath = "$nodePath/";
+        }
+//        tasks.generateTypeScript.execute()
+        workingDir "$angularDir"
+//        inputs.dir "$angularDir"
+//        group = BasePlugin.BUILD_GROUP
+        if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")) {
+            commandLine "${targetNodePath}npm.cmd", "install"
+        } else {
+            commandLine "${targetNodePath}npm", "install"
+        }
+    }
+}
+
+task buildWebAppAngular(type:Exec) {
+    dependsOn 'installAngular'
+    doFirst {
+        def targetNodePath = "";
+        if (project.hasProperty('nodePath')) {
+            targetNodePath = "$nodePath/";
+        }
+        workingDir "$angularDir"
+//        inputs.dir "$angularDir"
+//        group = BasePlugin.BUILD_GROUP
+        commandLine "${targetNodePath}node", "node_modules/@angular/cli/bin/ng", "build", "--prod"
+    }
+}
+
+task buildAngular(type: Copy, dependsOn: 'buildWebAppAngular') {
+//task buildAngular(type: Copy) {
+//    doFirst {
+        from "${webappDir}/index.html"
+        into "${templatesDir}"
+        print("buildAngular END : ${webappDir} ${templatesDir}")
+//    }
+}
+

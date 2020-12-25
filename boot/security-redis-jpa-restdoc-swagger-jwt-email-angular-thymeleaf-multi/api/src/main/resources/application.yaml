@@ -1,0 +1,41 @@
+spring:
+  profiles:
+    include:
+      - core
+      - db
+      - web-core
+      - default
+
+server:
+  port: 8086
+
+
+---
+
+
+spring:
+  profiles: default
+  application:
+    name: api
+  session:
+    store-type: REDIS
+    redis:
+      namespace: ${spring.application.name}.spring.session
+#  resources:
+#    add-mappings=true: true
+#    mvc:
+#    static-path-pattern: /static/**
+
+
+project:
+  jwt:
+    secretKey: vavavavsss
+    tokenPrefix: "Bearer "
+    tokenExpirationAfterDays: 10
+  properties:
+    username: company
+    password: pwdpwd
+    angular-path: classpath:/webapp
+    swagger-host: localhost:8086
+logging:
+  config: classpath:logback-spring.xml

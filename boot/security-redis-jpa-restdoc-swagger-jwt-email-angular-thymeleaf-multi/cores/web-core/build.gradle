@@ -1,0 +1,62 @@
+bootJar { enabled = false }
+jar { enabled = true }
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-mail")
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-mail')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile('org.springframework.boot:spring-boot-starter-data-redis')
+    compile('org.springframework.session:spring-session-data-redis')
+
+    compile 'org.springframework.security:spring-security-test'
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.0.9.RELEASE'
+    compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '3.0.2.RELEASE'
+
+    // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
+//    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+//    compile group: 'org.springframework.data', name: 'spring-data-rest-hal-browser', version: '3.0.8.RELEASE'
+
+}
+
+//def angularDir = project(':web-core-angular').projectDir
+//// https://www.habarta.cz/typescript-generator/maven/typescript-generator-maven-plugin/generate-mojo.html
+//generateTypeScript {
+//    dependsOn ':core:messagePropertiesToJsonWebCoreAngular'
+//    doFirst {
+//        customTypeNaming = [
+//                'org.springframework.security.core.userdetails.UserDetails:UserDetailsOfSpring',
+////                'org.springframework.data.domain.PageRequest:PageRequestOfSpring',
+////            'com.ceragem.iot.cms.domain.security.Auth:UserDetailAuth',
+//                'com.ceragem.iot.cms.model.security.GrantedObjAuthority:UserDetailGrantedObjAuthority'
+//        ]
+//        classPatterns = [
+//                'com.ceragem.iot.wcore.domain.**',
+//                'com.ceragem.iot.wcore.model.**',
+//                'com.ceragem.iot.wcore.config.http.**',
+//                'com.ceragem.iot.wcore.code.**',
+//
+//                'com.ceragem.iot.core.domain.**',
+//                'com.ceragem.iot.core.model.**',
+//                'com.ceragem.iot.core.code.**',
+//        ]
+////        generateConstructors = true
+//        //        extensionClasses = [
+////                'cz.habarta.typescript.generator.ext.EnumConstantsExtension'
+////        ]
+////        extensions = [cz.habarta.typescript.generator.ext.EnumConstantsExtension.class];
+////        jackson2Configuration = [
+////                'enumsUsingToString': true
+////        ]
+//        mapClasses = 'asClasses'
+//        mapEnum = 'asEnum'
+//        nonConstEnums = true
+//        //http://www.habarta.cz/typescript-generator/doc/ModulesAndNamespaces.html
+//        outputFileType = 'implementationFile'  //values are: declarationFile (.d.ts) or implementationFile (.ts)
+//        jsonLibrary = 'jackson2'
+//        outputKind = 'module'  // values are: global, module, ambientModule
+//        outputFile = "${angularDir}/generate/models.ts"
+//        scanSpringApplication = true
+//        generateSpringApplicationClient = true
+//    }
+//}

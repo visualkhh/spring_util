@@ -1,0 +1,131 @@
+<div *ngIf="type === 'inline'; then inline else block"></div>
+<ng-template #inline>
+    <a class="{{class}}" *ngIf="userDetails" (click)="show()">
+        <i-feather name="user" class="sub-icon"></i-feather>
+        {{oldUserDetails.admNm}}
+    </a>
+</ng-template>
+<ng-template #block>
+    <div class="row">
+        <div class="col-4 p-3">
+            <!-- https://www.flaticon.com/free-icon/user_848044 -->
+            <svg width="100%" height="100%" fill="#555" xmlns="http://www.w3.org/2000/svg" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 480 480" style="enable-background:new 0 0 480 480;" xml:space="preserve">
+                <g>
+                    <g>
+                        <path d="M408,0H72C32.304,0,0,32.304,0,72v336c0,35.696,26.144,65.328,60.272,70.96C61.4,479.568,62.632,480,64,480h8h336h8    c1.368,0,2.6-0.432,3.728-1.04C453.856,473.328,480,443.696,480,408V72C480,32.304,447.696,0,408,0z M408,464H72v-88    c0-60.016,44.12-110.496,103.168-118.768c1.008,0.8,2.072,1.512,3.104,2.272c3.44,2.552,7.016,4.936,10.76,7.056    c0.248,0.136,0.48,0.304,0.728,0.44c1.64,0.912,3.344,1.696,5.04,2.52c1.112,0.544,2.216,1.112,3.344,1.616    c1.648,0.728,3.336,1.368,5.024,2.008c1.256,0.48,2.512,0.96,3.792,1.392c1.632,0.552,3.28,1.04,4.944,1.512    c1.464,0.416,2.928,0.784,4.408,1.136c1.536,0.36,3.072,0.704,4.632,1c1.84,0.344,3.688,0.608,5.552,0.848    c1.272,0.168,2.52,0.368,3.8,0.488c3.216,0.296,6.456,0.48,9.704,0.48s6.488-0.184,9.704-0.488c1.28-0.12,2.536-0.32,3.8-0.488    c1.856-0.248,3.712-0.504,5.552-0.848c1.56-0.288,3.096-0.64,4.632-1c1.48-0.344,2.944-0.72,4.408-1.136    c1.664-0.472,3.312-0.96,4.944-1.512c1.28-0.432,2.528-0.912,3.792-1.392c1.688-0.64,3.376-1.28,5.024-2.008    c1.136-0.504,2.232-1.072,3.352-1.616c1.688-0.824,3.392-1.608,5.032-2.52c0.296-0.168,0.576-0.368,0.872-0.536    c3.696-2.096,7.216-4.448,10.616-6.96c1.032-0.768,2.104-1.472,3.104-2.272C363.88,265.504,408,315.984,408,376V464z M152,176    c0-48.52,39.48-88,88-88s88,39.48,88,88c0,26.856-12.12,50.896-31.144,67.048c-1.36,1.16-2.784,2.224-4.208,3.296    c-0.736,0.552-1.456,1.12-2.208,1.648c-1.432,1-2.904,1.936-4.384,2.848c-0.8,0.496-1.592,1-2.416,1.464    c-1.504,0.864-3.04,1.656-4.584,2.432c-0.856,0.424-1.72,0.848-2.592,1.248c-1.552,0.712-3.128,1.368-4.712,1.992    c-0.944,0.368-1.904,0.712-2.864,1.048c-1.552,0.544-3.112,1.056-4.688,1.504c-1.12,0.32-2.256,0.6-3.392,0.872    c-1.464,0.36-2.928,0.712-4.408,1c-1.464,0.28-2.96,0.48-4.456,0.68c-1.2,0.168-2.392,0.368-3.6,0.488    C245.6,263.84,242.816,264,240,264c-2.816,0-5.6-0.16-8.344-0.424c-1.208-0.12-2.4-0.32-3.6-0.488    c-1.488-0.208-2.984-0.4-4.456-0.68c-1.48-0.28-2.944-0.64-4.408-1c-1.136-0.28-2.272-0.552-3.392-0.872    c-1.576-0.456-3.136-0.968-4.688-1.504c-0.96-0.336-1.92-0.68-2.864-1.048c-1.592-0.616-3.16-1.28-4.712-1.992    c-0.872-0.4-1.736-0.824-2.592-1.248c-1.544-0.768-3.08-1.568-4.584-2.432c-0.816-0.472-1.608-0.976-2.416-1.464    c-1.48-0.912-2.96-1.84-4.384-2.848c-0.752-0.528-1.472-1.096-2.208-1.648c-1.424-1.064-2.848-2.136-4.208-3.296    C164.12,226.896,152,202.856,152,176z M464,408c0,25.32-16.896,46.736-40,53.64V376c0-63.968-44.256-118.272-105.184-132.336    C334.472,225.456,344,201.84,344,176c0-57.344-46.656-104-104-104s-104,46.656-104,104c0,25.84,9.528,49.456,25.184,67.664    C100.256,257.728,56,312.032,56,376v85.64c-23.104-6.904-40-28.32-40-53.64V72c0-30.88,25.12-56,56-56h336c30.88,0,56,25.12,56,56    V408z"/>
+                    </g>
+                </g>
+            </svg>
+        </div>
+        <div class="col-8">
+            <div class="row my-2">
+                <div class="col-4">{{'Affiliation' | i18n}}:</div>
+                <div class="col-8">{{oldUserDetails?.companyNm || '-'}}</div>
+            </div>
+            <div class="row my-2">
+                <div class="col-4">{{'Name' | i18n}}:</div>
+                <div class="col-8">{{oldUserDetails?.admNm || '-'}}</div>
+            </div>
+            <div class="row my-2">
+                <div class="col-4">{{'Job' | i18n}}:</div>
+                <div class="col-8">{{(oldUserDetails?.jobCd || '-') | i18n}}</div>
+            </div>
+            <div class="row my-2">
+                <div class="col-4">{{'UseDate' | i18n}}:</div>
+                <div class="col-8">{{(oldUserDetails?.startDt || '-') | moment: 'YYYY.MM.DD'}} ~ {{(oldUserDetails?.endDt || '-') | moment: ' YYYY.MM.DD'}}</div>
+            </div>
+            <div class="row my-2">
+                <button class="btn btn-secondary btn-sm ml-5" style="width: 130px" (click)="show()">{{'Detail' | i18n}}</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #modalTemplate>
+    <div class="modal-header">
+        <h6 class="modal-title" id="exampleModalLabel">
+            <i-feather name="info" class="head-icon mr-2" style="height: 15px; width: 15px"></i-feather>
+            {{'Account' | i18n}} {{'Update' | i18n}}
+        </h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <form [formGroup]="infoForm" *ngIf="userDetails">
+            <div class="form-group row d-none">
+                <label class="col-sm-3 col-form-label">* Seq</label>
+                <div class="col-sm-9 col-form-label">
+                    <input type="hidden" name="admSeq" formControlName="admSeq" placeholder="{{'No' | i18n}}" class="form-control" [(ngModel)]="userDetails.admSeq" readonly>
+                    {{ userDetails.admSeq }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">* {{'Id' | i18n}}</label>
+                <div class="col-sm-9 col-form-label">
+                    {{ userDetails.admLginId }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="admNm" class="col-sm-3 col-form-label">* {{'Name' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="admNm" name="admNm" formControlName="admNm" placeholder="{{'Name' | i18n}}" [(ngModel)]="userDetails.admNm">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="admNm" class="col-sm-3 col-form-label">{{'Password' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="password" class="form-control" id="admLginPw" name="admLginPw" formControlName="admLginPw" placeholder="{{'Password' | i18n}}" #admLginPw autocomplete="password" [(ngModel)]="userDetails.admLginPw">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="admNm" class="col-sm-3 col-form-label">{{'Password' | i18n}} {{'word.ok' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="password" class="form-control" id="admLginPwc" name="admLginPwc" formControlName="admLginPwc" placeholder="{{'Password' | i18n}} {{'word.ok' | i18n}}" autocomplete="password">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="companyNm" class="col-sm-3 col-form-label">{{'Affiliation' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="companyNm" class="form-control" id="companyNm" name="companyNm" formControlName="companyNm" [(ngModel)]="userDetails.companyNm">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="email" class="col-sm-3 col-form-label">{{'Email' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="email" class="form-control" id="email" name="email" formControlName="email" [(ngModel)]="userDetails.email">
+                </div>
+            </div>
+            <div class="form-group row d-none">
+                <label for="email" class="col-sm-3 col-form-label">{{'Home' | i18n}} URL</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="homeUrl" name="homeUrl" formControlName="homeUrl" [(ngModel)]="userDetails.homeUrl">
+                </div>
+            </div>
+            <div class="form-group row d-none">
+                <label for="useCd" class="col-sm-3 col-form-label">* {{'Status' | i18n}}</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="useCd" name="useCd" formControlName="useCd" [(ngModel)]="userDetails.useCd">
+                        <option [value]="code.cd" *ngFor="let code of codeService.getChildCodes(UseCd.USE000); let i = index">
+                            {{code.cd | i18n}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">* {{'RegistDt' | i18n}}</label>
+                <div class="col-sm-9 col-form-label">
+                    {{ userDetails.regDt | moment }}
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer" style="padding: 3px;">
+        <button type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-primary btn-sm" *ngIf="userDetails?.admSeq" (click)="update()">{{'Yes' | i18n}}</button>
+        <button type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-secondary btn-sm" data-dismiss="modal" (click)="no()">{{'Close' | i18n}}</button>
+    </div>
+
+</ng-template>
+

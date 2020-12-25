@@ -1,0 +1,66 @@
+<main role="main" class="">
+    <inline-navigation [url]="router.url"></inline-navigation>
+
+    <div class="row">
+        <div class="my-3 bg-white col-md-6 col-sm-12">
+            <div class="card p-3">
+                <h6 class="border-bottom border-gray pb-2 mb-0">{{'AccessorInfomaction' | i18n}}</h6>
+                <div>
+<!--                    <web-core-user-details type="block"></web-core-user-details>-->
+                </div>
+<!--                <web-core-history-datatable width="100%" [where]="{actCds: ['ACT002', 'ACT003']}" [strip]="true" [pageLength]="3"></web-core-history-datatable>-->
+            </div>
+        </div>
+        <div class="my-3 bg-white col-md-6 col-sm-12">
+            <div class="card p-3">
+                <h6 class="border-bottom border-gray pb-2 mb-0">{{'Notice' | i18n}}</h6>
+                <web-core-brd-datatable [type]="'BCC001'"  [strip]="true" [pageLength]="3"></web-core-brd-datatable>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+
+        <div class="my-3 bg-white col-12">
+            <div class="card p-3">
+                <h6 class="border-bottom border-gray pb-2 mb-0">{{'RecentPatientRegistration' | i18n}}</h6>
+<!--                <web-core-patient-datatable [strip]="true" [mriVisible]="false" [pageLength]="3" ></web-core-patient-datatable>-->
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+<!--<web-core-datatable-->
+<!--        [options]="{-->
+<!--                  ajax: 'assets/api/tables/datatables.standard.json',-->
+<!--                columns: [-->
+<!--                {data: 'id'},-->
+<!--                {data: 'name'},-->
+<!--                {data: 'phone'},-->
+<!--                {data: 'company'},-->
+<!--                {data: 'zip'},-->
+<!--                {data: 'city'},-->
+<!--                {data: 'date'}-->
+<!--                ],-->
+<!--                buttons: [-->
+<!--                'copy', 'excel', 'pdf', 'print'-->
+<!--                ]-->
+<!--                }"-->
+<!--        tableClass="table table-striped table-bordered table-hover"-->
+<!--&gt;-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th data-hide="mobile-p">ID</th>-->
+<!--        <th data-class="expand">Name</th>-->
+<!--        <th>Phone</th>-->
+<!--        <th data-hide="mobile-p">Company</th>-->
+<!--        <th data-hide="mobile-p,tablet-p">Zip</th>-->
+<!--        <th data-hide="mobile-p,tablet-p">City</th>-->
+<!--        <th data-hide="mobile-p,tablet-p">Date</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--</web-core-datatable>-->
+

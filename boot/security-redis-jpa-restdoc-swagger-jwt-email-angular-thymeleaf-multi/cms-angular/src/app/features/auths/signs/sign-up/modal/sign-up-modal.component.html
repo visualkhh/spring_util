@@ -1,0 +1,73 @@
+<ng-template #modalTemplate>
+    <div class="modal-header">
+        <h6 class="modal-title" id="exampleModalLabel">
+            <i-feather name="info" class="head-icon mr-2" style="height: 15px; width: 15px"></i-feather>
+            {{'SignUp' | i18n}}
+        </h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <form [formGroup]="infoForm" autocomplete="off">
+            <div class="form-group row">
+                <label for="admLginId" class="col-sm-3 col-form-label">* {{'Id' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="admLginId" name="admLginId" formControlName="admLginId" placeholder="{{'Id' | i18n}}" [readonly]="infoForm?.get('admSeq')?.value">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="admNm" class="col-sm-3 col-form-label">* {{'Name' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="admNm" name="admNm" formControlName="admNm" placeholder="{{'Name' | i18n}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="admNm" class="col-sm-3 col-form-label">{{'Affiliation' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="companyNm" name="companyNm" formControlName="companyNm" placeholder="{{'Affiliation' | i18n}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="admNm" class="col-sm-3 col-form-label">{{'Phone' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="phone" name="phone" formControlName="phone" placeholder="{{'Phone' | i18n}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="email" class="col-sm-3 col-form-label">* {{'Email' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="email" class="form-control" id="email" name="email" formControlName="email" placeholder="{{'Email' | i18n}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="jobCd" class="col-sm-3 col-form-label">{{'Job' | i18n}}</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="jobCd" name="jobCd" formControlName="jobCd" autocomplete="off">
+                        <option [value]="code.cd" *ngFor="let code of codeService.getChildCodes('JOB000'); let i = index">
+                            {{code.cd | i18n}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="admNm" class="col-sm-3 col-form-label">* {{'Password' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="password" class="form-control" id="admLginPw" name="admLginPw" formControlName="admLginPw" placeholder="{{'Password' | i18n}}" #admLginPw>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="admNm" class="col-sm-3 col-form-label">* {{'Password' | i18n}} {{'word.ok' | i18n}}</label>
+                <div class="col-sm-9">
+                    <input type="password" class="form-control" id="admLginPwc" name="admLginPwc" formControlName="admLginPwc"  placeholder="{{'Password' | i18n}} {{'word.ok' | i18n}}">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer" style="padding: 3px;">
+        <button type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-primary btn-sm" (click)="create()">{{'Yes' | i18n}}</button>
+        <button type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-secondary btn-sm" data-dismiss="modal" (click)="no()">{{'No' | i18n}}</button>
+    </div>
+
+</ng-template>

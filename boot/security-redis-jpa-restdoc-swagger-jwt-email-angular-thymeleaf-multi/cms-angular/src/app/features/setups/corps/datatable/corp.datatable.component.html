@@ -1,0 +1,13 @@
+<web-core-datatable [options]="options" [paginationLength]="!strip" [pageInfo]="!strip" [pageNavigation]="!strip"
+                    tableClass="table table-striped table-bordered table-hover table-radius">
+    <thead>
+    <tr>
+        <th data-hide="text-center">No</th>
+        <th data-hide="text-center">{{'Seq' | i18n}}</th>
+        <th data-hide="text-center">{{'Name' | i18n}}</th>
+        <th data-hide="text-center">{{'ROLE' | i18n}}</th>
+        <th data-hide="text-center">{{'RegistDt' | i18n}}</th> <!-- tablet-p-->
+    </tr>
+    </thead>
+</web-core-datatable>
+<web-core-corp-modal (complete)="table.draw()"></web-core-corp-modal>

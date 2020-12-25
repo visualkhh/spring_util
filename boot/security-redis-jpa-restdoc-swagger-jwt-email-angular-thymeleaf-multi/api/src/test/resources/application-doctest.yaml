@@ -1,0 +1,33 @@
+spring:
+  profiles: doctest
+  datasource:
+    #    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:mem:test;DB_CLOSE_ON_EXIT=FALSE
+    #    url: jdbc:h2:~/test
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+    path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  redis:
+    host: localhost
+    port: 6379
+    database: 12
+    password:
+  session:
+    store-type: REDIS
+
+project:
+  properties:
+    upload-path: "/home/dev/neuro-scan-dx/upload"
+logging:
+  config: classpath:logback-doctest.xml

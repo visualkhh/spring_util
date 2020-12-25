@@ -1,0 +1,38 @@
+rootProject.name = 'project-web'
+
+String[] cores = ['core', 'web-core']
+String[] cmss = ['cms-angular', 'cms']
+String[] apis = ['api']
+String[] tools = ['tool']
+//String[] modules = ['gmp', 'khid', 'thesis']
+
+//include buildSrc
+
+cores.each {
+    include it
+    def projectDir = new File("${rootProject.projectDir}/cores", it)
+    if (!projectDir.exists()) {projectDir.mkdirs()}
+    project(":${it}").projectDir = projectDir
+}
+cmss.each {
+    include it
+    def projectDir = new File(rootDir, it)
+    if (!projectDir.exists()) {
+        projectDir.mkdirs()
+    }
+}
+apis.each {
+    include it
+    def projectDir = new File(rootDir, it)
+    if (!projectDir.exists()) {
+        projectDir.mkdirs()
+    }
+}
+tools.each {
+    include it
+    def projectDir = new File("${rootProject.projectDir}/tools", it)
+    if (!projectDir.exists()) {projectDir.mkdirs()}
+    project(":${it}").projectDir = projectDir
+}
+
+

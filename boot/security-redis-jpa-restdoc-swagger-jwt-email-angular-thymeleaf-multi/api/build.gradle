@@ -1,0 +1,37 @@
+processResources {
+}
+bootJar {
+    dependsOn asciidoctor
+    from ("${project.projectDir}/src/main/resources/templates/docs") {
+        into 'BOOT-INF/classes/templates/docs'
+    }
+    baseName "api"
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.7.0'
+
+//    compile group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.10.7'
+//    compile group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.10.7'
+//    compile group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.10.7'
+    compile 'io.jsonwebtoken:jjwt-api:0.10.7'
+    runtime 'io.jsonwebtoken:jjwt-impl:0.10.7',
+            // Uncomment the next line if you want to use RSASSA-PSS (PS256, PS384, PS512) algorithms:
+            //'org.bouncycastle:bcprov-jdk15on:1.60',
+            'io.jsonwebtoken:jjwt-jackson:0.10.7' // or 'io.jsonwebtoken:jjwt-gson:0.11.2' for gson
+}
+ext {
+    set('snippetsDir', file("${buildDir}/generated-snippets"))
+}
+test {
+    outputs.dir snippetsDir
+    useJUnitPlatform()
+}
+
+asciidoctor {
+    dependsOn test
+    inputs.dir snippetsDir
+    separateOutputDirs = false
+    outputDir = file("${project.projectDir}/src/main/resources/templates/docs")
+}

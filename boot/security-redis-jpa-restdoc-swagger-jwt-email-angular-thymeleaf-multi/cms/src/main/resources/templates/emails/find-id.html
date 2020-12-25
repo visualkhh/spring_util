@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:utext="${#messages.msg('FindID')}"></title>
+</head>
+<body>
+<div th:utext="${#messages.msg('msg.email.find.id.content', adm.getAdmNm(), adm.getAdmLginId())}"> </div>
+</body>
+</html>

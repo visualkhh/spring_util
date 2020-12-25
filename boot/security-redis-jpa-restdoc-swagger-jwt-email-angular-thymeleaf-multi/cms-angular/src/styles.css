@@ -1,0 +1,120 @@
+/*@import url("node_modules/bootstrap/dist/css/bootstrap.min.css");*/
+/*@import url("~jquery-ui-npm/jquery-ui.css");*/
+/*@import url("~bootstrap/dist/css/bootstrap.min.css");*/
+/*@import url("~datatables.net-bs4/css/dataTables.bootstrap4.css");*/
+/*@import url("~datatables.net-buttons-bs4/css/buttons.bootstrap4.css");*/
+/*@import url("~datatables.net-fixedcolumns-bs4/css/fixedColumns.bootstrap4.css");*/
+/*@import url("~datatables.net-fixedheader-bs4/css/fixedHeader.bootstrap4.css");*/
+
+/*@import url("~glyphicons-halflings/css/glyphicons-halflings.css");*/
+/*@import url("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css");*/
+/*@import url("https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css");*/
+@import url("libs/Customizable-Loading-Modal-Plugin/css/modal-loading.css");
+@import url("libs/Customizable-Loading-Modal-Plugin/css/modal-loading-animate.css");
+@import url("libs/bootstrap-viewtree/bootstrap-treeview.min.css");
+/*@import url("../../../web-cores/web-core-angular/src/assets/css/font-awesome.min.css");*/
+/*@import url("../../../web-cores/web-core-angular/src/assets/css/flag.css");*/
+/*@import '~quill/dist/quill.core.css';*/
+/*@import '~quill/dist/quill.bubble.css';*/
+/*@import '~quill/dist/quill.snow.css';*/
+/* Global Styles */
+body {
+    font-size: 0.8rem;
+}
+
+/*.dataTables_wrapper .dataTables_paginate .paginate_button:hover {*/
+/*    color: white !important;*/
+/*    border: 1px solid #c4c4c4c4;*/
+/*    background-color: #ffffff;*/
+/*    background: #ffffff;*/
+/*}*/
+/*.paginate_button>a{*/
+/*    color:#6c757d;*/
+/*}*/
+.table-hover {
+    cursor: pointer;
+}
+.table-radius {
+    border-radius: 7px;
+    overflow: hidden;
+}
+/*.glyphicon {*/
+/*    width: 50px!important;*/
+/*    height: 50px!important;*/
+/*    background-color: red;*/
+/*}*/
+
+
+/*.paginate_button:hover {*/
+/*    background-color: pink!important;*/
+/*}*/
+/*.paginate_button>a:hover {*/
+/*    background-color: red!important;*/
+/*}*/
+/*.pagination>{*/
+/*    background-color: pink;*/
+/*}*/
+/*h1 {*/
+/*  color: #369;*/
+/*  font-family: Arial, Helvetica, sans-serif;*/
+/*  font-size: 250%;*/
+/*}*/
+/*h2, h3 {*/
+/*  color: #444;*/
+/*  font-family: Arial, Helvetica, sans-serif;*/
+/*  font-weight: lighter;*/
+/*}*/
+/*body {*/
+/*  margin: 2em;*/
+/*}*/
+/*body, input[text], button {*/
+/*  color: #333;*/
+/*  font-family: Cambria, Georgia;*/
+/*}*/
+/*a {*/
+/*  cursor: pointer;*/
+/*  cursor: hand;*/
+/*}*/
+/*button {*/
+/*  font-family: Arial;*/
+/*  background-color: #eee;*/
+/*  border: none;*/
+/*  padding: 5px 10px;*/
+/*  border-radius: 4px;*/
+/*  cursor: pointer;*/
+/*  cursor: hand;*/
+/*}*/
+/*button:hover {*/
+/*  background-color: #cfd8dc;*/
+/*}*/
+/*button:disabled {*/
+/*  background-color: #eee;*/
+/*  color: #aaa;*/
+/*  cursor: auto;*/
+/*}*/
+
+/*!* Navigation link styles *!*/
+/*nav a {*/
+/*  padding: 5px 10px;*/
+/*  text-decoration: none;*/
+/*  margin-right: 10px;*/
+/*  margin-top: 10px;*/
+/*  display: inline-block;*/
+/*  background-color: #eee;*/
+/*  border-radius: 4px;*/
+/*}*/
+/*nav a:visited, a:link {*/
+/*  color: #607D8B;*/
+/*}*/
+/*nav a:hover {*/
+/*  color: #039be5;*/
+/*  background-color: #CFD8DC;*/
+/*}*/
+/*nav a.active {*/
+/*  color: #039be5;*/
+/*}*/
+
+/*!* everywhere else *!*/
+/** {*/
+/*  font-family: Arial, Helvetica, sans-serif;*/
+/*}*/

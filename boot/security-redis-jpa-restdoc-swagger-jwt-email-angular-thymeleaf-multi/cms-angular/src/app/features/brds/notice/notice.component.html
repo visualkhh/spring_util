@@ -1,0 +1,29 @@
+<main role="main">
+<!--    <inline-navigation *ngIf="router && router.url" [url]="router.url"></inline-navigation>-->
+
+    <form class="form-inline">
+        <div class="d-flex w-100 align-items-center p-3 my-3 rounded" style="border: 1px solid #c8c8c8">
+            <div class="p-2 mr-auto ">
+                <div class="form-group p-0 m-0">
+                    <label for="search" class="d-none d-md-block">{{'Search' | i18n}}</label>
+                    <input type="text" id="search" name="search" class="form-control mx-sm-3" placeholder="{{'Subject' | i18n}}" [(ngModel)]="where.search" (keyup.enter)="search()" autofocus>
+                </div>
+            </div>
+            <div class="p-2 flex-shrink-1">
+                <div class="row">
+                    <div class="col-6">
+                        <button *ngIf="isSearch()" type="button" class="btn btn-secondary btn-sm" style="width: 75px" (click)="search()">{{'Search' | i18n}}</button>
+                    </div>
+                    <div class="col-6">
+                        <button *ngIf="isRegister()" type="button" class="btn btn-primary btn-sm" style="width: 75px" (click)="register()">{{'Register' | i18n}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="d-flex flex-column p-3 my-3 rounded" style="border: 1px solid #c8c8c8">
+<!--        <web-core-brd-datatable [type]="BrdCateCd.BCC001" [where]="where" (response)="response($event)"></web-core-brd-datatable>-->
+    </div>
+</main>
+
+<web-core-brd-modal (complete)="registerComplete()"></web-core-brd-modal>

@@ -1,0 +1,22 @@
+spring:
+  profiles: doctest
+  datasource:
+    #    url: jdbc:mysql://1.1.1.1:3306/project?useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://1.1.1.1:3306/ceragem?useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul
+    #    url: jdbc:mysql://1.1.1.1:3306/genome
+    username: project
+    password: pwdpwdpwd
+  redis:
+    host: 1.1.1.2
+    port: 6379
+    database: 12
+    password: pwdpwd
+  session:
+    store-type: REDIS
+
+
+project:
+  properties:
+    upload-path: "/home/dev/neuro-scan-dx/upload"
+logging:
+  config: classpath:logback-doctest.xml

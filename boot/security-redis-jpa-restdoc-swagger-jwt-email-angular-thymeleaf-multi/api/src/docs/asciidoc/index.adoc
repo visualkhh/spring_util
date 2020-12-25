@@ -1,0 +1,43 @@
+= Getting Started With Spring REST Docs
+
+//=== index
+//.request
+//include::{snippets}/index/http-request.adoc[]
+//include::{snippets}/index/curl-request.adoc[]
+//
+//.response
+//include::{snippets}/index/http-response.adoc[]
+//
+//
+//
+//=== chat
+//.request
+//include::{snippets}/chat/http-request.adoc[]
+//include::{snippets}/chat/curl-request.adoc[]
+//.response
+//include::{snippets}/chat/http-response.adoc[]
+
+
+
+=== brds
+.request
+include::{snippets}/brds/http-request.adoc[]
+include::{snippets}/brds/path-parameters.adoc[]
+include::{snippets}/brds/request-parameters.adoc[]
+include::{snippets}/brds/request-fields.adoc[]
+include::{snippets}/brds/curl-request.adoc[]
+.response
+include::{snippets}/brds/response-fields.adoc[]
+include::{snippets}/brds/http-response.adoc[]
+
+
+=== users
+.request
+include::{snippets}/userList/http-request.adoc[]
+include::{snippets}/userList/request-parameters.adoc[]
+include::{snippets}/userList/curl-request.adoc[]
+.response
+include::{snippets}/userList/response-fields.adoc[]
+include::{snippets}/userList/http-response.adoc[]
+
+

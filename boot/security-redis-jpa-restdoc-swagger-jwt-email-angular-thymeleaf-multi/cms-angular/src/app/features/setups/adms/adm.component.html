@@ -1,0 +1,43 @@
+<main role="main">
+<!--    <inline-navigation *ngIf="router && router.url" [url]="router.url"></inline-navigation>-->
+    <div class="d-flex flex-column p-3 my-3 rounded" style="border: 1px solid #c8c8c8">
+        <div class="p-2 bd-highlight">
+            <form>
+                <div class="form-row">
+                    <div class="form-inline form-group col-md-4">
+                        <label for="companyNm" class="col-5">{{'Affiliation' | i18n}}</label>
+                        <input type="text" id="companyNm" name="companyNm" class="form-control col-7" placeholder="{{'Affiliation' | i18n}}" [(ngModel)]="where.companyNm" (keyup.enter)="search()" autofocus>
+                    </div>
+                    <div class="form-inline form-group col-md-4">
+                        <label for="ptntNm" class="col-5">{{'Name' | i18n}}</label>
+                        <input type="text" id="ptntNm" name="ptntNm" class="form-control col-7" placeholder="{{'Name' | i18n}}" [(ngModel)]="where.admNm" (keyup.enter)="search()">
+                    </div>
+                    <div class="form-inline form-group col-md-4">
+                        <label for="admLginId" class="col-5">{{'Id' | i18n}}</label>
+                        <input type="text" id="admLginId" name="admLginId" class="form-control col-7" placeholder="{{'Id' | i18n}}" [(ngModel)]="where.admLginId" (keyup.enter)="search()">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-inline form-group col-md-4">
+                        <label for="useCd" class="col-5">{{'UseYn' | i18n}}</label>
+                        <select class="form-control col-7" id="useCd" name="useCd" [(ngModel)]="where.useCd">
+                            <option value="" selected="">{{'All' | i18n}}</option>
+                            <option [value]="code.cd" *ngFor="let code of codeService.getChildCodes(UseCd.USE000); let i = index">
+                                {{code.cd | i18n}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="p-2 d-flex justify-content-end bd-highlight">
+            <a class="btn btn-sm btn-outline-secondary" (click)="resetWhere()">reset</a>
+            <button type="button" class="btn btn-success btn-sm ml-1" style="width: 100px" (click)="showAdmModal()">{{'Register' | i18n}}</button>
+            <button type="button" class="btn btn-secondary btn-sm ml-1" style="width: 100px" (click)="search()">{{'Search' | i18n}}</button>
+        </div>
+    </div>
+    <div class="d-flex flex-column p-3 my-3 rounded" style="border: 1px solid #c8c8c8">
+        <web-core-adm-datatable [where]="where"></web-core-adm-datatable>
+    </div>
+</main>
+<web-core-adm-modal (complete)="admComplete($event)"></web-core-adm-modal>

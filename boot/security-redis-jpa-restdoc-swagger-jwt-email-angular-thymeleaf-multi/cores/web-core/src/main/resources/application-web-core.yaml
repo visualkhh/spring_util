@@ -1,0 +1,36 @@
+spring:
+  profiles: web-core
+  application:
+    name: web-core
+  http:
+    log-request-details: true
+  thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+    check-template: true
+    cache: false
+#  redis:
+#    host: localhost
+#    port: 6379
+#    database: 8
+#    password:
+#  session:
+#    store-type: REDIS
+#  mail:
+#    default-encoding: UTF-8
+#    host: localhost
+#    port: 25
+#    username: company@company.com
+#    password:
+#    properties:
+#      mail.smtp.auth: true
+
+
+
+#  logging:
+#    level:
+#      org.springframework.web.reactive.function.client.ExchangeFunctions: TRACE
+
+
+
+

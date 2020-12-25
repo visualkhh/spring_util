@@ -1,0 +1,30 @@
+spring:
+  profiles:
+    include:
+      - core
+      - db
+      - web-core
+      - default
+
+server:
+  port: 8085
+
+
+---
+
+
+spring:
+  profiles: default
+  application:
+    name: cms
+  session:
+    store-type: REDIS
+    redis:
+      namespace: ${spring.application.name}.spring.session
+
+project:
+  properties:
+    angular-path: classpath:/webapp
+    swagger-host: localhost:8085
+logging:
+  config: classpath:logback-spring.xml

@@ -1,0 +1,11 @@
+//import com.omnicns.gradle.plugin.PropertiesToJson
+bootJar { enabled = false }
+jar { enabled = true }
+dependencies {
+}
+
+def webcoreAngularDir = project(':cms-angular').projectDir
+task messagePropertiesToJsonWebCoreAngular(type: com.omnicns.gradle.plugin.PropertiesToJson) {
+    sourceDirPath = "${projectDir}/src/main/resources/messages"
+    destDirPath = "${webcoreAngularDir}/generate/i18n"
+}

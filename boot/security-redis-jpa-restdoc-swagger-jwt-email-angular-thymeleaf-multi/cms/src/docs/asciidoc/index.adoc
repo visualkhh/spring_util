@@ -1,0 +1,14 @@
+= Getting Started With Spring REST Docs
+
+
+=== brds
+.request
+include::{snippets}/users/http-request.adoc[]
+include::{snippets}/users/path-parameters.adoc[]
+include::{snippets}/users/request-parameters.adoc[]
+include::{snippets}/users/request-fields.adoc[]
+include::{snippets}/users/curl-request.adoc[]
+.response
+include::{snippets}/users/response-fields.adoc[]
+include::{snippets}/users/http-response.adoc[]
+
