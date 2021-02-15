@@ -34,3 +34,12 @@
 .Spotlight-V100
 .Trashes
 ehthumbs.db
+
+.gradle/
+.gradle
+gradle
+.idea
+build
+gradlew
+gradlew.bat
+
