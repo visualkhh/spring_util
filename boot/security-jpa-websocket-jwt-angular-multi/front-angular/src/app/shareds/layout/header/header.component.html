@@ -1,0 +1,19 @@
+<header id="header" class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 d-flex shadow">
+
+<!--    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" [routerLink]="userService?.userDetails?.homeUrl?.replace('/#','') || '/home'">NeuroScanDx</a>-->
+
+<!--    <web-core-user-details type="inline" [class]="'btn btn-sm btn-secondary ml-3'"></web-core-user-details>-->
+<!--    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--        <span class="navbar-toggler-icon"></span>-->
+<!--    </button>-->
+
+    <span *ngIf="userToken" class="btn btn-sm btn-secondary ml-3">{{userToken.id}}</span>
+
+    <div class="ml-auto d-flex align-items-center">
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <sign-out [class]="'nav-link'"></sign-out>
+            </li>
+        </ul>
+    </div>
+</header>

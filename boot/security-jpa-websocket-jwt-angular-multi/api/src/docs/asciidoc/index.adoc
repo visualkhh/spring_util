@@ -1,0 +1,23 @@
+= Getting Started With Spring REST Docs
+
+=== index
+
+.request
+include::{snippets}/index/http-request.adoc[]
+include::{snippets}/index/curl-request.adoc[]
+
+.response
+include::{snippets}/index/http-response.adoc[]
+
+
+
+=== chat
+
+
+.request
+include::{snippets}/chat/http-request.adoc[]
+include::{snippets}/chat/curl-request.adoc[]
+.response
+include::{snippets}/chat/http-response.adoc[]
+
+As you can see the format is very simple, and in fact you always get the same message.

@@ -1,0 +1,147 @@
+apply plugin: 'cz.habarta.typescript-generator'
+//apply plugin: 'org.asciidoctor.convert'
+//processResources {
+//    dependsOn "buildRestDoc"
+//}
+bootJar {
+    dependsOn "buildAngular"
+    dependsOn asciidoctor
+    from ("${project.projectDir}/src/main/resources/templates/docs") {
+        into 'BOOT-INF/classes/templates/docs'
+    }
+    from ("${project.projectDir}/src/main/resources/webapp") {
+        into 'BOOT-INF/classes/webapp'
+    }
+    from (file("${project.projectDir}/src/main/resources/templates/index.html")) {
+        into 'BOOT-INF/classes/templates'
+    }
+    baseName "api"
+
+}
+
+def webappDir = "$projectDir/src/main/resources/webapp"
+def templatesDir = "$projectDir/src/main/resources/templates"
+def angularDir = project(':front-angular').projectDir
+
+//bootJar.doFirst {
+//    dependsOn asciidoctor
+//}
+ext {
+    set('snippetsDir', file("build/generated-snippets"))
+}
+//ext['spring-restdocs.version'] = '2.0.6.BUILD-SNAPSHOT'
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-cache')
+
+
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-aws
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.1.RELEASE'
+
+
+    //Swagger
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+
+}
+test {
+    outputs.dir snippetsDir
+    useJUnitPlatform()
+}
+
+asciidoctor {
+    dependsOn test
+    inputs.dir snippetsDir
+    separateOutputDirs = false
+//    outputs.dir = "${project.projectDir}/resources/templates"
+//    outputDir = file("$buildDir/site")
+    outputDir = file("${project.projectDir}/src/main/resources/templates/docs")
+//    println("--> ${outputDir}")
+//    print('-asciidoctor after-')
+}
+//asciidoctor.doLast {
+//    println("do lastttt")
+//    copy {
+//        from 'build/docs/html5'
+//        into "${project.projectDir}/src/main/resources/templates/docs"
+//        include 'index.html'
+//    }
+//}
+
+
+generateTypeScript {
+//    customTypeNaming = [
+//            'org.springframework.security.core.userdetails.UserDetails:UserDetailsOfSpring',
+//    ]
+    classPatterns = [
+            'com.clone.chat.domain.**',
+            'com.clone.chat.model.**',
+            'com.clone.chat.controller.api.**.model.**',
+            'com.clone.chat.controller.ws.**.model.**',
+            'com.clone.chat.config.security.jwt.**',
+            com/clone/chat/model/error
+//            'org.springframework.http.**',
+
+    ]
+//    classes = [
+//            'com.clone.chat.config.security.jwt.JwtConfig',
+//            'org.springframework.http.HttpHeaders'
+//    ]
+    mapClasses = 'asClasses'
+    mapEnum = 'asEnum'
+//    generateConstructors = true
+//    optionalProperties = cz.habarta.typescript.generator.OptionalProperties.useLibraryDefinition
+    nonConstEnums = true
+    //http://www.habarta.cz/typescript-generator/doc/ModulesAndNamespaces.html
+    outputFileType = 'implementationFile'  //values are: declarationFile (.d.ts) or implementationFile (.ts)
+    jsonLibrary = 'jackson2'
+    outputKind = 'module'  // values are: global, module, ambientModule
+    mapPackagesToNamespaces = true
+    outputFile = "${angularDir}/generate/models.ts"
+    scanSpringApplication = true
+    generateSpringApplicationClient = true
+}
+
+
+
+
+
+task installAngular(type: Exec) {
+    dependsOn generateTypeScript
+    doFirst {
+        def targetNodePath = "";
+        if (project.hasProperty('nodePath')) {
+            targetNodePath = "$nodePath/";
+        }
+//        tasks.generateTypeScript.execute()
+        workingDir "$angularDir"
+//        inputs.dir "$angularDir"
+//        group = BasePlugin.BUILD_GROUP
+        if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")) {
+            commandLine "${targetNodePath}npm.cmd", "install"
+        } else {
+            commandLine "${targetNodePath}npm", "install"
+        }
+    }
+}
+task buildWebAppAngular(type:Exec) {
+    dependsOn 'installAngular'
+    doFirst {
+        def targetNodePath = "";
+        if (project.hasProperty('nodePath')) {
+            targetNodePath = "$nodePath/";
+        }
+        workingDir "$angularDir"
+//        inputs.dir "$angularDir"
+//        group = BasePlugin.BUILD_GROUP
+        commandLine "${targetNodePath}node", "node_modules/@angular/cli/bin/ng", "build", "--prod"
+    }
+}
+task buildAngular(type: Copy, dependsOn: 'buildWebAppAngular') {
+//task buildAngular(type: Copy) {
+//    doFirst {
+    from "${webappDir}/index.html"
+    into "${templatesDir}"
+    print("buildAngular END : ${webappDir} ${templatesDir}")
+//    }
+}

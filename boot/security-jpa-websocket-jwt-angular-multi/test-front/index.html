@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>kakao-api</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="state">no user</div>
+<div style="border: 1px solid black; padding: 10px">
+    login
+    <input type="text" id="id" value="user1"/>
+    <input type="text" id="password" value="1234"/>
+    <button id="login">login</button>
+</div>
+
+<div style="border: 1px solid black; padding: 10px">
+    <button id="websocket">websocket</button>
+    <button id="websocket-disconnected">websocket-disconnected</button>
+    <div id="websocket-state"></div>
+</div>
+<div style="border: 1px solid black; padding: 10px">
+    <button id="friends">friends</button>
+    <div id="friends-info"></div>
+</div>
+
+<div style="border: 1px solid black; padding: 10px">
+    <button id="chats">chats</button>
+    <div id="chats-info"></div>
+</div>
+</body>
+
+<script>
+    var token;
+    var ws;
+
+    $(document).ready(function () {
+        $("#login").click(function () {
+            var data = {
+                username: $("#id").val(),
+                password: $("#password").val(),
+            }
+            $.ajax({
+                url: "/securitys/user-sign-in",
+                type: "POST",
+                // cache:false,
+                // timeout : 30000,
+                contentType: "application/json;",
+                dataType: "json",
+                data: JSON.stringify(data),
+                success: function (data) {
+                    token = data.token;
+                    $("#state").html(data.token);
+                }
+            });
+        })
+
+
+        $("#websocket").click(function () {
+            var socket = new SockJS('http://localhost:9000/websocket')
+            ws = Stomp.over(socket);
+            ws.connect({}, function (frame) {
+                $("#websocket-state").html(ws.toString() + frame.toString())
+
+                ws.subscribe("/user/queue/errors", function (message) {
+                    $("#websocket-state").html("/user/queue/errors Error " + message.body);
+                }, {'Authorization': token});
+
+            }, function (error) {
+                $("#websocket-state").html("STOMP error " + error);
+            });
+        });
+
+        $("#websocket-disconnected").click(function () {
+            ws.disconnect();
+        })
+
+
+        $("#friends").click(function () {
+            ws.subscribe("/user/queue/friends", function (message) {
+                console.log("----friend--->>", message.body);
+            }, {'Authorization': token});
+            var data = JSON.stringify({
+                'id': ""
+            })
+            ws.send("/app/friends", {'Authorization': token}, data);
+        });
+
+        var roomNumber = 1;
+        $("#chats").click(function () {
+            ws.subscribe("/topic/chats/"+roomNumber, function (message) {
+                console.log('chats->', message.body);
+            }, {'Authorization': token});
+
+            var data = JSON.stringify({
+                message:  "chat ~!~!~!" + new Date().toString()
+            });
+            ws.send("/app/chats/"+roomNumber, {'Authorization': token}, data);
+        });
+    });
+</script>
+</html>

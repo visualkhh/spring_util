@@ -1,0 +1,74 @@
+[
+  {
+    "id": 10,
+    "name": "room1",
+    "userRooms": [
+      {
+        "id": 20,
+        "userId": "user1",
+        "user": {
+          "id": "user1",
+          "password": "$2a$10$ggpEwyLeBdTusg6TaeC3Zu9eJDQmqU5ZlsgTutyNJynA/vMZYW7ca",
+          "nickName": "user1-nick",
+          "role": "USER",
+          "updDt": "2021-01-17T12:31:10.409+09:00",
+          "friends": null
+        }
+      },
+      {
+        "id": 21,
+        "userId": "user2",
+        "user": {
+          "id": "user2",
+          "password": "$2a$10$yZXH5m9b4iuvRxFfn51muOS6jFFrmZLxmY8kJA1RsFzhyuwZdBTbe",
+          "nickName": "user2-nick",
+          "role": "USER",
+          "updDt": "2021-01-17T12:31:10.412+09:00",
+          "friends": null
+        }
+      },
+      {
+        "id": 22,
+        "userId": "user3",
+        "user": {
+          "id": "user3",
+          "password": "$2a$10$D.h9kWONJLZeNGmgRkHa7OTZMzcoHw1mZmp2d6mfDZbdU5y8z/wRe",
+          "nickName": "user3-nick",
+          "role": "USER",
+          "updDt": "2021-01-17T12:31:10.412+09:00",
+          "friends": null
+        }
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "name": "u1u2",
+    "userRooms": [
+      {
+        "id": 26,
+        "userId": "user1",
+        "user": {
+          "id": "user1",
+          "password": "$2a$10$ggpEwyLeBdTusg6TaeC3Zu9eJDQmqU5ZlsgTutyNJynA/vMZYW7ca",
+          "nickName": "user1-nick",
+          "role": "USER",
+          "updDt": "2021-01-17T12:31:10.409+09:00",
+          "friends": null
+        }
+      },
+      {
+        "id": 27,
+        "userId": "user2",
+        "user": {
+          "id": "user2",
+          "password": "$2a$10$yZXH5m9b4iuvRxFfn51muOS6jFFrmZLxmY8kJA1RsFzhyuwZdBTbe",
+          "nickName": "user2-nick",
+          "role": "USER",
+          "updDt": "2021-01-17T12:31:10.412+09:00",
+          "friends": null
+        }
+      }
+    ]
+  }
+]

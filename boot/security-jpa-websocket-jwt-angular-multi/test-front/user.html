@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en"
+>
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"-->
+<head>
+    <meta charset="UTF-8">
+    <title>kakao-api</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+user
+<button id="send"> aaa </button>
+
+</body>
+<script>
+    var ws;
+
+    $(document).ready(function(){
+        connectionSockJs(connected);
+        $("#send").click(function() {
+            sendName();
+        })
+    });
+    function connectionSockJs(connected) {
+        var socket = new SockJS('http://localhost:9000/websocket')
+        ws = Stomp.over(socket);
+
+        ws.connect({}, function(frame) {
+            connected(ws, frame)
+        }, function(error) {
+            alert("STOMP error " + error);
+        });
+    }
+
+    function connected(ws, frame) {
+        ws.subscribe("/user/queue/errors", function(message) {
+            alert("Error " + message.body);
+        });
+
+        ws.subscribe("/user/queue/reply", function(message) {
+            showGreeting(message.body);
+        });
+    }
+
+
+
+    function disconnect() {
+        if (ws != null) {
+            ws.close();
+        }
+        setConnected(false);
+        console.log("Disconnected");
+    }
+
+    function sendName() {
+        var data = JSON.stringify({
+            'name' : $("#name").val()
+        })
+        ws.send("/app/message", {}, data);
+    }
+
+    function showGreeting(message) {
+        $("#greetings").append(" " + message + "");
+    }
+
+
+
+</script>
+</html>

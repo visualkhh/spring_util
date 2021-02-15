@@ -1,0 +1,63 @@
+<div class="authLayout">
+
+    <div id="content" class="container">
+        <div style="margin-top: 100px;"></div>
+        <div class="form-signin">
+            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+            <label for="username" class="sr-only">Username</label>
+            <input type="text" id="username" [(ngModel)]="username" name="username" class="form-control my-1" placeholder="ID" required autofocus>
+            <label for="password" class="sr-only">Password</label>
+            <input type="password" id="password" name="password" [(ngModel)]="password" class="form-control" placeholder="Password" (keyup.enter)="submit($event)" required>
+            <button class="btn btn-lg btn-primary btn-block" type="button" (click)="submit($event)">Sign-in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="button" (click)="openSignUpModal()">Sign-up</button>
+        </div>
+        <div style="width: 100%; max-width:400px; margin: 0 auto">
+        </div>
+    </div>
+</div>
+
+
+
+
+<basic-modal #signUpModal [buttons]="[{name:'ok', class:'btn-primary'}]" (buttonClick)="signUp($event)">
+    <form [formGroup]="infoForm" >
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">id</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="id" placeholder="id" formControlName="id">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">nick</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="nickName" placeholder="nickName" formControlName="nickName">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">phone</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="phone" placeholder="phone" formControlName="phone" >
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">statusMsg</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="statusMsg" placeholder="statusMsg" formControlName="statusMsg">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Password</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" name="password" placeholder="password" formControlName="password">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">file</label>
+            <div class="col-sm-10">
+                <input #file class="form-control" type="file" name="file" placeholder="file" formControlName="file" accept="image/gif,image/jpeg,image/png" id="formFile"  (change)="fileList = file.files">
+            </div>
+        </div>
+    </form>
+</basic-modal>
+
+

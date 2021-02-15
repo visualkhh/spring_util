@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>ceragem-iot-api</title>
+</head>
+<body>
+<div sec:authorize="!isAuthenticated()">
+    <form name="login-form" th:action="${login_processing_url}" method="post">
+        <div>
+            <input type="text" th:name="${username}" id="username">
+        </div>
+        <div>
+            <input type="password" th:name="${password}" id="password">
+        </div>
+        <input type="submit" value="login">
+    </form>
+</div>
+<div sec:authorize="isAuthenticated()">
+    <form name="login-form" th:action="${logout_url}" method="post">
+        <input type="submit" value="log-out">
+    </form>
+</div>
+
+
+</body>
+</html>

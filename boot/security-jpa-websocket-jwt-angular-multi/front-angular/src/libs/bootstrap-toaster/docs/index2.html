@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Bootstrap Toaster</title>
+
+    <style>
+        .wow {
+            font-size: 500px;
+        }
+        h1{ margin-top: 80px; }
+        h2,h3{ margin-top: 40px; }
+        .example{ border: 4px solid #eee; margin-bottom:30px;}
+        .example-preview{ padding: 1.5rem; }
+        .example > pre{ border-top: 4px solid #eee;margin:0; }
+        .highlihgt-grid .row + .row{ margin-top: 1rem;}
+        .highlihgt-grid [class^="col-"]{
+            padding-top: .75rem;
+            padding-bottom: .75rem;
+            background-color: rgba(86,61,124,.15);
+            border: 1px solid rgba(86,61,124,.2);
+        }
+    </style>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-1746437125043617",
+              enable_page_level_ads: true
+         });
+    </script>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+        <a class="navbar-brand" href="#">Bootstrap Toaster</a>
+        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/iqbalfn/bootstrap-toaster">Github</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/iqbalfn/bootstrap-toaster/releases">Download</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+
+                <h1>Toaster</h1>
+                <p class="lead">Bootstrap Toast Component helper that provide easy build of instant toast.</p>
+
+                <p>Bootstrap 4.2 come with new component called <code>Toast</code>. As always, you've to build the component with HTML and require JavaScript action to open in. This helper provide easy way to build toast without the need to build the HTML part, to make it easy to work with toast with-in JavaScript.</p>
+
+                <p>Please note that the element is removed right after disappear from screen.</p>
+
+                <section>
+                    <h2>Overview</h2>
+                    <p>Things to know when using the toast helper</p>
+                    <ol>
+                        <li>The bootstrap version must be greater then or equal to 4.2</li>
+                        <li>If you're building Bootstrap JavaScript from source, make sure Toast plugin is included.</li>
+                        <li>This helper developed and tested under Bootstrap 4.3.1</li>
+                    </ol>
+                </section>
+
+                <section>
+                    <h2>Examples</h2>
+
+                    <article>
+                        <section>
+                            <h3>Basic</h3>
+                            <article>
+                                <p>This is the very basic toast. The toast has only content text in it. Calling <code>$.toaster(/content/)</code> will only show the content toast it self, except other options alredy been be set by calling <code>$.toaster.setDefault(/options/)</code>.</p>
+                                <div class="example">
+                                    <div class="example-preview">
+                                        <button type="button" class="btn btn-primary" onclick="op1()">
+                                            Launch demo toast
+                                        </button>
+                                        <script>
+                                            function op1(){
+                                                // $.toaster()
+                                                $.toaster({
+                                                    content: 'Hello, world! This is a toast message.',
+                                                    title: 'ttttttttttt.',
+                                                    delay: 100000,
+                                                    containerOption: {
+                                                        style: 'background-color:#ff000088',
+                                                    },
+                                                    // buttonOption: {
+                                                    //     style: 'color: yellow',
+                                                    // },
+                                                    headerOption: {
+                                                        style: 'background-color:#ff000088; color:blue',
+                                                    //     class: 'wow'
+                                                    },
+                                                    bodyOption: {
+                                                        style: 'background-color:#ff000088',
+                                                        class: 'wow'
+                                                    }
+                                                })
+                                            }
+                                        </script>
+                                    </div>
+                                    <pre><code class="language-html">
+&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; onclick=&quot;op1()&quot;&gt;
+    Launch demo toast
+&lt;/button&gt;
+
+&lt;script&gt;
+    function op1(){
+        $.toaster('Hello, world! This is a toast message.')
+    }
+&lt;/script&gt;
+                                    </code></pre>
+                                </div>
+
+                            </article>
+                        </section>
+
+                        <section>
+                            <h3>With Title</h3>
+                            <article>
+                                <p>Adding the second parameter on calling <code>$.toaster</code> function will add title to the toast.</p>
+                                <div class="example">
+                                    <div class="example-preview">
+                                        <button type="button" class="btn btn-primary" onclick="op2()">
+                                            Launch demo toast
+                                        </button>
+                                        <script>
+                                            function op2(){
+                                                $.toaster('Hello, world! This is a toast message.', 'Bootstrap Toaster')
+                                            }
+                                        </script>
+                                    </div>
+                                    <pre><code class="language-html">
+&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; onclick=&quot;op2()&quot;&gt;
+    Launch demo toast
+&lt;/button&gt;
+
+&lt;script&gt;
+    function op2(){
+        $.toaster('Hello, world! This is a toast message.', 'Bootstrap Toaster')
+    }
+&lt;/script&gt;
+                                    </code></pre>
+                                </div>
+
+                            </article>
+                        </section>
+
+                        <section>
+                            <h3>With Title And Info</h3>
+                            <article>
+                                <p>To add more parameters to the title, please use object as the title instead of string..</p>
+                                <div class="example">
+                                    <div class="example-preview">
+                                        <button type="button" class="btn btn-primary" onclick="op3()">
+                                            Launch demo toast 333333
+                                        </button>
+                                        <script>
+                                            function op3(){
+                                                $.toaster('Hello, world! This is a toast message.', {
+                                                    text: 'Bootstrap Toaster',
+                                                    info: '11 mins ago'
+                                                })
+                                            }
+                                        </script>
+                                    </div>
+                                    <pre><code class="language-html">
+&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; onclick=&quot;op3()&quot;&gt;
+    Launch demo toast
+&lt;/button&gt;
+
+&lt;script&gt;
+    function op3(){
+        $.toaster('Hello, world! This is a toast message.', {
+            text: 'Bootstrap Toaster',
+            info: '11 mins ago'
+        })
+    }
+&lt;/script&gt;
+                                    </code></pre>
+                                </div>
+
+                            </article>
+                        </section>
+
+                        <section>
+                            <h3>With Title And Image</h3>
+                            <article>
+                                <p>To add more parameters to the title, please use object as the title instead of string..</p>
+                                <div class="example">
+                                    <div class="example-preview">
+                                        <button type="button" class="btn btn-primary" onclick="op3a()">
+                                            Launch demo toast
+                                        </button>
+                                        <script>
+                                            function op3a(){
+                                                $.toaster('Hello, world! This is a toast message.', {
+                                                    text: 'Bootstrap Toaster',
+                                                    image: 'https://getbootstrap.com/docs/4.3/assets/img/favicons/favicon-16x16.png'
+                                                })
+                                            }
+                                        </script>
+                                    </div>
+                                    <pre><code class="language-html">
+&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; onclick=&quot;op3a()&quot;&gt;
+    Launch demo toast
+&lt;/button&gt;
+
+&lt;script&gt;
+    function op3a(){
+        $.toaster('Hello, world! This is a toast message.', {
+            text: 'Bootstrap Toaster',
+            image: 'http://...'
+        })
+    }
+&lt;/script&gt;
+                                    </code></pre>
+                                </div>
+
+                            </article>
+                        </section>
+
+                        <section>
+                            <h3>With Title And Icon</h3>
+                            <article>
+                                <p>To add more parameters to the title, please use object as the title instead of string..</p>
+                                <div class="example">
+                                    <div class="example-preview">
+                                        <button type="button" class="btn btn-primary" onclick="op3b()">
+                                            Launch demo toast
+                                        </button>
+                                        <script>
+                                            function op3b(){
+                                                $.toaster('Hello, world! This is a toast message.', {
+                                                    text: 'Bootstrap Toaster',
+                                                    icon: 'fa fa-heart'
+                                                })
+                                            }
+                                        </script>
+                                    </div>
+                                    <pre><code class="language-html">
+&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; onclick=&quot;op3b()&quot;&gt;
+    Launch demo toast
+&lt;/button&gt;
+
+&lt;script&gt;
+    function op3b(){
+        $.toaster('Hello, world! This is a toast message.', {
+            text: 'Bootstrap Toaster',
+            icon: 'fa fa-heart'
+        })
+    }
+&lt;/script&gt;
+                                    </code></pre>
+                                </div>
+
+                            </article>
+                        </section>
+
+                        <section>
+                            <h3>Position</h3>
+                            <article>
+                                <p>Toast can be put on a different position. Combine vertical position ( <code>top</code>, <code>bottom</code> ) and horizontal position ( <code>left</code>, <code>center</code>, or <code>right</code> ) to put it other place on screen.</p>
+                                <div class="example">
+                                    <div class="example-preview">
+                                        <button type="button" class="btn btn-primary" onclick="op4()">
+                                            Launch demo toast
+                                        </button>
+                                        <script>
+                                            function op4(){
+                                                $.toaster({
+                                                    content: 'Hello, world! This is a toast message.',
+                                                    position: 'bottom left'
+                                                })
+                                            }
+                                        </script>
+                                    </div>
+                                    <pre><code class="language-html">
+&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; onclick=&quot;op4()&quot;&gt;
+    Launch demo toast
+&lt;/button&gt;
+&lt;script&gt;
+    function op4(){
+        $.toaster({
+            content: 'Hello, world! This is a toast message.',
+            position: 'bottom left'
+        })
+    }
+&lt;/script&gt;
+                                    </code></pre>
+                                </div>
+
+                            </article>
+                        </section>
+
+                    </article>
+                </section>
+
+                <section>
+                    <h2>JavaScript</h2>
+
+                    <article>
+                        <section>
+                            <h3>Options</h3>
+
+                            <article>
+                                <p>Below are all options accepted for <code>.toaster</code> function:</p>
+
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr><th>Name</th><th>Type</th><th>Default</th><th>Description</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>title</td>
+                                            <td>(string|object)</td>
+                                            <td>false</td>
+                                            <td>Toast title, it can be a string or object with other properties</td>
+                                        </tr>
+                                        <tr>
+                                            <td>content</td>
+                                            <td>string</td>
+                                            <td>""</td>
+                                            <td>The toast body text. This is the only required property.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>delay</td>
+                                            <td>int</td>
+                                            <td>4000</td>
+                                            <td>The delay time before the toast removed from document.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>position</td>
+                                            <td>string</td>
+                                            <td><code>top right</code></td>
+                                            <td>The position where toast should be put. The value should be combination of vertical position ( <code>top</code>, or <code>bottom</code> ), and horizontal position ( <code>left</code>, <code>center</code>, or <code>right</code> ) separated by space.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <p>While the <code>title</code> property as object accept below options:</p>
+
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr><th>Name</th><th>Type</th><th>Default</th><th>Description</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>text</td>
+                                            <td>string</td>
+                                            <td>""</td>
+                                            <td>The toast title text.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>icon</td>
+                                            <td>string</td>
+                                            <td>false</td>
+                                            <td>The toast icon <code>class</code> as <code>&lt;i&gt;</code> element. (e.g <code>"fa fa-peace"</code>).</td>
+                                        </tr>
+                                        <tr>
+                                            <td>image</td>
+                                            <td>string</td>
+                                            <td>false</td>
+                                            <td>The toast icon <code>src</code> as <code>&lt;img&gt;</code>. If this property exists, property <code>icon</code> is ignored.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>close</td>
+                                            <td>boolean</td>
+                                            <td>true</td>
+                                            <td>Show or hide the close button of the toast.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>info</td>
+                                            <td>text</td>
+                                            <td>""</td>
+                                            <td>Additional text info (e.g <code>11 mins ago</code>).</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </article>
+                        </section>
+
+                        <section>
+                            <h3>Methods</h3>
+
+                            <article>
+                                <p>There's only one method known so far, which is <code>setDefault</code> to set default options of the toast.</p>
+
+                                <section>
+                                    <h4><code>.setDefault(opts)</code></h4>
+
+                                    <article>
+                                        <p>Set default options for the toast for future implementation.</p>
+
+                                        <pre><code class="language-js">
+$.toaster.setDefault({
+    title: {
+        text: 'Awesome',
+        icon: 'fa fa-peace',
+        info: 'just now',
+        close: true
+    },
+    content: 'Default content',
+    delay: 500,
+    position: 'top left'
+});
+                                        </code></pre>
+                                    </article>
+                                </section>
+                            </article>
+                        </section>
+
+                    </article>
+
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/prism.min.js" data-manual></script>
+<!--    <script src="js/bootstrap-toaster.js"></script>-->
+    <script src="../dist/js/bootstrap-toaster.js"></script>
+    <script>
+        $('[class^="language"]').each(function(i,e){
+            e.innerHTML = e.innerHTML.trim();
+            Prism.highlightElement(e);
+        });
+    </script>
+</body>
+</html>

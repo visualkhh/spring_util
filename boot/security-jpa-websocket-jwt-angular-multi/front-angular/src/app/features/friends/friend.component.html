@@ -1,0 +1,84 @@
+<main role="main" class="container">
+
+    <div class="d-flex mt-3 mb-3 ">
+        <div class="mr-auto p-2"> 친구</div>
+        <div class="p-2">
+            <i-feather name="refresh-Cw" style="margin-right:10px; cursor: pointer" (click)="send()"></i-feather>
+        </div>
+        <div class="p-2">
+            <i-feather name="user-plus" style="margin-right:10px; cursor: pointer"
+                       (click)="openAddFriendModal()"></i-feather>
+        </div>
+    </div>
+
+    <div class="container">
+        <ul class="list-group">
+            <li class="list-group-item" style="cursor:pointer" *ngFor="let it of friends" (click)="showUser(it)">
+                <img  style="width: 20px; height: 20px" src="{{it.file?.filePath}}">
+                <span class="badge badge-pill badge-primary ml-2 mr-2 ">{{it.nickName}}</span> <span
+                    class="badge badge-secondary ml-2 mr-2">{{it.statusMsg}}</span>
+            </li>
+        </ul>
+        <!--        <div *ngFor="let it of friends" class="row">-->
+        <!--            <div class="col-3"><span class="mr-2 my-1 fa fa-pencil-square-o"></span>{{it.id}}</div>-->
+        <!--            <div class="col-3">{{it.nickName}}</div>-->
+        <!--        </div>-->
+    </div>
+</main>
+
+
+<basic-modal #addFriendModal [buttons]="[{name:'ok', class:'btn-primary'}]" (buttonClick)="addFriend($event)">
+    <form>
+        <div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon2">아이디</span>
+                </div>
+                <input #searchFriendName type="text" class="form-control" placeholder="검색할 아이디를 입력하세요"
+                       aria-label="Username" aria-describedby="basic-addon1"
+                       (keyup.enter)="searchFriend(searchFriendName.value)">
+                <button class="btn btn-primary" (click)="searchFriend(searchFriendName.value)">검색</button>
+            </div>
+        </div>
+        <div *ngIf="findUser" style="text-align: center">
+            <img *ngIf="findUser" style="width: 50%; height: 50%" src="{{findUser.file?.filePath}}" class="img-responsive" alt="">
+
+            <div style="font-size: 15px">{{findUser.nickName}}</div>
+        </div>
+    </form>
+</basic-modal>
+
+
+<basic-modal #userModal [config]="{class: 'modal-lg', ignoreBackdropClick: true}"> <!--(completed)="roomCompleted()"-->
+    <div *ngIf="choiceUser">
+        <div class="m-2">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">name</span>
+                </div>
+                <input type="text" class="form-control" readonly placeholder="name" aria-label="Username"
+                       aria-describedby="basic-addon1" value="{{choiceUser.id}} - {{choiceUser.nickName}}">
+            </div>
+        </div>
+        <div #contents style="height: 300px; width: 100%; overflow: scroll" class="alert alert-info m-2">
+            <li #contentsItems class="list-group-item" *ngFor="let it of userMessage" style="cursor: pointer"
+                [ngStyle]="{'text-align': userMessage && it.userId === userTokenContain.id ? 'right' : 'left'}">
+                <span class="badge badge-pill badge-primary">
+                {{it.userId}}
+                </span>
+                <span class="badge badge-light ml-2 mr-2">{{it.contents}}</span>
+                <span class="badge badge-secondary">{{it.regDt | moment}}</span>
+            </li>
+        </div>
+        <div class="m-2">
+            <div class="input-group mb-3">
+                <input #sendInput type="text" class="form-control" placeholder="message">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button"
+                            (click)="sendMessage(choiceUser, sendInput.value); sendInput.value=''">Send
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</basic-modal>

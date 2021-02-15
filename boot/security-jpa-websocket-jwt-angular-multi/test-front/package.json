@@ -1,0 +1,15 @@
+{
+  "name": "test-front",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node node_modules/http-server-proxy/bin/http-server-proxy ./ -o  -P http://localhost:9000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "http-server-proxy": "^0.14.5"
+  }
+}

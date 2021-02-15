@@ -1,0 +1,25 @@
+<a class="sign-out {{class}}" (click)="show()">Sign Out</a>
+
+
+<ng-template #modalTemplate>
+
+    <!--    <div class="modal-header">-->
+    <!--        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>-->
+    <!--        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">-->
+    <!--            <span aria-hidden="true">&times;</span>-->
+    <!--        </button>-->
+    <!--    </div>-->
+    <div class="modal-body">
+        <h6>로그아웃 하시겠습니까?</h6>
+    </div>
+    <div class="modal-footer" style="padding: 3px;">
+<!--        w-25-->
+        <button type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-primary btn-sm" (click)="yes()">Yes</button>
+        <button type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-secondary btn-sm" data-dismiss="modal" (click)="no()">No</button>
+    </div>
+
+</ng-template>
+
+<form #from action="/securitys/sign-out" method="post" hidden>
+    <input type="text" name="_csrf" value="{{cookieService.get('XSRF-TOKEN')}}">
+</form>

@@ -1,0 +1,19 @@
+<ng-template #modalTemplate>
+    <div class="modal-header" *ngIf="title">
+        <h6 class="modal-title">
+            <i-feather name="{{titleIcon || 'info'}}" class="head-icon mr-2" style="height: 15px; width: 15px"></i-feather>
+            {{title}}
+        </h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeAndComplet()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <ng-content></ng-content>
+    </div>
+    <div class="modal-footer" style="padding: 3px;">
+        <button *ngFor="let it of buttons" type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-sm {{it.class || 'btn-secondary'}}" data-dismiss="modal" (click)="buttonEmitter(it)">{{it.name}}</button>
+        <button *ngIf="!config.disableCloseBtn" type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-secondary btn-sm" data-dismiss="modal" (click)="closeAndComplet()">{{(config.closeBtnName || 'Close') }}</button>
+<!--        <button type="button" style="width:80px; font-size: 0.8rem;" class="btn btn-primary btn-sm" (click)="update()">{{'Yes' | i18n}}</button>-->
+    </div>
+</ng-template>

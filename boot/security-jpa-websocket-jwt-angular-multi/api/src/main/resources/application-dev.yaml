@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: api
+  datasource:
+#    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:mem:test;DB_CLOSE_ON_EXIT=FALSE
+#    url: jdbc:h2:mem:test;COMPRESS=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
+#    url: jdbc:h2:~/test
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+#      settings: web-allow-others=true
+      enabled: true
+    path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+      use-new-id-generator-mappings: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+logging:
+  config: classpath:logback-dev.xml
+
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIAU2UABLWF2JG2HL65
+      secretKey: 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
+    s3:
+      bucket: serobucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

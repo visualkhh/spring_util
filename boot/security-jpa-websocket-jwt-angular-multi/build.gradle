@@ -1,0 +1,101 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath 'cz.habarta.typescript-generator:typescript-generator-gradle-plugin:2.+'
+		classpath 'cz.habarta.typescript-generator:typescript-generator-spring:2.+'
+		classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.1.9.RELEASE'
+	}
+}
+plugins {
+	id 'org.springframework.boot' version '2.3.5.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id "org.asciidoctor.convert" version "2.4.0"
+	id 'java'
+}
+
+group = 'com.clone'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+allprojects {
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+	apply plugin: 'org.asciidoctor.convert'
+	apply plugin: 'java'
+	apply plugin: 'idea'
+
+	repositories {
+		mavenCentral()
+		maven { url "https://repo1.maven.org/maven2" }
+		maven { url 'https://plugins.gradle.org/m2/' }
+	}
+}
+subprojects { it ->
+	dependencies {
+		asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+		implementation 'org.springframework.boot:spring-boot-starter-validation'
+		compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+		compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+		compile group: 'org.apache.commons', name: 'commons-text', version: '1.9'
+
+
+
+		testImplementation 'org.springframework.security:spring-security-test'
+		compile('org.springframework.boot:spring-boot-starter-security')
+
+//		compile group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.0.9.RELEASE'
+		compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '3.0.2.RELEASE'
+
+		// https://mvnrepository.com/artifact/org.webjars/jquery
+		compile group: 'org.webjars', name: 'jquery', version: '3.5.1'
+
+
+		//웹소켓 관련 dependency
+		implementation 'org.springframework.boot:spring-boot-starter-websocket'
+//		compile 'org.webjars:sockjs-client:1.1.0'
+		compile group: 'org.webjars', name: 'sockjs-client', version: '1.1.1'
+		compile 'org.webjars:stomp-websocket:2.3.3'
+		//jwt
+		compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+		compile("org.hibernate:hibernate-java8")
+		compile "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.8.+"
+
+		compile('org.modelmapper:modelmapper:1.1.0')
+		developmentOnly 'org.springframework.boot:spring-boot-devtools'
+		runtimeOnly 'com.h2database:h2'
+		runtimeOnly 'org.mariadb.jdbc:mariadb-java-client' // MariaDB
+		annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+		compile 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+		testCompileOnly 'org.projectlombok:lombok'
+		testAnnotationProcessor 'org.projectlombok:lombok'
+		testImplementation('org.springframework.boot:spring-boot-starter-test') {
+			exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+		}
+		testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	}
+}
+test {
+	useJUnitPlatform()
+}
+
+project(':api') {
+	dependencies {
+		compile project(':core')
+	}
+}

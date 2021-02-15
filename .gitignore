@@ -35,6 +35,8 @@
 .Trashes
 ehthumbs.db
 
+webapp/
+node_modules/
 .gradle/
 .gradle
 gradle

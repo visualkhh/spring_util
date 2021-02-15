@@ -1,0 +1,83 @@
+<main role="main" class="">
+
+
+    <div class="d-flex mt-3 mb-3 ">
+        <div class="mr-auto p-2" style="margin-left: 50px"> 대화방</div>
+        <div class="p-2"><i-feather name="refresh-Cw" style="margin-right:10px; cursor: pointer" (click)="send()"></i-feather></div>
+        <div class="p-2"><i-feather name="plus-square" style="margin-right:10px; cursor: pointer" (click)="createRoom(); modal.show()"></i-feather></div>
+    </div>
+
+
+    <div class="container">
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let it of rooms" style="cursor: pointer" (click)="showRoom(it)">
+                <div>
+                    <b>{{it.name}}</b> <br *ngIf="it.lastMsgContents">{{it.lastMsgContents}}&nbsp;&nbsp;&nbsp; {{it.lastMsgDt | date: 'yyyy/MM/dd HH:mm:ss'}}
+                </div>
+                <div *ngIf="it.userRooms">
+                    <span *ngFor="let sit of it.userRooms" class="badge badge-primary m-1">{{sit.user.nickName}}</span>
+                </div>
+
+            </li>
+        </ul>
+    </div>
+</main>
+
+
+<basic-modal #modal [buttons]="[{name:'ok', class:'btn-primary'}]" (buttonClick)="createRoomCheck($event)">
+    <div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">방이름</span>
+            </div>
+            <input type="text" class="form-control" placeholder="방이름을 입력해주세요" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="newRoomName">
+        </div>
+    </div>
+    <div *ngFor="let it of this.friends">
+        {{it.id}} <input type="checkbox" [(ngModel)]="it.value"/>
+    </div>
+</basic-modal>
+
+<basic-modal #roomModal [config]="{class: 'modal-lg', ignoreBackdropClick: true}" (completed)="roomCompleted()">
+    <div *ngIf="choiceRoom">
+        <div class="m-2">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">name</span>
+                </div>
+                <input type="text" class="form-control" readonly placeholder="name" aria-label="Username" aria-describedby="basic-addon1" value="{{choiceRoom.name}}">
+            </div>
+        </div>
+        <div class="m-2">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    참여자
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <button class="dropdown-item" type="button" *ngFor="let it of choiceRoom.userRooms">{{it.userId}}</button>
+                </div>
+            </div>
+        </div>
+        <div #contents style="height: 300px; width: 100%; overflow: scroll" class="alert alert-info m-2" >
+            <li #contentsItems class="list-group-item" *ngFor="let it of choiceRoomMessages" style="cursor: pointer" [ngStyle]="{'text-align': userTokenContain && it.userId === userTokenContain.id ? 'right' : 'left'}">
+<!--                <span [style]="userTokenContain && it.userId === userTokenContain.id ? 'float: right' : 'float: left'">-->
+                <span class="badge badge-pill badge-primary">
+                {{it.userId}}
+                </span>
+                <span class="badge badge-light ml-2 mr-2">{{it.contents}}</span>
+                <span class="badge badge-secondary">{{it.regDt | moment}}</span>
+
+<!--                <span style="float: right" *ngIf="userTokenContain && it.userId === userTokenContain.id"> *me</span>-->
+            </li>
+        </div>
+        <div class="m-2">
+            <div class="input-group mb-3">
+                <input #sendInput type="text" class="form-control" placeholder="message">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" (click)="sendMessage(choiceRoom, sendInput.value); sendInput.value=''" >Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</basic-modal>

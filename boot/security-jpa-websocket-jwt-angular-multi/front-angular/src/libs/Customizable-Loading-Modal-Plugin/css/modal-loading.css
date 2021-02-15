@@ -1,0 +1,170 @@
+@charset "UTF-8";
+/**
+ * Modal Loading Css Library
+ * @author  c
+ * @date    2017-11-06
+ * @version 1.0.0
+ */
+ 
+.modal-mask {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	/*background: rgba(22, 22, 22, 0.2);*/
+}
+
+.modal-mask .modal-loading {
+	position: fixed;
+	top: 0;
+	left: 0;
+    /*-webkit-border-radius: 12px;*/
+    /*border-radius: 12px;*/
+    /*padding: 5px 15px;*/
+	/*background: rgb(49, 41, 35);*/
+	text-align: center;
+}
+
+.modal-mask .modal-loading .loading-title {
+	/*font-size: 1.4rem;*/
+	/*color: #FFF;*/
+}
+
+
+.modal-mask .modal-loading .loading-discription {
+	/*font-size: 1.2rem;*/
+	/*color: #FFF;*/
+}
+
+/* start loading-animate */
+.modal-mask .modal-loading .loading-animate {
+	/*width: 40px;*/
+	/*height: 40px;*/
+	background: transparent;
+	position: relative;
+	margin: 0 auto;
+}
+
+/* 图片加载动画 */
+.modal-mask .modal-loading .loading-animate img {
+	width: 100%;
+	height: 100%;
+}
+
+.modal-mask .modal-loading .loading-animate .animate-origin {
+    width: 60%;
+    height: 60%;
+    position: absolute;
+    left: 20%;
+    top: 20%;
+    opacity: 1;
+	-webkit-animation: load 2.28s linear infinite;
+	animation: load 2.28s linear infinite;
+}
+
+.modal-mask .modal-loading .loading-animate .animate-origin span {
+	display: block;
+	/*width: 4px;*/
+	/*height: 4px;*/
+	/*background: #FFF;*/
+	border-radius: 50%;
+}
+
+.modal-mask .modal-loading .loading-animate .animate-origin:nth-child(1) {
+	-webkit-animation-delay: 0.2s;
+	animation-delay: 0.2s;
+}
+
+.modal-mask .modal-loading .loading-animate .animate-origin:nth-child(2) {
+	-webkit-animation-delay: 0.4s;
+	animation-delay: 0.4s;
+}
+
+.modal-mask .modal-loading .loading-animate .animate-origin:nth-child(3) {
+	-webkit-animation-delay: 0.6s;
+	animation-delay: 0.6s;
+}
+
+.modal-mask .modal-loading .loading-animate .animate-origin:nth-child(4) {
+	-webkit-animation-delay: 0.8s;
+	animation-delay: 0.8s;
+}
+
+.modal-mask .modal-loading .loading-animate .animate-origin:nth-child(5) {
+	-webkit-animation-delay: 1s;
+	animation-delay: 1s;
+}
+
+@-webkit-keyframes load {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	10% {
+		-webkit-transform: rotate(45deg);
+		transform: rotate(45deg);
+	}
+	50% {
+		opacity: 1;
+		-webkit-transform: rotate(160deg);
+		transform: rotate(160deg);
+	}
+	62% {
+		opacity: 0;
+	}
+	65% {
+		opacity: 0;
+		-webkit-transform: rotate(200deg);
+		transform: rotate(200deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes load {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	10% {
+		-webkit-transform: rotate(45deg);
+		transform: rotate(45deg);
+	}
+	50% {
+		opacity: 1;
+		-webkit-transform: rotate(160deg);
+		transform: rotate(160deg);
+	}
+	62% {
+		opacity: 0;
+	}
+	65% {
+		opacity: 0;
+		-webkit-transform: rotate(200deg);
+		transform: rotate(200deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+/* loading-animate end */
+
+/* 水平布局 */
+.modal-mask .modal-loading.modal-hor-layout .loading-title {
+}
+
+.modal-mask .modal-loading.modal-hor-layout .loading-animate {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.modal-mask .modal-loading.modal-hor-layout .loading-discription {
+	display: inline-block;
+	padding-left: 15px;
+	/*font-size: 1.4rem;*/
+
+}

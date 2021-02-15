@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"-->
+<head>
+    <meta charset="UTF-8">
+    <title>kakao-api</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+join
+
+</body>
+<script>
+    $(document).ready(function(){
+        connectionSockJs(connected);
+    });
+    function connectionSockJs(connected) {
+        // http://localhost:9000/websocket/topic/chats/joins/1
+        // var socket = new SockJS('http://127.0.0.1:8080/websocket')
+        var socket = new SockJS('http://localhost:9000/websocket')
+        // var socket = new SockJS('websocket')
+        var stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            connected(stompClient, frame)
+        });
+        return stompClient;
+    }
+
+    function connected(socket, frame) {
+        socket.subscribe("/topic/chats/joins/1", function(r) {
+            console.log(r);
+        })
+
+        setInterval(function() {
+            var data = {
+                name: 'a'
+            }
+            socket.send('/app/joins/1', {'aheader': 'aaaaaaa'}, JSON.stringify(data));
+        }, 1000)
+    }
+</script>
+</html>

@@ -1,0 +1,14 @@
+spring:
+  profiles: core
+  application:
+    name: core
+  pid:
+    file: ${spring.application.name}.pid
+  messages:
+    basename: classpath:/messages/message # Comma-separated list of basenames, each following the ResourceBundle convention.
+    encoding: UTF-8
+    cache-duration: -1
+project:
+  properties:
+    email-from: omnicns@omnicns.com
+    private-key: 6a21c8f949b6zza0683148b3fbb355b2

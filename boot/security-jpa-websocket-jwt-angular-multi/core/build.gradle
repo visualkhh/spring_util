@@ -1,0 +1,5 @@
+//import com.omnicns.gradle.plugin.PropertiesToJson
+bootJar { enabled = false }
+jar { enabled = true }
+dependencies {
+}
