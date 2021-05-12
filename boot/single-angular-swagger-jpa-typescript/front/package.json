@@ -41,7 +41,7 @@
     "chart.js": "2.7.1",
     "classlist.js": "^1.1.20150312",
     "clockpicker": "0.0.7",
-    "codemirror": "^5.38.0",
+    "codemirror": "^5.58.2",
     "core-js": "^2.5.4",
     "datatables.net-dt": "^1.10.20",
     "datatables.net-fixedcolumns-dt": "^3.3.0",
